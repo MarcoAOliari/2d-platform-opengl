@@ -10,9 +10,9 @@
 using std::vector;
 
 class ConfiguracoesJogo {
-    // Circle player;
+    Circle player;
     vector<Circle> inimigos;
-    // Rect arena;
+    Rect arena;
     vector<Rect> obstaculos;
 
     public:

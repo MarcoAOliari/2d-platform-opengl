@@ -7,3 +7,7 @@ Rect::Rect(float width, float height, float x, float y, bool isArena) {
     this->y = y;
     this->isArena = isArena;
 }
+
+bool Rect::getIsArena() {
+    return this->isArena;
+}

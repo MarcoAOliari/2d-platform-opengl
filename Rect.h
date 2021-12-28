@@ -9,7 +9,9 @@ class Rect {
     bool isArena;
 
     public:
+        Rect(){};
         Rect(float width, float height, float x, float y, bool isArena);
+        bool getIsArena();
 };
 
 #endif /* RECT_H */

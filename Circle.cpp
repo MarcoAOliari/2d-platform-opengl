@@ -6,3 +6,7 @@ Circle::Circle(float cx, float cy, float r, bool isPlayer) {
     this->r = r;
     this->isPlayer = isPlayer;
 }
+
+bool Circle::getIsPlayer() {
+    return this->isPlayer;
+}
