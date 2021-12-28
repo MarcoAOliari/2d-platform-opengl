@@ -11,3 +11,19 @@ Rect::Rect(float width, float height, float x, float y, bool isArena) {
 bool Rect::getIsArena() {
     return this->isArena;
 }
+
+float Rect::getX() {
+    return this->x;
+}
+
+float Rect::getY() {
+    return this->y;
+}
+
+float Rect::getWidth() {
+    return this->width;
+}
+
+float Rect::getHeight() {
+    return this->height;
+}
