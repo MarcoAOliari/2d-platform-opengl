@@ -24,7 +24,8 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
 
     for (Circle c : circles) {
         if (c.getIsPlayer()) {
-            this->player = c;
+            Character ch(c, arena, larguraTotal);
+            this->player = ch;
         } else {
             this->inimigos.push_back(c);
         }
@@ -39,6 +40,8 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
 }
 
 void ConfiguracoesJogo::Desenha() {
+    this->player.Desenha();
+
     for (Obstacle o : this->obstaculos) {
         o.Desenha();
     }

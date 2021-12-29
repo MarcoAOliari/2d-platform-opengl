@@ -2,12 +2,12 @@
 #define CIRCLE_H
 
 class Circle {
-    float cx;
-    float cy;
-    float r;
-    bool isPlayer;
-
     public:
+        float cx;
+        float cy;
+        float r;
+        bool isPlayer;
+
         Circle(){};
         Circle(float cx, float cy, float r, bool isPlayer);
         bool getIsPlayer();

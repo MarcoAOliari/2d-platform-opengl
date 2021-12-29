@@ -5,13 +5,14 @@
 
 #include "SVGReader.h"
 #include "Circle.h"
+#include "Character.h"
 #include "Rect.h"
 #include "Obstacle.h"
 
 using std::vector;
 
 class ConfiguracoesJogo {
-    Circle player;
+    Character player;
     vector<Circle> inimigos;
     vector<Obstacle> obstaculos;
 

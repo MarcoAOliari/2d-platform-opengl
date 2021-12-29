@@ -17,6 +17,6 @@ Obstacle::Obstacle(Rect r, Rect arena, float larguraTotal) {
 void Obstacle::Desenha() {
     glPushMatrix();
     glTranslatef(this->gX, this->gY, 0);
-    DesenhaRect(this->width, this->height, 1, 0, 1);
+    DesenhaRect(this->width, this->height, 0, 0, 0);
     glPopMatrix();
 }
