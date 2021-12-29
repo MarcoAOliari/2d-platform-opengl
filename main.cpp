@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "player.h"
 #include "ConfiguracoesJogo.h"
 
 #define INC_KEY 1
@@ -19,7 +18,9 @@ int keyStatus[256];
 const GLint Width = 500;
 const GLint Height = 500;
 
-Player player(0.5, -0.1, 0.3);
+ConfiguracoesJogo config("arena_teste.svg");
+
+float incX = 0;
 
 void keyPress(unsigned char key, int x, int y)
 {
@@ -57,9 +58,9 @@ void renderScene(void)
 {
      // Clear the screen.
      glClear(GL_COLOR_BUFFER_BIT);
- 
-     player.Desenha();
-     
+      
+    config.Desenha();
+
      //if (tiro) tiro->Desenha();
      
      //alvo.Desenha();
@@ -73,13 +74,13 @@ void init(void)
 {
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity(alpha).
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
  
     glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-    glOrtho(-1,     // X coordinate of left edge             
-            1,     // X coordinate of right edge            
-            0,     // Y coordinate of bottom edge             
-            1,     // Y coordinate of top edge             
+    glOrtho(0 + incX,     // X coordinate of left edge             
+            500 + incX,     // X coordinate of right edge            
+            500,     // Y coordinate of bottom edge             
+            0,     // Y coordinate of top edge             
             -1,     // Z coordinate of the “near” plane            
             1);    // Z coordinate of the “far” plane
     glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
@@ -105,12 +106,15 @@ void idle(void)
     if(keyStatus[(int)('a')])
     {
         printf("esquerda\n");
+        incX -= 0.2;
         // player.MoveEmX(-inc);
     }
     if(keyStatus[(int)('d')])
     {
         printf("direita\n");
+        incX += 0.2;
         // player.MoveEmX(inc);
+        printf("%f\n", incX);
     }
     
     // //Trata o tiro (soh permite um tiro por vez)
@@ -148,27 +152,25 @@ void idle(void)
 
 int main(int argc, char *argv[])
 {
-    ConfiguracoesJogo config("arena_teste.svg");
-
     // Initialize openGL with Double buffer and RGB color without transparency.
     // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
-    // glutInit(&argc, argv);
-    // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
  
-    // // Create the window.
-    // glutInitWindowSize(Width, Height);
-    // glutInitWindowPosition(150,50);
-    // glutCreateWindow("Trabalho 2D");
+    // Create the window.
+    glutInitWindowSize(Width, Height);
+    glutInitWindowPosition(150,50);
+    glutCreateWindow("Trabalho 2D");
  
-    // // Define callbacks.
-    // glutDisplayFunc(renderScene);
-    // glutKeyboardFunc(keyPress);
-    // glutIdleFunc(idle);
-    // glutKeyboardUpFunc(keyup);
+    // Define callbacks.
+    glutDisplayFunc(renderScene);
+    glutKeyboardFunc(keyPress);
+    glutIdleFunc(idle);
+    glutKeyboardUpFunc(keyup);
     
-    // init();
+    init();
  
-    // glutMainLoop();
+    glutMainLoop();
  
     return 0;
 }

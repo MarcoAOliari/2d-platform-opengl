@@ -15,7 +15,6 @@ public:
     Obstacle(Rect r, Rect arena, float larguraTotal);
 
     void Desenha();
-
 };
 
 #endif /* OBSTACLE_H */

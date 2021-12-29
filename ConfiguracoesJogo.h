@@ -17,6 +17,7 @@ class ConfiguracoesJogo {
 
     public:
         ConfiguracoesJogo(const char *pFilename);
+        void Desenha();
 };
 
 #endif /* CONFIGURACOES_JOGO_H */

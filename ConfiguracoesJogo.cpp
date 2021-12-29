@@ -37,3 +37,9 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
         }
     }
 }
+
+void ConfiguracoesJogo::Desenha() {
+    for (Obstacle o : this->obstaculos) {
+        o.Desenha();
+    }
+}
