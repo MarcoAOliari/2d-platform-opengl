@@ -19,6 +19,9 @@ class Character {
 
 private:
     void DesenhaTronco();
+    void DesenhaCoxa(int id);
+    void DesenhaPerna(int id);
+    void DesenhaCanela(int id);
 
 public:
     Character(){};

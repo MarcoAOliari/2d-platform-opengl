@@ -1,22 +1,23 @@
 #include "Character.h"
 #include "utils.h"
 #include <iostream>
+#define PI 3.14159264
 
 using namespace std;
 
 Character::Character(Circle c, Rect arena, float larguraTotal) {
-    gX = larguraTotal * (c.cx - arena.x) / arena.width;
+    gX = larguraTotal * (c.cx - arena.x) / arena.width /*+ 100 */;
 
-    float y = 500 * (c.cy - arena.y) / arena.height;
-    float r = 500 * c.r / arena.height;
+    float y = 500 * (c.cy - arena.y) / arena.height /* -  100 */;
+    float r = 500 * c.r / arena.height /* + 50 */;
 
     gY = y - 0.75 * r;
     raioCabeca = 0.25 * r;
-    alturaQuadril = 0.66666 * r;
-    alturaArticulacao = 0.2083333 * r;
-    gThetaQuadril1 = 0; 
-    gThetaQuadril2 = 0; 
-    gThetaJoelho1 = 0;
+    alturaQuadril = 0.7 * r;
+    alturaArticulacao = 0.43333 * r;
+    gThetaQuadril1 = 60; 
+    gThetaQuadril2 = 100; 
+    gThetaJoelho1 = 30;
     gThetaJoelho2 = 0;
 
     // cout << gX << " " << gY << "\n";
@@ -24,8 +25,36 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
 
 void Character::DesenhaTronco() {
     glPushMatrix();
-    glTranslatef(-0.8*this->raioCabeca, this->raioCabeca, 0);
-    DesenhaRect(1.6 * this->raioCabeca, this->alturaQuadril, 0, 1, 0);
+    glTranslatef(-0.6 * this->raioCabeca, this->raioCabeca, 0);
+    DesenhaRect(1.2 * this->raioCabeca, this->alturaQuadril, 0, 1, 0);
+    glPopMatrix();
+}
+
+void Character::DesenhaCoxa(int id) {
+    if (id == 1) {
+        glRotatef(this->gThetaQuadril1, 0, 0, 1);
+    } else if (id == 2) {
+        glRotatef(this->gThetaQuadril2, 0, 0, 1);
+    }
+
+    DesenhaRect(0.3 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+}
+
+void Character::DesenhaCanela(int id) {
+    if (id == 1) {
+        glRotatef(this->gThetaJoelho1, 0, 0, 1);
+    } else if (id == 2) {
+        glRotatef(this->gThetaJoelho2, 0, 0, 1);
+    }
+
+    DesenhaRect(0.3 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+}
+
+void Character::DesenhaPerna(int id) {
+    glPushMatrix();
+    DesenhaCoxa(id);
+    glTranslatef(0, this->alturaArticulacao, 0);
+    DesenhaCanela(id);
     glPopMatrix();
 }
 
@@ -34,5 +63,9 @@ void Character::Desenha() {
     glTranslatef(this->gX, this->gY, 0);
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
+    glTranslatef(0, this->raioCabeca + this->alturaQuadril, 0);
+    glRotatef(-90, 0, 0, 1);
+    this->DesenhaPerna(1);
+    this->DesenhaPerna(2);
     glPopMatrix();
 }
