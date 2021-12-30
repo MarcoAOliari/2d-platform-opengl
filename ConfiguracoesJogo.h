@@ -2,6 +2,8 @@
 #define CONFIGURACOES_JOGO_H
 
 #include <vector>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 #include "SVGReader.h"
 #include "Circle.h"
@@ -13,12 +15,14 @@ using std::vector;
 
 class ConfiguracoesJogo {
     Character player;
-    vector<Circle> inimigos;
+    vector<Character> inimigos;
     vector<Obstacle> obstaculos;
 
     public:
         ConfiguracoesJogo(const char *pFilename);
         void Desenha();
+        void AndaPlayer(GLfloat dx, GLdouble deltaT);
+        GLfloat getCentroCamera();
 };
 
 #endif /* CONFIGURACOES_JOGO_H */

@@ -19,8 +19,6 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     gThetaQuadril2 = 100; 
     gThetaJoelho1 = 30;
     gThetaJoelho2 = 0;
-
-    // cout << gX << " " << gY << "\n";
 }
 
 void Character::DesenhaTronco() {
@@ -37,7 +35,7 @@ void Character::DesenhaCoxa(int id) {
         glRotatef(this->gThetaQuadril2, 0, 0, 1);
     }
 
-    DesenhaRect(0.3 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+    DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
 }
 
 void Character::DesenhaCanela(int id) {
@@ -47,7 +45,7 @@ void Character::DesenhaCanela(int id) {
         glRotatef(this->gThetaJoelho2, 0, 0, 1);
     }
 
-    DesenhaRect(0.3 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+    DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
 }
 
 void Character::DesenhaPerna(int id) {
@@ -56,6 +54,12 @@ void Character::DesenhaPerna(int id) {
     glTranslatef(0, this->alturaArticulacao, 0);
     DesenhaCanela(id);
     glPopMatrix();
+}
+
+void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer) {
+    this->gX += dx * deltaT;
+
+    if (isPlayer) glTranslatef(-dx * deltaT, 0, 0);
 }
 
 void Character::Desenha() {
@@ -68,4 +72,8 @@ void Character::Desenha() {
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
     glPopMatrix();
+}
+
+GLfloat Character::getCentroCamera() {
+    return this->gX;
 }

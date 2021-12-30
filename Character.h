@@ -27,6 +27,8 @@ public:
     Character(){};
     Character(Circle c, Rect arena, float larguraTotal);
     void Desenha();
+    void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer);
+    GLfloat getCentroCamera();
 };
 
 #endif /* CHARACTER_H */

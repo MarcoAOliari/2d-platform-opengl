@@ -8,7 +8,7 @@
 
 #include "ConfiguracoesJogo.h"
 
-#define INC_KEY 1
+#define INC_KEY 0.05
 #define INC_KEYIDLE 0.01
 
 //Key status
@@ -75,10 +75,12 @@ void init(void)
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
+
+    GLfloat centro = config.getCentroCamera();
  
     glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-    glOrtho(0 + incX,     // X coordinate of left edge             
-            500 + incX,     // X coordinate of right edge            
+    glOrtho(centro - Width/2,     // X coordinate of left edge             
+            centro + Width/2,     // X coordinate of right edge            
             500,     // Y coordinate of bottom edge             
             0,     // Y coordinate of top edge             
             -1,     // Z coordinate of the “near” plane            
@@ -103,18 +105,12 @@ void idle(void)
 
     double inc = INC_KEYIDLE;
     //Treat keyPress
-    if(keyStatus[(int)('a')])
-    {
-        printf("esquerda\n");
-        incX -= 0.2;
-        // player.MoveEmX(-inc);
+    if (keyStatus[(int)('a')]) {
+        config.AndaPlayer(-INC_KEY, timeDiference);
     }
-    if(keyStatus[(int)('d')])
-    {
-        printf("direita\n");
-        incX += 0.2;
-        // player.MoveEmX(inc);
-        printf("%f\n", incX);
+
+    if (keyStatus[(int)('d')]) {
+        config.AndaPlayer(INC_KEY, timeDiference);
     }
     
     // //Trata o tiro (soh permite um tiro por vez)

@@ -23,11 +23,11 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
     }
 
     for (Circle c : circles) {
+        Character ch(c, arena, larguraTotal);
         if (c.getIsPlayer()) {
-            Character ch(c, arena, larguraTotal);
             this->player = ch;
         } else {
-            this->inimigos.push_back(c);
+            this->inimigos.push_back(ch);
         }
     }
 
@@ -45,4 +45,16 @@ void ConfiguracoesJogo::Desenha() {
     for (Obstacle o : this->obstaculos) {
         o.Desenha();
     }
+
+    for (Character c : this->inimigos) {
+        c.Desenha();
+    }
+}
+
+void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT) {
+    this->player.Anda(dx, deltaT, true);
+}
+
+GLfloat ConfiguracoesJogo::getCentroCamera() {
+    return this->player.getCentroCamera();
 }
