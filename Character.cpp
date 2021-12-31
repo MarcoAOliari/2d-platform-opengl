@@ -22,7 +22,6 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     gThetaJoelho1 = 30;
     gThetaJoelho2 = 0;
     direcao = 'd';
-    inverteDesenho = false;
 }
 
 void Character::DesenhaTronco() {
@@ -68,13 +67,9 @@ void Character::PoseParado() {
 
 void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
     this->gX += dx * deltaT;
+    this->direcao = direcao;
 
     this->frameCaminhada = (this->frameCaminhada + 1) % 1000;
-
-    if (this->direcao != direcao) {
-        this->direcao = direcao;
-        this->inverteDesenho = true;
-    }
 
     if (this->frameCaminhada < 200) {
         this->PoseParado();
@@ -111,13 +106,12 @@ void Character::ParaDeAndar() {
 
 void Character::Desenha() {
     glPushMatrix();
+    glTranslatef(this->gX, this->gY, 0);
 
-    if (this->inverteDesenho) {
-        this->inverteDesenho = false;
+    if (this->direcao == 'e') {
         glScalef(-1, 1, 1);
     }
-
-    glTranslatef(this->gX, this->gY, 0);
+    
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
     glTranslatef(0, this->alturaQuadril, 0);
@@ -125,8 +119,6 @@ void Character::Desenha() {
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
     glPopMatrix();
-
-    cout << this->direcao << "\n";
 }
 
 GLfloat Character::getCentroCamera() {

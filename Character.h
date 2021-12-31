@@ -20,7 +20,6 @@ class Character {
     GLfloat larguraArticulacao;
     int frameCaminhada;
     char direcao;
-    bool inverteDesenho;
 
 private:
     void DesenhaTronco();
