@@ -51,8 +51,8 @@ void ConfiguracoesJogo::Desenha() {
     }
 }
 
-void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT) {
-    this->player.Anda(dx, deltaT, true);
+void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
+    this->player.Anda(dx, deltaT, true, direcao);
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {

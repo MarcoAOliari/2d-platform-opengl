@@ -105,11 +105,11 @@ void idle(void)
     //Treat keyPress
     if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
         if (keyStatus[(int)('a')]) {
-            config.AndaPlayer(-INC_KEY, timeDiference);
+            config.AndaPlayer(-INC_KEY, timeDiference, 'e');
         }
 
         if (keyStatus[(int)('d')]) {
-            config.AndaPlayer(INC_KEY, timeDiference);
+            config.AndaPlayer(INC_KEY, timeDiference, 'd');
         }
     } else {
         config.ParaDeAndarPlayer();

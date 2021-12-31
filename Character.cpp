@@ -21,6 +21,8 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     gThetaQuadril2 = 100; 
     gThetaJoelho1 = 30;
     gThetaJoelho2 = 0;
+    direcao = 'd';
+    inverteDesenho = false;
 }
 
 void Character::DesenhaTronco() {
@@ -64,19 +66,35 @@ void Character::PoseParado() {
     gThetaJoelho2 = 0;
 }
 
-void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer) {
+void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
     this->gX += dx * deltaT;
 
-    this->frameCaminhada = (this->frameCaminhada + 1) % 900;
+    this->frameCaminhada = (this->frameCaminhada + 1) % 1000;
 
-    if (this->frameCaminhada < 300) {
+    if (this->direcao != direcao) {
+        this->direcao = direcao;
+        this->inverteDesenho = true;
+    }
+
+    if (this->frameCaminhada < 200) {
         this->PoseParado();
+
+    } else if (this->frameCaminhada < 400){
+        gThetaQuadril1 = 70; 
+        gThetaQuadril2 = 97; 
+        gThetaJoelho1 = 25;
+        gThetaJoelho2 = 15;
     } else if (this->frameCaminhada < 600) {
         gThetaQuadril1 = 80; 
         gThetaQuadril2 = 95; 
         gThetaJoelho1 = 20;
         gThetaJoelho2 = 25;
-    } else if (this->frameCaminhada < 900) {
+    }  else if (this->frameCaminhada < 800) {
+        gThetaQuadril1 = 86; 
+        gThetaQuadril2 = 80; 
+        gThetaJoelho1 = 10;
+        gThetaJoelho2 = 45;
+    } else if (this->frameCaminhada < 1000) {
         gThetaQuadril1 = 92; 
         gThetaQuadril2 = 70; 
         gThetaJoelho1 = 5;
@@ -93,6 +111,12 @@ void Character::ParaDeAndar() {
 
 void Character::Desenha() {
     glPushMatrix();
+
+    if (this->inverteDesenho) {
+        this->inverteDesenho = false;
+        glScalef(-1, 1, 1);
+    }
+
     glTranslatef(this->gX, this->gY, 0);
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
@@ -101,6 +125,8 @@ void Character::Desenha() {
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
     glPopMatrix();
+
+    cout << this->direcao << "\n";
 }
 
 GLfloat Character::getCentroCamera() {

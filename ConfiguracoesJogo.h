@@ -21,7 +21,7 @@ class ConfiguracoesJogo {
     public:
         ConfiguracoesJogo(const char *pFilename);
         void Desenha();
-        void AndaPlayer(GLfloat dx, GLdouble deltaT);
+        void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();
         GLfloat getCentroCamera();
 };

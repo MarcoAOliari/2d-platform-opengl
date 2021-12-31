@@ -19,6 +19,8 @@ class Character {
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
     int frameCaminhada;
+    char direcao;
+    bool inverteDesenho;
 
 private:
     void DesenhaTronco();
@@ -31,7 +33,7 @@ public:
     Character(){};
     Character(Circle c, Rect arena, float larguraTotal);
     void Desenha();
-    void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer);
+    void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
     void ParaDeAndar();
     GLfloat getCentroCamera();
 };
