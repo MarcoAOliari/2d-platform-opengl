@@ -55,6 +55,10 @@ void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT) {
     this->player.Anda(dx, deltaT, true);
 }
 
+void ConfiguracoesJogo::ParaDeAndarPlayer() {
+    this->player.ParaDeAndar();
+}
+
 GLfloat ConfiguracoesJogo::getCentroCamera() {
     return this->player.getCentroCamera();
 }

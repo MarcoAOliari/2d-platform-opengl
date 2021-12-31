@@ -18,18 +18,21 @@ class Character {
     GLfloat gThetaJoelho2;
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
+    int frameCaminhada;
 
 private:
     void DesenhaTronco();
     void DesenhaCoxa(int id);
     void DesenhaPerna(int id);
     void DesenhaCanela(int id);
+    void PoseParado();
 
 public:
     Character(){};
     Character(Circle c, Rect arena, float larguraTotal);
     void Desenha();
     void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer);
+    void ParaDeAndar();
     GLfloat getCentroCamera();
 };
 

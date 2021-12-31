@@ -8,7 +8,7 @@
 
 #include "ConfiguracoesJogo.h"
 
-#define INC_KEY 0.1
+#define INC_KEY 0.08
 #define INC_KEYIDLE 0.01
 
 //Key status
@@ -19,8 +19,6 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 ConfiguracoesJogo config("arena_teste.svg");
-
-int frame = 0;
 
 void keyPress(unsigned char key, int x, int y)
 {
@@ -106,8 +104,6 @@ void idle(void)
     double inc = INC_KEYIDLE;
     //Treat keyPress
     if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
-        frame++;
-
         if (keyStatus[(int)('a')]) {
             config.AndaPlayer(-INC_KEY, timeDiference);
         }
@@ -116,7 +112,7 @@ void idle(void)
             config.AndaPlayer(INC_KEY, timeDiference);
         }
     } else {
-        frame = 0;
+        config.ParaDeAndarPlayer();
     }
     
     // //Trata o tiro (soh permite um tiro por vez)

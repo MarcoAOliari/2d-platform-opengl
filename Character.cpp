@@ -57,10 +57,38 @@ void Character::DesenhaPerna(int id) {
     glPopMatrix();
 }
 
+void Character::PoseParado() {
+    gThetaQuadril1 = 60; 
+    gThetaQuadril2 = 100; 
+    gThetaJoelho1 = 30;
+    gThetaJoelho2 = 0;
+}
+
 void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer) {
     this->gX += dx * deltaT;
 
+    this->frameCaminhada = (this->frameCaminhada + 1) % 900;
+
+    if (this->frameCaminhada < 300) {
+        this->PoseParado();
+    } else if (this->frameCaminhada < 600) {
+        gThetaQuadril1 = 80; 
+        gThetaQuadril2 = 95; 
+        gThetaJoelho1 = 20;
+        gThetaJoelho2 = 25;
+    } else if (this->frameCaminhada < 900) {
+        gThetaQuadril1 = 92; 
+        gThetaQuadril2 = 70; 
+        gThetaJoelho1 = 5;
+        gThetaJoelho2 = 70;
+    }
+
     if (isPlayer) glTranslatef(-dx * deltaT, 0, 0);
+}
+
+void Character::ParaDeAndar() {
+    this->frameCaminhada = 0;
+    this->PoseParado();
 }
 
 void Character::Desenha() {
