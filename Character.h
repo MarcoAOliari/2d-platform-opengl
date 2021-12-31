@@ -16,6 +16,8 @@ class Character {
     GLfloat gThetaQuadril2; 
     GLfloat gThetaJoelho1;
     GLfloat gThetaJoelho2;
+    GLfloat larguraQuadril;
+    GLfloat larguraArticulacao;
 
 private:
     void DesenhaTronco();

@@ -14,7 +14,9 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     gY = y - 0.75 * r;
     raioCabeca = 0.25 * r;
     alturaQuadril = 0.7 * r;
+    larguraQuadril = 0.7 * raioCabeca;
     alturaArticulacao = 0.43333 * r;
+    larguraArticulacao = 0.4 * raioCabeca;
     gThetaQuadril1 = 60; 
     gThetaQuadril2 = 100; 
     gThetaJoelho1 = 30;
@@ -22,10 +24,8 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
 }
 
 void Character::DesenhaTronco() {
-    glPushMatrix();
-    glTranslatef(-0.6 * this->raioCabeca, this->raioCabeca, 0);
-    DesenhaRect(1.2 * this->raioCabeca, this->alturaQuadril, 0, 1, 0);
-    glPopMatrix();
+    glTranslatef(0, this->raioCabeca, 0);
+    DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0, 1, 0);
 }
 
 void Character::DesenhaCoxa(int id) {
@@ -35,7 +35,8 @@ void Character::DesenhaCoxa(int id) {
         glRotatef(this->gThetaQuadril2, 0, 0, 1);
     }
 
-    DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+    // correcao pra juntar joelho
+    DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 1, 0, 0);
 }
 
 void Character::DesenhaCanela(int id) {
@@ -67,7 +68,7 @@ void Character::Desenha() {
     glTranslatef(this->gX, this->gY, 0);
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
-    glTranslatef(0, this->raioCabeca + this->alturaQuadril, 0);
+    glTranslatef(0, this->alturaQuadril, 0);
     glRotatef(-90, 0, 0, 1);
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
