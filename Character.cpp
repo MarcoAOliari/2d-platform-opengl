@@ -127,7 +127,7 @@ GLfloat Character::getCentroCamera() {
 }
 
 bool Character::ColisaoY(Obstacle o, GLfloat dy) {
-    if (this->gY + dy + this->raioCabeca < o.getgY() &&
+    if (this->gY + dy + this->raioCabeca < o.getgY() ||
         this->gY + dy - (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getWidth()){
             cout << "Colisao Y!\n";
         return true;}
@@ -136,8 +136,8 @@ bool Character::ColisaoY(Obstacle o, GLfloat dy) {
 }
 
 bool Character::ColisaoX(Obstacle o, GLfloat dx) {
-    if (this->gX + dx + this->raioCabeca * 1.5 > o.getgX() - o.getWidth()/2.0 &&
-        this->gX + dx - this->raioCabeca * 1.5 < o.getgX() + o.getWidth()/2.0){
+    if (this->gX + dx + this->raioCabeca * 3.5 > o.getgX() - o.getWidth()/2.0 &&
+        this->gX + dx - this->raioCabeca * 3.5 < o.getgX() + o.getWidth()/2.0){
             cout << "Colisao X!\n";
         return true;}
     else
