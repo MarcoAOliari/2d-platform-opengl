@@ -2,8 +2,7 @@
 #include <math.h>
 #define PI 3.14159264
 
-void DesenhaRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B)
-{
+void DesenhaRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B) {
     glColor3f (R, G, B);
     glBegin(GL_QUADS);
         glVertex2f(-width/2, 0);
@@ -13,8 +12,7 @@ void DesenhaRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B)
     glEnd();
 }
 
-void DesenhaCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B)
-{
+void DesenhaCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B) {
     glColor3f(R, G, B);
     glPointSize(4);
     glBegin(GL_POLYGON);
@@ -25,4 +23,8 @@ void DesenhaCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B)
         );
     }
     glEnd();
+}
+
+GLfloat Distancia(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2) {
+    return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }

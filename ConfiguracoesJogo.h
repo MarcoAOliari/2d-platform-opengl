@@ -18,6 +18,9 @@ class ConfiguracoesJogo {
     vector<Character> inimigos;
     vector<Obstacle> obstaculos;
 
+    private:
+        bool Colisao(Character c, GLfloat dx, GLfloat dy);
+
     public:
         ConfiguracoesJogo(const char *pFilename);
         void Desenha();

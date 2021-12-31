@@ -15,6 +15,10 @@ public:
     Obstacle(Rect r, Rect arena, float larguraTotal);
 
     void Desenha();
+    GLfloat getgX();
+    GLfloat getgY();
+    GLfloat getWidth();
+    GLfloat getHeight();
 };
 
 #endif /* OBSTACLE_H */

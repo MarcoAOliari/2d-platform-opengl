@@ -5,10 +5,12 @@
 
 #include "Circle.h"
 #include "Rect.h"
+#include "Obstacle.h"
 
 class Character {
     GLfloat gX;
     GLfloat gY;
+    GLfloat alturaTotal;
     GLfloat raioCabeca;
     GLfloat alturaQuadril;
     GLfloat alturaArticulacao;
@@ -27,6 +29,8 @@ private:
     void DesenhaPerna(int id);
     void DesenhaCanela(int id);
     void PoseParado();
+    bool ColisaoX(Obstacle o, GLfloat dx);
+    bool ColisaoY(Obstacle o, GLfloat dy);
 
 public:
     Character(){};
@@ -34,6 +38,7 @@ public:
     void Desenha();
     void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
     void ParaDeAndar();
+    bool Colisao(Obstacle o, GLfloat dx, GLfloat dy);
     GLfloat getCentroCamera();
 };
 

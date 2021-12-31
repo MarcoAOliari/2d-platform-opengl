@@ -51,8 +51,22 @@ void ConfiguracoesJogo::Desenha() {
     }
 }
 
+bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
+    for (Obstacle o : this->obstaculos) {
+        if (c.Colisao(o, dx, dy)){ 
+            return true;
+        }
+    }
+    return false;
+}
+
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    this->player.Anda(dx, deltaT, true, direcao);
+    if (!this->Colisao(this->player, dx, 0)){
+        this->player.Anda(dx, deltaT, true, direcao);
+        cout << "SEM COLISÃO\n";
+    } else {
+        cout << "Colisao!\n";
+    }
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {

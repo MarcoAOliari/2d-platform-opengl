@@ -13,6 +13,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
 
     gY = y - 0.75 * r;
     raioCabeca = 0.25 * r;
+    alturaTotal = 2 * r;
     alturaQuadril = 0.7 * r;
     larguraQuadril = 0.7 * raioCabeca;
     alturaArticulacao = 0.43333 * r;
@@ -111,7 +112,7 @@ void Character::Desenha() {
     if (this->direcao == 'e') {
         glScalef(-1, 1, 1);
     }
-    
+
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
     glTranslatef(0, this->alturaQuadril, 0);
@@ -123,4 +124,26 @@ void Character::Desenha() {
 
 GLfloat Character::getCentroCamera() {
     return this->gX;
+}
+
+bool Character::ColisaoY(Obstacle o, GLfloat dy) {
+    if (this->gY + dy + this->raioCabeca < o.getgY() &&
+        this->gY + dy - (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getWidth()){
+            cout << "Colisao Y!\n";
+        return true;}
+    else
+        return false;
+}
+
+bool Character::ColisaoX(Obstacle o, GLfloat dx) {
+    if (this->gX + dx + this->raioCabeca * 1.5 > o.getgX() - o.getWidth()/2.0 &&
+        this->gX + dx - this->raioCabeca * 1.5 < o.getgX() + o.getWidth()/2.0){
+            cout << "Colisao X!\n";
+        return true;}
+    else
+        return false;
+}
+
+bool Character::Colisao(Obstacle o, GLfloat dx, GLfloat dy) {
+    return this->ColisaoX(o, dx) && this->ColisaoY(o, dy);
 }

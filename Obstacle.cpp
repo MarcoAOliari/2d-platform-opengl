@@ -17,3 +17,19 @@ void Obstacle::Desenha() {
     DesenhaRect(this->width, this->height, 0, 0, 0);
     glPopMatrix();
 }
+
+GLfloat Obstacle::getgX() {
+    return this->gX;
+}
+
+GLfloat Obstacle::getgY() {
+    return this->gY;
+}
+
+GLfloat Obstacle::getWidth() {
+    return this->width;
+}
+
+GLfloat Obstacle::getHeight() {
+    return this->height;
+}
