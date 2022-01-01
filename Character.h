@@ -20,6 +20,8 @@ class Character {
     GLfloat gThetaJoelho2;
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
+    GLfloat velocidadePulo;
+    bool caindo;
     int frameCaminhada;
     char direcao;
 
@@ -40,6 +42,8 @@ public:
     void ParaDeAndar();
     bool Colisao(Obstacle o, GLfloat dx, GLfloat dy);
     GLfloat getCentroCamera();
+    void Pula(GLfloat dy, GLfloat deltaT);
+    void Cai(GLfloat dy, GLfloat deltaT);
 };
 
 #endif /* CHARACTER_H */

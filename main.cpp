@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <iostream>
 
+using namespace std;
+
 #include "ConfiguracoesJogo.h"
 
 #define INC_KEY 0.08
@@ -19,6 +21,9 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 ConfiguracoesJogo config("arena_teste.svg");
+
+bool jumping = false;
+int jumpCounter = 0;
 
 void keyPress(unsigned char key, int x, int y)
 {
@@ -114,6 +119,12 @@ void idle(void)
     } else {
         config.ParaDeAndarPlayer();
     }
+
+    if (jumping) {
+        config.PulaPlayer(INC_KEY, timeDiference);
+    } else {
+        config.CaiPlayer(INC_KEY, timeDiference);
+    }
     
     // //Trata o tiro (soh permite um tiro por vez)
     // //Poderia usar uma lista para tratar varios tiros
@@ -148,6 +159,14 @@ void idle(void)
     glutPostRedisplay();
 }
 
+void mouse (int button, int state, int x, int y) {
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+        jumping = true;
+    } else {
+        jumping = false;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     // Initialize openGL with Double buffer and RGB color without transparency.
@@ -165,6 +184,7 @@ int main(int argc, char *argv[])
     glutKeyboardFunc(keyPress);
     glutIdleFunc(idle);
     glutKeyboardUpFunc(keyup);
+    glutMouseFunc(mouse);
     
     init();
  

@@ -27,6 +27,8 @@ class ConfiguracoesJogo {
         void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();
         GLfloat getCentroCamera();
+        void PulaPlayer(GLfloat dy, GLdouble deltaT);
+        void CaiPlayer(GLfloat dy, GLfloat deltaT);
 };
 
 #endif /* CONFIGURACOES_JOGO_H */

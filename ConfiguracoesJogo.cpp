@@ -73,6 +73,14 @@ void ConfiguracoesJogo::ParaDeAndarPlayer() {
     this->player.ParaDeAndar();
 }
 
+void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
+    this->player.Pula(dy, deltaT);
+}
+
+void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLfloat deltaT) {
+    this->player.Cai(dy, deltaT);
+}
+
 GLfloat ConfiguracoesJogo::getCentroCamera() {
     return this->player.getCentroCamera();
 }

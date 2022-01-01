@@ -22,6 +22,9 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     gThetaQuadril2 = 100; 
     gThetaJoelho1 = 30;
     gThetaJoelho2 = 0;
+    velocidadePulo = -0.25;
+    caindo = false;
+    frameCaminhada = 0;
     direcao = 'd';
 }
 
@@ -146,4 +149,28 @@ bool Character::ColisaoX(Obstacle o, GLfloat dx) {
 
 bool Character::Colisao(Obstacle o, GLfloat dx, GLfloat dy) {
     return this->ColisaoX(o, dx) && this->ColisaoY(o, dy);
+}
+
+void Character::Pula(GLfloat dy, GLfloat deltaT) {
+    if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT < 500) {
+        this->gY += this->velocidadePulo * deltaT;
+        this->velocidadePulo += 0.00015 * deltaT;
+    }
+}
+
+void Character::Cai(GLfloat dy, GLfloat deltaT) {
+    if (this->gY + (this->alturaTotal - this->raioCabeca) - this->velocidadePulo * deltaT < 500) {
+        if (this->caindo) {
+            this->gY += this->velocidadePulo * deltaT;
+            this->velocidadePulo += 0.00015 * deltaT;
+        } else {
+            this->caindo = true;
+            if (this->velocidadePulo < 0) {
+                this->velocidadePulo = 0;
+            }
+        }
+    } else {
+        this->caindo = false;
+        this->velocidadePulo = -0.25;
+    }
 }
