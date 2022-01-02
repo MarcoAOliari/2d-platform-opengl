@@ -6,26 +6,26 @@
 using namespace std;
 
 Character::Character(Circle c, Rect arena, float larguraTotal) {
-    gX = larguraTotal * (c.cx - arena.x) / arena.width /*+ 100 */;
+    this->gX = larguraTotal * (c.cx - arena.x) / arena.width /*+ 100 */;
 
     float y = 500 * (c.cy - arena.y) / arena.height /* -  100 */;
     float r = 500 * c.r / arena.height /* + 50 */;
 
-    gY = y - 0.75 * r;
-    raioCabeca = 0.25 * r;
-    alturaTotal = 2 * r;
-    alturaQuadril = 0.7 * r;
-    larguraQuadril = 0.7 * raioCabeca;
-    alturaArticulacao = 0.43333 * r;
-    larguraArticulacao = 0.4 * raioCabeca;
-    gThetaQuadril1 = 60; 
-    gThetaQuadril2 = 100; 
-    gThetaJoelho1 = 30;
-    gThetaJoelho2 = 0;
-    velocidadePulo = -0.25;
-    caindo = false;
-    frameCaminhada = 0;
-    direcao = 'd';
+    this->gY = y - 0.75 * r;
+    this->raioCabeca = 0.25 * r;
+    this->alturaTotal = 2 * r;
+    this->alturaQuadril = 0.7 * r;
+    this->larguraQuadril = 0.7 * raioCabeca;
+    this->alturaArticulacao = 0.43333 * r;
+    this->larguraArticulacao = 0.4 * raioCabeca;
+    this->gThetaQuadril1 = 60; 
+    this->gThetaQuadril2 = 100; 
+    this->gThetaJoelho1 = 30;
+    this->gThetaJoelho2 = 0;
+    this->velocidadePulo = -0.25;
+    this->caindo = false;
+    this->frameCaminhada = 0;
+    this->direcao = 'd';
 }
 
 void Character::DesenhaTronco() {
@@ -79,25 +79,25 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
         this->PoseParado();
 
     } else if (this->frameCaminhada < 400){
-        gThetaQuadril1 = 70; 
-        gThetaQuadril2 = 97; 
-        gThetaJoelho1 = 25;
-        gThetaJoelho2 = 15;
+        this->gThetaQuadril1 = 70; 
+        this->gThetaQuadril2 = 97; 
+        this->gThetaJoelho1 = 25;
+        this->gThetaJoelho2 = 15;
     } else if (this->frameCaminhada < 600) {
-        gThetaQuadril1 = 80; 
-        gThetaQuadril2 = 95; 
-        gThetaJoelho1 = 20;
-        gThetaJoelho2 = 25;
+        this->gThetaQuadril1 = 80; 
+        this->gThetaQuadril2 = 95; 
+        this->gThetaJoelho1 = 20;
+        this->gThetaJoelho2 = 25;
     }  else if (this->frameCaminhada < 800) {
-        gThetaQuadril1 = 86; 
-        gThetaQuadril2 = 80; 
-        gThetaJoelho1 = 10;
-        gThetaJoelho2 = 45;
+        this->gThetaQuadril1 = 86; 
+        this->gThetaQuadril2 = 80; 
+        this->gThetaJoelho1 = 10;
+        this->gThetaJoelho2 = 45;
     } else if (this->frameCaminhada < 1000) {
-        gThetaQuadril1 = 92; 
-        gThetaQuadril2 = 70; 
-        gThetaJoelho1 = 5;
-        gThetaJoelho2 = 70;
+        this->gThetaQuadril1 = 92; 
+        this->gThetaQuadril2 = 70; 
+        this->gThetaJoelho1 = 5;
+        this->gThetaJoelho2 = 70;
     }
 
     if (isPlayer) glTranslatef(-dx * deltaT, 0, 0);
@@ -139,8 +139,8 @@ bool Character::ColisaoY(Obstacle o, GLfloat dy) {
 
 bool Character::ColisaoX(Obstacle o, GLfloat dx) {
     if (this->gX + dx + this->raioCabeca * 2 > o.getgX() - o.getWidth()/2.0 &&
-        this->gX + dx - this->raioCabeca * 2 < o.getgX() + o.getWidth()/2.0){
-        return true;}
+        this->gX + dx - this->raioCabeca * 2 < o.getgX() + o.getWidth()/2.0)
+        return true;
     else
         return false;
 }
@@ -154,6 +154,21 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
         this->gY += this->velocidadePulo * deltaT;
         this->velocidadePulo += 0.00015 * deltaT;
     }
+}
+
+bool Character::ColisaoChao(Obstacle o, GLfloat dy) {
+    if (this->gY + (this->alturaTotal - this->raioCabeca) + dy > o.getgY() && 
+        this->gY + (this->alturaTotal - this->raioCabeca) < o.getgY() &&
+        this->ColisaoX(o, 0)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void Character::EstadoInicialY() {
+    this->caindo = false;
+    this->velocidadePulo = -0.25;
 }
 
 void Character::Cai(GLfloat dy, GLfloat deltaT) {

@@ -60,6 +60,16 @@ bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
     return false;
 }
 
+bool ConfiguracoesJogo::ColisaoChao(Character c, GLfloat dy, GLdouble deltaT) {
+    for (Obstacle o : this->obstaculos) {
+        if (c.ColisaoChao(o, dy)){ 
+            return true;
+            cout << "COLIDIU!\n";
+        }
+    }
+    return false;
+}
+
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
     if (!this->Colisao(this->player, dx, 0))
         this->player.Anda(dx, deltaT, true, direcao);
@@ -74,7 +84,11 @@ void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLfloat deltaT) {
-    this->player.Cai(dy, deltaT);
+    if (!this->ColisaoChao(this->player, dy, deltaT)) {
+        this->player.Cai(dy, deltaT);
+    } else {
+        this->player.EstadoInicialY();
+    }
 }
 
 GLfloat ConfiguracoesJogo::getCentroCamera() {

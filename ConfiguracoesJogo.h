@@ -20,6 +20,7 @@ class ConfiguracoesJogo {
 
     private:
         bool Colisao(Character c, GLfloat dx, GLfloat dy);
+        bool ColisaoChao(Character c, GLfloat dy, GLdouble deltaT);
 
     public:
         ConfiguracoesJogo(const char *pFilename);
