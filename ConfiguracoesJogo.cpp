@@ -61,12 +61,8 @@ bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
 }
 
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->Colisao(this->player, dx, 0)){
+    if (!this->Colisao(this->player, dx, 0))
         this->player.Anda(dx, deltaT, true, direcao);
-        cout << "SEM COLISÃO\n";
-    } else {
-        cout << "Colisao!\n";
-    }
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {
