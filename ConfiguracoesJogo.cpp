@@ -88,7 +88,7 @@ void ConfiguracoesJogo::ParaDeAndarPlayer() {
 }
 
 void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
-    if (!this->ColisaoTeto(this->player, dy, deltaT)) {
+    if (!this->ColisaoTeto(this->player, dy, deltaT) && !this->player.getPlayerCaindo()) {
         this->player.Pula(dy, deltaT);
     } else {
         this->CaiPlayer(dy, deltaT);

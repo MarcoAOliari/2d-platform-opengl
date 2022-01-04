@@ -47,6 +47,7 @@ public:
     bool ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT);
     bool ColisaoTeto(Obstacle o, GLfloat dy);
     void EstadoInicialY();
+    bool getPlayerCaindo();
 };
 
 #endif /* CHARACTER_H */

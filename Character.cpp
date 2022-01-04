@@ -153,6 +153,8 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT < 500) {
         this->gY += this->velocidadePulo * deltaT;
         this->velocidadePulo += 0.00015 * deltaT;
+
+        if (this->velocidadePulo >= 0) this->caindo = true;
     }
 }
 
@@ -196,4 +198,8 @@ void Character::Cai(GLfloat dy, GLfloat deltaT) {
         this->caindo = false;
         this->velocidadePulo = -0.25;
     }
+}
+
+bool Character::getPlayerCaindo() {
+    return this->caindo;
 }
