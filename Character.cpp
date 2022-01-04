@@ -156,9 +156,19 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
     }
 }
 
-bool Character::ColisaoChao(Obstacle o, GLfloat dy) {
-    if (this->gY + (this->alturaTotal - this->raioCabeca) + dy > o.getgY() && 
+bool Character::ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT) {
+    if (this->gY + (this->alturaTotal - this->raioCabeca) + 5 * dy * deltaT > o.getgY() && 
         this->gY + (this->alturaTotal - this->raioCabeca) < o.getgY() &&
+        this->ColisaoX(o, 0)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Character::ColisaoTeto(Obstacle o, GLfloat dy) {
+    if (this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight() &&
+        this->gY + (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getHeight() &&
         this->ColisaoX(o, 0)) {
         return true;
     } else {

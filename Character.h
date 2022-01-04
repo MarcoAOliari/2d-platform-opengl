@@ -44,7 +44,8 @@ public:
     GLfloat getCentroCamera();
     void Pula(GLfloat dy, GLfloat deltaT);
     void Cai(GLfloat dy, GLfloat deltaT);
-    bool ColisaoChao(Obstacle o, GLfloat dy);
+    bool ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT);
+    bool ColisaoTeto(Obstacle o, GLfloat dy);
     void EstadoInicialY();
 };
 

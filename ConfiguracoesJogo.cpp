@@ -62,9 +62,17 @@ bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
 
 bool ConfiguracoesJogo::ColisaoChao(Character c, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoChao(o, dy)){ 
+        if (c.ColisaoChao(o, dy, deltaT)){ 
             return true;
-            cout << "COLIDIU!\n";
+        }
+    }
+    return false;
+}
+
+bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
+    for (Obstacle o : this->obstaculos) {
+        if (c.ColisaoTeto(o, dy)){ 
+            return true;
         }
     }
     return false;
@@ -80,10 +88,15 @@ void ConfiguracoesJogo::ParaDeAndarPlayer() {
 }
 
 void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
-    this->player.Pula(dy, deltaT);
+    if (!this->ColisaoTeto(this->player, dy, deltaT)) {
+        this->player.Pula(dy, deltaT);
+    } else {
+        this->CaiPlayer(dy, deltaT);
+    }
 }
 
 void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLfloat deltaT) {
+    
     if (!this->ColisaoChao(this->player, dy, deltaT)) {
         this->player.Cai(dy, deltaT);
     } else {
