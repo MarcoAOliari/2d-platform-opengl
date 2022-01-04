@@ -14,12 +14,15 @@ class Character {
     GLfloat raioCabeca;
     GLfloat alturaQuadril;
     GLfloat alturaArticulacao;
+    GLfloat alturaBraco;
     GLfloat gThetaQuadril1; 
     GLfloat gThetaQuadril2; 
     GLfloat gThetaJoelho1;
     GLfloat gThetaJoelho2;
+    GLfloat gThetaBraco;
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
+    GLfloat larguraBraco;
     GLfloat velocidadePulo;
     bool caindo;
     int frameCaminhada;
@@ -30,6 +33,7 @@ private:
     void DesenhaCoxa(int id);
     void DesenhaPerna(int id);
     void DesenhaCanela(int id);
+    void DesenhaBraco();
     void PoseParado();
     bool ColisaoX(Obstacle o, GLfloat dx);
     bool ColisaoY(Obstacle o, GLfloat dy);

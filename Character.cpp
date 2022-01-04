@@ -18,10 +18,13 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->larguraQuadril = 0.7 * raioCabeca;
     this->alturaArticulacao = 0.43333 * r;
     this->larguraArticulacao = 0.4 * raioCabeca;
+    this->alturaBraco = 2 * raioCabeca;
+    this->larguraBraco = 0.6 * raioCabeca;
     this->gThetaQuadril1 = 60; 
     this->gThetaQuadril2 = 100; 
     this->gThetaJoelho1 = 30;
     this->gThetaJoelho2 = 0;
+    this->gThetaBraco = 0;
     this->velocidadePulo = -0.25;
     this->caindo = false;
     this->frameCaminhada = 0;
@@ -59,6 +62,14 @@ void Character::DesenhaPerna(int id) {
     DesenhaCoxa(id);
     glTranslatef(0, this->alturaArticulacao, 0);
     DesenhaCanela(id);
+    glPopMatrix();
+}
+
+void Character::DesenhaBraco() {
+    glPushMatrix();
+    glTranslatef(this->alturaBraco/2.0, 0, 0);
+    glRotatef(this->gThetaBraco, 0, 0, 0);
+    DesenhaRect(this->alturaBraco, this->larguraBraco, 1, 1, 0);
     glPopMatrix();
 }
 
@@ -118,7 +129,9 @@ void Character::Desenha() {
 
     DesenhaCirc(this->raioCabeca, 0, 1, 0);
     this->DesenhaTronco();
-    glTranslatef(0, this->alturaQuadril, 0);
+    glTranslatef(0, this->alturaQuadril/2.0, 0);
+    this->DesenhaBraco();
+    glTranslatef(0, this->alturaQuadril/2.0, 0);
     glRotatef(-90, 0, 0, 1);
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
