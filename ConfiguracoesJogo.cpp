@@ -107,3 +107,7 @@ void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLfloat deltaT) {
 GLfloat ConfiguracoesJogo::getCentroCamera() {
     return this->player.getCentroCamera();
 }
+
+void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
+    this->player.MoveBraco(x, y);
+}

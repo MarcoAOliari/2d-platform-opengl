@@ -167,6 +167,11 @@ void mouse (int button, int state, int x, int y) {
     }
 }
 
+void motion (int x, int y) {
+    config.MoveBracoPlayer(x, y);
+    glutPostRedisplay();
+}
+
 int main(int argc, char *argv[])
 {
     // Initialize openGL with Double buffer and RGB color without transparency.
@@ -185,6 +190,7 @@ int main(int argc, char *argv[])
     glutIdleFunc(idle);
     glutKeyboardUpFunc(keyup);
     glutMouseFunc(mouse);
+    glutPassiveMotionFunc(motion);
     
     init();
  

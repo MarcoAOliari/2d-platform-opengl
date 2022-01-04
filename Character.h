@@ -23,6 +23,7 @@ class Character {
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
     GLfloat larguraBraco;
+    GLfloat gYBraco;
     GLfloat velocidadePulo;
     bool caindo;
     int frameCaminhada;
@@ -52,6 +53,7 @@ public:
     bool ColisaoTeto(Obstacle o, GLfloat dy);
     void EstadoInicialY();
     bool getPlayerCaindo();
+    void MoveBraco(GLfloat x, GLfloat y);
 };
 
 #endif /* CHARACTER_H */

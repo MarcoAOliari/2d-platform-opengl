@@ -1,6 +1,7 @@
 #include "Character.h"
 #include "utils.h"
 #include <iostream>
+#include <math.h>
 #define PI 3.14159264
 
 using namespace std;
@@ -20,6 +21,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->larguraArticulacao = 0.4 * raioCabeca;
     this->alturaBraco = 2 * raioCabeca;
     this->larguraBraco = 0.6 * raioCabeca;
+    this->gYBraco = gY + raioCabeca + alturaQuadril/2.0;
     this->gThetaQuadril1 = 60; 
     this->gThetaQuadril2 = 100; 
     this->gThetaJoelho1 = 30;
@@ -68,6 +70,7 @@ void Character::DesenhaPerna(int id) {
 void Character::DesenhaBraco() {
     glPushMatrix();
     glTranslatef(this->alturaBraco/2.0, 0, 0);
+    cout << "THETA " << gThetaBraco << "\n";
     glRotatef(this->gThetaBraco, 0, 0, 0);
     DesenhaRect(this->alturaBraco, this->larguraBraco, 1, 1, 0);
     glPopMatrix();
@@ -215,4 +218,10 @@ void Character::Cai(GLfloat dy, GLfloat deltaT) {
 
 bool Character::getPlayerCaindo() {
     return this->caindo;
+}
+
+void Character::MoveBraco(GLfloat x, GLfloat y) {
+    GLfloat novoAngulo = atan((y - this->gYBraco)/(x - this->gX));
+    this->gThetaBraco = novoAngulo * 180 / PI;
+    cout << novoAngulo * 180 / PI << "\n";
 }

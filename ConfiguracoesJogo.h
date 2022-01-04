@@ -31,6 +31,7 @@ class ConfiguracoesJogo {
         GLfloat getCentroCamera();
         void PulaPlayer(GLfloat dy, GLdouble deltaT);
         void CaiPlayer(GLfloat dy, GLfloat deltaT);
+        void MoveBracoPlayer(GLfloat x, GLfloat y);
 };
 
 #endif /* CONFIGURACOES_JOGO_H */
