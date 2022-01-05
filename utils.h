@@ -5,6 +5,8 @@
 
 void DesenhaRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
 
+void DesenhaRectEixo(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
+
 void DesenhaCirc(GLint radius, GLfloat R, GLfloat G, GLfloat B);
 
 GLfloat Distancia(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);

@@ -23,7 +23,7 @@ class Character {
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
     GLfloat larguraBraco;
-    GLfloat gYBraco;
+    // GLfloat gYBraco;
     GLfloat velocidadePulo;
     bool caindo;
     int frameCaminhada;

@@ -21,7 +21,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->larguraArticulacao = 0.4 * raioCabeca;
     this->alturaBraco = 2 * raioCabeca;
     this->larguraBraco = 0.6 * raioCabeca;
-    this->gYBraco = gY + raioCabeca + alturaQuadril/2.0;
+    // this->gYBraco = gY + raioCabeca + alturaQuadril/2.0;
     this->gThetaQuadril1 = 60; 
     this->gThetaQuadril2 = 100; 
     this->gThetaJoelho1 = 30;
@@ -69,10 +69,8 @@ void Character::DesenhaPerna(int id) {
 
 void Character::DesenhaBraco() {
     glPushMatrix();
-    glTranslatef(this->alturaBraco/2.0, 0, 0);
-    cout << "THETA " << gThetaBraco << "\n";
-    glRotatef(this->gThetaBraco, 0, 0, 0);
-    DesenhaRect(this->alturaBraco, this->larguraBraco, 1, 1, 0);
+    glRotatef(this->gThetaBraco, 0, 0, 1);
+    DesenhaRectEixo(this->alturaBraco, this->larguraBraco, 1, 1, 0);
     glPopMatrix();
 }
 
@@ -221,7 +219,22 @@ bool Character::getPlayerCaindo() {
 }
 
 void Character::MoveBraco(GLfloat x, GLfloat y) {
-    GLfloat novoAngulo = atan((y - this->gYBraco)/(x - this->gX));
-    this->gThetaBraco = novoAngulo * 180 / PI;
-    cout << novoAngulo * 180 / PI << "\n";
+    GLfloat novoAngulo;
+    GLfloat gYBraco = this->gY + this->raioCabeca + this->alturaQuadril/2.0;
+    
+    if (this->direcao == 'd') {
+        novoAngulo = atan((y - gYBraco)/(x - 250)) * 180 / PI;
+    } else {
+        novoAngulo = -atan((y - gYBraco)/(x - 250)) * 180 / PI;
+    }
+
+    if ((novoAngulo > 45 || novoAngulo < -45) && y <= gYBraco) {
+        this->gThetaBraco = -45;
+    } else if ((novoAngulo > 45 || novoAngulo < -45) && y > gYBraco) {
+        this->gThetaBraco = 45;
+    } else {
+        this->gThetaBraco = novoAngulo;
+    }
+
+    //cout << x << " " << y << " " << gX << " " << gYBraco << " " << gThetaBraco << "\n" ;
 }
