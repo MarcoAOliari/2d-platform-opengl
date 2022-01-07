@@ -21,13 +21,13 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->larguraArticulacao = 0.4 * raioCabeca;
     this->alturaBraco = 2 * raioCabeca;
     this->larguraBraco = 0.6 * raioCabeca;
-    // this->gYBraco = gY + raioCabeca + alturaQuadril/2.0;
     this->gThetaQuadril1 = 60; 
     this->gThetaQuadril2 = 100; 
     this->gThetaJoelho1 = 30;
     this->gThetaJoelho2 = 0;
     this->gThetaBraco = 0;
     this->velocidadePulo = -0.25;
+    this->tiro = NULL;
     this->caindo = false;
     this->frameCaminhada = 0;
     this->direcao = 'd';
@@ -137,6 +137,10 @@ void Character::Desenha() {
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
     glPopMatrix();
+
+    if (this->tiro) {
+        this->tiro->DesenhaTiro();
+    }
 }
 
 GLfloat Character::getCentroCamera() {
@@ -235,6 +239,18 @@ void Character::MoveBraco(GLfloat x, GLfloat y) {
     } else {
         this->gThetaBraco = novoAngulo;
     }
+}
 
-    //cout << x << " " << y << " " << gX << " " << gYBraco << " " << gThetaBraco << "\n" ;
+void Character::Atira(GLdouble velocidadeTiro, GLdouble deltaT) {
+    if (!this->tiro) {
+        this->tiro = new Tiro(this->gX, this->gY + this->raioCabeca + this->alturaQuadril/2.0, this->gThetaBraco, this->larguraBraco, this->alturaBraco, velocidadeTiro);
+    } else {
+        this->MoveTiro(deltaT);
+    }
+}
+
+void Character::MoveTiro(GLdouble deltaT) {
+    if (this->tiro) {
+        this->tiro->Move(deltaT);
+    }
 }

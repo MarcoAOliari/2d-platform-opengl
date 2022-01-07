@@ -23,6 +23,7 @@ const GLint Height = 500;
 ConfiguracoesJogo config("arena_teste.svg");
 
 bool jumping = false;
+bool atirou = false;
 int jumpCounter = 0;
 
 void keyPress(unsigned char key, int x, int y)
@@ -125,6 +126,12 @@ void idle(void)
     } else {
         config.CaiPlayer(INC_KEY, timeDiference);
     }
+
+    if (atirou) {
+        config.AtiraPlayer(2 * INC_KEY, timeDiference);
+    } else {
+        config.MoveTiroPlayer(timeDiference);
+    }
     
     // //Trata o tiro (soh permite um tiro por vez)
     // //Poderia usar uma lista para tratar varios tiros
@@ -160,10 +167,16 @@ void idle(void)
 }
 
 void mouse (int button, int state, int x, int y) {
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
         jumping = true;
     } else {
         jumping = false;
+    }
+
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        atirou = true;
+    } else {
+        atirou = false;
     }
 }
 

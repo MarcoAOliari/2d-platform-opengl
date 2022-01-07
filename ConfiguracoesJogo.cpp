@@ -95,7 +95,7 @@ void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
     }
 }
 
-void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLfloat deltaT) {
+void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLdouble deltaT) {
     
     if (!this->ColisaoChao(this->player, dy, deltaT)) {
         this->player.Cai(dy, deltaT);
@@ -110,4 +110,12 @@ GLfloat ConfiguracoesJogo::getCentroCamera() {
 
 void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
     this->player.MoveBraco(x, y);
+}
+
+void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
+    this->player.Atira(velocidadeTiro, deltaT);
+}
+
+void ConfiguracoesJogo::MoveTiroPlayer(GLdouble deltaT) {
+    this->player.MoveTiro(deltaT);
 }

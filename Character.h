@@ -6,6 +6,7 @@
 #include "Circle.h"
 #include "Rect.h"
 #include "Obstacle.h"
+#include "Tiro.h"
 
 class Character {
     GLfloat gX;
@@ -23,8 +24,8 @@ class Character {
     GLfloat larguraQuadril;
     GLfloat larguraArticulacao;
     GLfloat larguraBraco;
-    // GLfloat gYBraco;
     GLfloat velocidadePulo;
+    Tiro* tiro;
     bool caindo;
     int frameCaminhada;
     char direcao;
@@ -54,6 +55,8 @@ public:
     void EstadoInicialY();
     bool getPlayerCaindo();
     void MoveBraco(GLfloat x, GLfloat y);
+    void Atira(GLdouble velocidadeTiro, GLdouble deltaT);
+    void MoveTiro(GLdouble deltaT);
 };
 
 #endif /* CHARACTER_H */

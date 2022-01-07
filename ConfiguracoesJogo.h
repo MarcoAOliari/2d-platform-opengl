@@ -30,7 +30,9 @@ class ConfiguracoesJogo {
         void ParaDeAndarPlayer();
         GLfloat getCentroCamera();
         void PulaPlayer(GLfloat dy, GLdouble deltaT);
-        void CaiPlayer(GLfloat dy, GLfloat deltaT);
+        void CaiPlayer(GLfloat dy, GLdouble deltaT);
+        void AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT);
+        void MoveTiroPlayer(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
 };
 
