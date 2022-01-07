@@ -55,23 +55,31 @@ void ConfiguracoesJogo::Desenha() {
 
     for (it = this->tiros.begin(); it != this->tiros.end();) {
 
-        if ((*it)->Valido(this->limiteArena)){
+        if ((*it)->Valido(this->limiteArena) && !this->ColisaoTiro((*it))){
             (*it)->DesenhaTiro();
             ++it;
         } else {
             it = this->tiros.erase(it);
         }
     }
-
-    cout << this->tiros.size() << "\n";
 }
 
-bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
+bool ConfiguracoesJogo::ColisaoPlayer(Character c, GLfloat dx, GLfloat dy) {
     for (Obstacle o : this->obstaculos) {
-        if (c.Colisao(o, dx, dy)){ 
+        if (c.ColisaoObstaculo(o, dx, dy)){ 
             return true;
         }
     }
+    return false;
+}
+
+bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
+    for (Obstacle o : this->obstaculos) {
+        if (t->ColisaoObstaculo(o)){
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -94,7 +102,7 @@ bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->Colisao(this->player, dx, 0))
+    if (!this->ColisaoPlayer(this->player, dx, 0))
         this->player.Anda(dx, deltaT, true, direcao);
 }
 

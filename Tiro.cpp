@@ -53,3 +53,27 @@ void Tiro::Move(GLfloat deltaT) {
 bool Tiro::Valido(GLfloat limiteArena) {
     return this->gX < limiteArena + 250 && this->gX > -250 && this->gY < 500 && this->gY > 0;
 }
+
+bool Tiro::ColisaoX(Obstacle o, GLfloat dx) {
+    if (this->gX + this->raioTiro * 2 + dx > o.getgX() - o.getWidth()/2.0 &&
+        this->gX + dx - this->raioTiro * 2 < o.getgX() + o.getWidth()/2.0)
+        return true;
+    else
+        return false;
+}
+
+bool Tiro::ColisaoY(Obstacle o, GLfloat dy) {
+    if (this->gY + dy + this->raioTiro > o.getgY() &&
+        this->gY - this->raioTiro < o.getgY() + o.getHeight())
+        return true;
+    else
+        return false;
+}
+
+bool Tiro::ColisaoObstaculo(Obstacle o) {
+    if (this->direcao == 'e') {
+        return ColisaoX(o, -gVel * cos(gAngulo * PI / 180)) && ColisaoY(o, gVel * sin(gAngulo * PI / 180));
+    } else {
+        return ColisaoX(o, gVel * cos(gAngulo * PI / 180)) && ColisaoY(o, gVel * sin(gAngulo * PI / 180));
+    }
+}

@@ -163,7 +163,7 @@ bool Character::ColisaoX(Obstacle o, GLfloat dx) {
         return false;
 }
 
-bool Character::Colisao(Obstacle o, GLfloat dx, GLfloat dy) {
+bool Character::ColisaoObstaculo(Obstacle o, GLfloat dx, GLfloat dy) {
     return this->ColisaoX(o, dx) && this->ColisaoY(o, dy);
 }
 

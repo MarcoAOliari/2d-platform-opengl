@@ -46,7 +46,7 @@ class Character {
         void Desenha();
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
         void ParaDeAndar();
-        bool Colisao(Obstacle o, GLfloat dx, GLfloat dy);
+        bool ColisaoObstaculo(Obstacle o, GLfloat dx, GLfloat dy);
         GLfloat getCentroCamera();
         void Pula(GLfloat dy, GLfloat deltaT);
         void Cai(GLfloat dy, GLfloat deltaT);

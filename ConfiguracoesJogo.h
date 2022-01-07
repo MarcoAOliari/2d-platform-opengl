@@ -22,9 +22,10 @@ class ConfiguracoesJogo {
     GLfloat limiteArena;
 
     private:
-        bool Colisao(Character c, GLfloat dx, GLfloat dy);
+        bool ColisaoPlayer(Character c, GLfloat dx, GLfloat dy);
         bool ColisaoChao(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT);
+        bool ColisaoTiro(Tiro* t);
 
     public:
         ConfiguracoesJogo(const char *pFilename);

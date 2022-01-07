@@ -3,6 +3,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "Obstacle.h"
+
 class Tiro {
     GLfloat gXInit; 
     GLfloat gYInit; 
@@ -14,11 +16,16 @@ class Tiro {
     GLfloat raioTiro;
     char direcao;     
 
+    private:
+        bool ColisaoX(Obstacle o, GLfloat dx);
+        bool ColisaoY(Obstacle o, GLfloat dy);
+
     public:
         Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro, char direcao);
         void DesenhaTiro();
         void Move(GLfloat deltaT);
         bool Valido(GLfloat limiteArena);
+        bool ColisaoObstaculo(Obstacle o);
 };
 
 #endif /* TIRO_H */
