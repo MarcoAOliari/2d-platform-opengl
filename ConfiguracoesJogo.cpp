@@ -17,6 +17,7 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
     for (Rect r : rects) {
         if (r.getIsArena()) {
             larguraTotal = r.width * 500 / r.height;
+            this->limiteArena = larguraTotal;
             arena = r;
             break;
         }
@@ -50,9 +51,19 @@ void ConfiguracoesJogo::Desenha() {
         c.Desenha();
     }
 
-    for (Tiro* t : this->tiros) {
-        t->DesenhaTiro();
+    vector<Tiro*>::iterator it;
+
+    for (it = this->tiros.begin(); it != this->tiros.end();) {
+
+        if ((*it)->Valido(this->limiteArena)){
+            (*it)->DesenhaTiro();
+            ++it;
+        } else {
+            it = this->tiros.erase(it);
+        }
     }
+
+    cout << this->tiros.size() << "\n";
 }
 
 bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {

@@ -98,14 +98,9 @@ void idle(void)
 {
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, timeDiference;
-    //Pega o tempo que passou do inicio da aplicacao
     currentTime = glutGet(GLUT_ELAPSED_TIME);
-    // Calcula o tempo decorrido desde de a ultima frame.
     timeDiference = currentTime - previousTime;
-    //Atualiza o tempo do ultimo frame ocorrido
     previousTime = currentTime;
-
-    // primeira é útil
 
     double inc = INC_KEYIDLE;
     //Treat keyPress
@@ -134,36 +129,6 @@ void idle(void)
     
     config.MoveTiros(timeDiference);
     
-    // //Trata o tiro (soh permite um tiro por vez)
-    // //Poderia usar uma lista para tratar varios tiros
-    // if(tiro){
-    //     tiro->Move(timeDiference);
-
-    //     //Trata colisao
-    //     if (alvo.Atingido(tiro)){
-    //         alvo.Recria(rand()%500 - 250, 200);
-    //         atingido++;
-    //     }
-
-    //     if (!tiro->Valido()){ 
-    //         delete tiro;
-    //         tiro = NULL;
-    //     }
-    // }
-    
-    
-    // //Control animation
-    // if (animate){
-    //     static int dir = 1;
-    //     if (robo.ObtemX() > (ViewingWidth/2)){
-    //         dir *= -1;
-    //     }
-    //     else if (robo.ObtemX() < -(ViewingWidth/2)){
-    //         dir *= -1;
-    //     }
-    //     robo.MoveEmX(dir*INC_KEYIDLE);
-    // }
-    
     glutPostRedisplay();
 }
 
@@ -188,7 +153,7 @@ int main(int argc, char *argv[])
  
     // Create the window.
     glutInitWindowSize(Width, Height);
-    glutInitWindowPosition(150,50);
+    glutInitWindowPosition(150, 50);
     glutCreateWindow("Trabalho 2D");
  
     // Define callbacks.

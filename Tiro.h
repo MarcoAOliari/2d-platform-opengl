@@ -18,6 +18,7 @@ class Tiro {
         Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro, char direcao);
         void DesenhaTiro();
         void Move(GLfloat deltaT);
+        bool Valido(GLfloat limiteArena);
 };
 
 #endif /* TIRO_H */

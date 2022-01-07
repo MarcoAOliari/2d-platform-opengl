@@ -19,6 +19,7 @@ class ConfiguracoesJogo {
     vector<Character> inimigos;
     vector<Obstacle> obstaculos;
     vector<Tiro*> tiros;
+    GLfloat limiteArena;
 
     private:
         bool Colisao(Character c, GLfloat dx, GLfloat dy);

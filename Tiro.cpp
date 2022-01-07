@@ -44,8 +44,12 @@ void Tiro::Move(GLfloat deltaT) {
     } else if (direcao == 'd') {
         this->gX += deltaT * gVel * cos(gAngulo * PI / 180);
     }
-    
+
     this->gY += deltaT * gVel * sin(gAngulo * PI / 180);
     glTranslatef(gX, gY, 0);
     glPopMatrix();
+}
+
+bool Tiro::Valido(GLfloat limiteArena) {
+    return this->gX < limiteArena + 250 && this->gX > -250 && this->gY < 500 && this->gY > 0;
 }
