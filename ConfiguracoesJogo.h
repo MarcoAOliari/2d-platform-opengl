@@ -10,6 +10,7 @@
 #include "Character.h"
 #include "Rect.h"
 #include "Obstacle.h"
+#include "Tiro.h"
 
 using std::vector;
 
@@ -17,6 +18,7 @@ class ConfiguracoesJogo {
     Character player;
     vector<Character> inimigos;
     vector<Obstacle> obstaculos;
+    vector<Tiro*> tiros;
 
     private:
         bool Colisao(Character c, GLfloat dx, GLfloat dy);
@@ -32,7 +34,7 @@ class ConfiguracoesJogo {
         void PulaPlayer(GLfloat dy, GLdouble deltaT);
         void CaiPlayer(GLfloat dy, GLdouble deltaT);
         void AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT);
-        void MoveTiroPlayer(GLdouble deltaT);
+        void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
 };
 

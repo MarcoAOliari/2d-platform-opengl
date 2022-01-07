@@ -11,10 +11,11 @@ class Tiro {
     GLfloat alturaBraco;
     GLfloat gAngulo;
     GLfloat gVel;
-    GLfloat raioTiro;        
+    GLfloat raioTiro;
+    char direcao;     
 
     public:
-        Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro);
+        Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro, char direcao);
         void DesenhaTiro();
         void Move(GLfloat deltaT);
 };

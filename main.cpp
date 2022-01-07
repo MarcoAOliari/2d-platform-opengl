@@ -129,9 +129,10 @@ void idle(void)
 
     if (atirou) {
         config.AtiraPlayer(2 * INC_KEY, timeDiference);
-    } else {
-        config.MoveTiroPlayer(timeDiference);
-    }
+        atirou = false;
+    } 
+    
+    config.MoveTiros(timeDiference);
     
     // //Trata o tiro (soh permite um tiro por vez)
     // //Poderia usar uma lista para tratar varios tiros
@@ -167,21 +168,13 @@ void idle(void)
 }
 
 void mouse (int button, int state, int x, int y) {
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-        jumping = true;
-    } else {
-        jumping = false;
-    }
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) jumping = true;
+    else jumping = false;
 
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        atirou = true;
-    } else {
-        atirou = false;
-    }
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !atirou) atirou = true;
 }
 
 void motion (int x, int y) {
-    //cout << x << " " << y << "\n";
     config.MoveBracoPlayer(x, y);
     glutPostRedisplay();
 }

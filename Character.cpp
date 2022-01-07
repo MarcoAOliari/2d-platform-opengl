@@ -241,16 +241,6 @@ void Character::MoveBraco(GLfloat x, GLfloat y) {
     }
 }
 
-void Character::Atira(GLdouble velocidadeTiro, GLdouble deltaT) {
-    if (!this->tiro) {
-        this->tiro = new Tiro(this->gX, this->gY + this->raioCabeca + this->alturaQuadril/2.0, this->gThetaBraco, this->larguraBraco, this->alturaBraco, velocidadeTiro);
-    } else {
-        this->MoveTiro(deltaT);
-    }
-}
-
-void Character::MoveTiro(GLdouble deltaT) {
-    if (this->tiro) {
-        this->tiro->Move(deltaT);
-    }
+Tiro* Character::CriaTiro(GLdouble velocidadeTiro) {
+    return new Tiro(this->gX, this->gY + this->raioCabeca + this->alturaQuadril/2.0, this->gThetaBraco, this->larguraBraco, this->alturaBraco, velocidadeTiro, this->direcao);
 }

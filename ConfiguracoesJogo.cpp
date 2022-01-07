@@ -49,6 +49,10 @@ void ConfiguracoesJogo::Desenha() {
     for (Character c : this->inimigos) {
         c.Desenha();
     }
+
+    for (Tiro* t : this->tiros) {
+        t->DesenhaTiro();
+    }
 }
 
 bool ConfiguracoesJogo::Colisao(Character c, GLfloat dx, GLfloat dy) {
@@ -113,9 +117,11 @@ void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
 }
 
 void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
-    this->player.Atira(velocidadeTiro, deltaT);
+    this->tiros.push_back(this->player.CriaTiro(velocidadeTiro));
 }
 
-void ConfiguracoesJogo::MoveTiroPlayer(GLdouble deltaT) {
-    this->player.MoveTiro(deltaT);
+void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
+    for (Tiro* t : this->tiros) {
+        t->Move(deltaT);
+    }
 }
