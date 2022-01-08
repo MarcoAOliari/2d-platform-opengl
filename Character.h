@@ -56,6 +56,7 @@ class Character {
         bool getPlayerCaindo();
         void MoveBraco(GLfloat x, GLfloat y);
         Tiro* CriaTiro(GLdouble velocidadeTiro);
+        bool ColisaoTiro(Tiro* t);
 };
 
 #endif /* CHARACTER_H */

@@ -20,6 +20,35 @@ Tiro::Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat a
     this->direcao = direcao;
 }
 
+GLfloat Tiro::getX() {
+    return this->gX;
+}
+
+GLfloat Tiro::getY() {
+    return this->gY;
+}
+
+GLfloat Tiro::getXInit() {
+    return this->gXInit;
+}
+
+GLfloat Tiro::getYInit() {
+    return this->gYInit;
+}
+
+GLfloat Tiro::getRaioTiro() {
+    return this->raioTiro;
+}
+
+GLfloat Tiro::getDx() {
+    if (this->direcao == 'd') return gVel * cos(gAngulo * PI / 180);
+    else return -gVel * cos(gAngulo * PI / 180);
+}
+
+GLfloat Tiro::getDy() {
+    return gVel * sin(gAngulo * PI / 180);
+}
+
 void Tiro::DesenhaTiro()
 {
     glPushMatrix();

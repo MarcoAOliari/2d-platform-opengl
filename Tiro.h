@@ -22,6 +22,13 @@ class Tiro {
 
     public:
         Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro, char direcao);
+        GLfloat getX();
+        GLfloat getY();
+        GLfloat getRaioTiro();
+        GLfloat getDx();
+        GLfloat getDy();
+        GLfloat getXInit();
+        GLfloat getYInit();
         void DesenhaTiro();
         void Move(GLfloat deltaT);
         bool Valido(GLfloat limiteArena);

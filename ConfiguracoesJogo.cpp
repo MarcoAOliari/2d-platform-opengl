@@ -53,6 +53,7 @@ void ConfiguracoesJogo::Desenha() {
 
     vector<Tiro*>::iterator it;
 
+    // passar pra idle e acrescentar deltaT
     for (it = this->tiros.begin(); it != this->tiros.end();) {
 
         if ((*it)->Valido(this->limiteArena) && !this->ColisaoTiro((*it))){
@@ -78,6 +79,16 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
         if (t->ColisaoObstaculo(o)){
             return true;
         }
+    }
+
+    for (Character c : this->inimigos) {
+        if (c.ColisaoTiro(t)) {
+            return true;
+        }
+    }
+
+    if (this->player.ColisaoTiro(t)) {
+        return true;
     }
 
     return false;

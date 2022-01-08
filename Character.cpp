@@ -244,3 +244,24 @@ void Character::MoveBraco(GLfloat x, GLfloat y) {
 Tiro* Character::CriaTiro(GLdouble velocidadeTiro) {
     return new Tiro(this->gX, this->gY + this->raioCabeca + this->alturaQuadril/2.0, this->gThetaBraco, this->larguraBraco, this->alturaBraco, velocidadeTiro, this->direcao);
 }
+
+bool Character::ColisaoTiro(Tiro* t) {
+    if (!(this->gX + this->alturaBraco >= t->getXInit() && this->gX - this->alturaBraco <= t->getXInit() &&
+        this->gY - this->raioCabeca < t->getYInit() && this->gY + (this->alturaTotal - this->raioCabeca) > t->getYInit())) {
+
+        if (t->getX() + t->getRaioTiro() + t->getDx() > this->gX - this->alturaBraco &&
+            t->getX() - t->getRaioTiro() + t->getDx() < this->gX + this->alturaBraco &&
+            t->getY() + t->getRaioTiro() + t->getDy() > this->gY - this->raioCabeca &&
+            t->getY() - t->getRaioTiro() + t->getDy() < this->gY + (this->alturaTotal - this->raioCabeca)) {
+            
+            return true;
+
+            // cout << (this->gX + this->alturaBraco <= t->getXInit()) << " " << (this->gX - this->alturaBraco >= t->getXInit()) << " "
+            // << (this->gY - this->raioCabeca < t->getYInit()) << " " << (this->gY + (this->alturaTotal - this->raioCabeca) > t->getYInit()) << " " 
+            // << t->getXInit() << " " << this->gX << "\n";
+        }
+
+    }
+
+    return false;
+}
