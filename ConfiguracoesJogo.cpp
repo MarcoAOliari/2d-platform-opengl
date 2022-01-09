@@ -51,18 +51,10 @@ void ConfiguracoesJogo::Desenha() {
         c.Desenha();
     }
 
-    vector<Tiro*>::iterator it;
-
-    // passar pra idle e acrescentar deltaT
-    for (it = this->tiros.begin(); it != this->tiros.end();) {
-
-        if ((*it)->Valido(this->limiteArena) && !this->ColisaoTiro((*it))){
-            (*it)->DesenhaTiro();
-            ++it;
-        } else {
-            it = this->tiros.erase(it);
-        }
+    for (Tiro* t : this->tiros) {
+        t->DesenhaTiro();
     }
+
 }
 
 bool ConfiguracoesJogo::ColisaoPlayer(Character c, GLfloat dx, GLfloat dy) {
@@ -81,10 +73,13 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
         }
     }
 
-    for (Character c : this->inimigos) {
-        if (c.ColisaoTiro(t)) {
+    vector<Character>::iterator it;
+
+    for (it = this->inimigos.begin(); it != this->inimigos.end(); ++it) {
+        if ((*it).ColisaoTiro(t)){
+            it = this->inimigos.erase(it);
             return true;
-        }
+        } 
     }
 
     if (this->player.ColisaoTiro(t)) {
@@ -151,7 +146,15 @@ void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
-    for (Tiro* t : this->tiros) {
-        t->Move(deltaT);
+    vector<Tiro*>::iterator it;
+
+    for (it = this->tiros.begin(); it != this->tiros.end();) {
+
+        if ((*it)->Valido(this->limiteArena) && !this->ColisaoTiro((*it))){
+            (*it)->Move(deltaT);
+            ++it;
+        } else {
+            it = this->tiros.erase(it);
+        }
     }
 }

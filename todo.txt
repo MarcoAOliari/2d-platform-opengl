@@ -1,0 +1,4 @@
+- colisões com deltaT;
+- animacao com deltaT;
+- colisão bem estabelecida;
+- IA
