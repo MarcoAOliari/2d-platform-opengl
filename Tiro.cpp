@@ -9,8 +9,14 @@
 using namespace std;
 
 Tiro::Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat alturaBraco, GLfloat velocidadeTiro, char direcao){
-    this->gXInit = x;
-    this->gX = x;
+    if (direcao == 'd') {
+        this->gXInit = x + alturaBraco * cos(angulo * PI / 180);
+        this->gX = x + alturaBraco * cos(angulo * PI / 180);
+    } else {
+        this->gXInit = x - alturaBraco * cos(angulo * PI / 180);
+        this->gX = x - alturaBraco * cos(angulo * PI / 180);
+    }
+
     this->gYInit = y;
     this->gY = y;
     this->alturaBraco = alturaBraco;
@@ -21,11 +27,15 @@ Tiro::Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat a
 }
 
 GLfloat Tiro::getX() {
-    return this->gX;
+    if (this->direcao == 'd') {
+        return this->gX + this->alturaBraco * cos(this->gAngulo * PI / 180);
+    } else {
+        return this->gX - this->alturaBraco * cos(this->gAngulo * PI / 180);
+    }
 }
 
 GLfloat Tiro::getY() {
-    return this->gY;
+    return this->gY + this->alturaBraco * sin(this->gAngulo * PI / 180);;
 }
 
 GLfloat Tiro::getXInit() {
@@ -41,12 +51,12 @@ GLfloat Tiro::getRaioTiro() {
 }
 
 GLfloat Tiro::getDx() {
-    if (this->direcao == 'd') return gVel * cos(gAngulo * PI / 180);
-    else return -gVel * cos(gAngulo * PI / 180);
+    if (this->direcao == 'd') return this->gVel * cos(this->gAngulo * PI / 180);
+    else return -this->gVel * cos(this->gAngulo * PI / 180);
 }
 
 GLfloat Tiro::getDy() {
-    return gVel * sin(gAngulo * PI / 180);
+    return this->gVel * sin(this->gAngulo * PI / 180);
 }
 
 void Tiro::DesenhaTiro()
@@ -54,12 +64,12 @@ void Tiro::DesenhaTiro()
     glPushMatrix();
     glTranslatef(this->gX, this->gY, 0);
 
-    if (direcao == 'e') {
+    if (this->direcao == 'e') {
         glScalef(-1, 1, 1);
     }
 
     glRotatef(this->gAngulo, 0, 0, 1);
-    glTranslatef(this->alturaBraco, 0, 0);
+    // glTranslatef(this->alturaBraco, 0, 0);
     DesenhaCirc(this->raioTiro, 0.5, 0.5, 1);
     glPopMatrix();
 }

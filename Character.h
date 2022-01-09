@@ -25,7 +25,7 @@ class Character {
     GLfloat larguraArticulacao;
     GLfloat larguraBraco;
     GLfloat velocidadePulo;
-    Tiro* tiro;
+    GLfloat larguraColisao;
     bool caindo;
     int frameCaminhada;
     char direcao;

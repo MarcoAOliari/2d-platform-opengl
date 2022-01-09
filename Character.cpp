@@ -27,7 +27,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->gThetaJoelho2 = 0;
     this->gThetaBraco = 0;
     this->velocidadePulo = -0.25;
-    this->tiro = NULL;
+    this->larguraColisao = 2.2 * raioCabeca;
     this->caindo = false;
     this->frameCaminhada = 0;
     this->direcao = 'd';
@@ -137,10 +137,6 @@ void Character::Desenha() {
     this->DesenhaPerna(1);
     this->DesenhaPerna(2);
     glPopMatrix();
-
-    if (this->tiro) {
-        this->tiro->DesenhaTiro();
-    }
 }
 
 GLfloat Character::getCentroCamera() {
@@ -149,15 +145,15 @@ GLfloat Character::getCentroCamera() {
 
 bool Character::ColisaoY(Obstacle o, GLfloat dy) {
     if (this->gY + dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
-        this->gY - this->raioCabeca < o.getgY() + o.getHeight())
+        this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight())
         return true;
     else
         return false;
 }
 
 bool Character::ColisaoX(Obstacle o, GLfloat dx) {
-    if (this->gX + dx + this->raioCabeca * 2 > o.getgX() - o.getWidth()/2.0 &&
-        this->gX + dx - this->raioCabeca * 2 < o.getgX() + o.getWidth()/2.0)
+    if (this->gX + dx + this->larguraColisao > o.getgX() - o.getWidth()/2.0 &&
+        this->gX + dx - this->larguraColisao < o.getgX() + o.getWidth()/2.0)
         return true;
     else
         return false;
@@ -246,22 +242,11 @@ Tiro* Character::CriaTiro(GLdouble velocidadeTiro) {
 }
 
 bool Character::ColisaoTiro(Tiro* t) {
-    // margem de erro para não colidir com próprio atirador
-    if (!(this->gX + this->alturaBraco * 1.5 >= t->getXInit() && this->gX - this->alturaBraco * 1.5 <= t->getXInit() &&
-        this->gY - this->raioCabeca - 5 < t->getYInit() && this->gY + (this->alturaTotal - this->raioCabeca) + 5 > t->getYInit())) {
-
-        if (t->getX() + t->getRaioTiro() + t->getDx() > this->gX - this->alturaBraco &&
-            t->getX() - t->getRaioTiro() + t->getDx() < this->gX + this->alturaBraco &&
-            t->getY() + t->getRaioTiro() + t->getDy() > this->gY - this->raioCabeca &&
-            t->getY() - t->getRaioTiro() + t->getDy() < this->gY + (this->alturaTotal - this->raioCabeca)) {
-            
-            cout << (this->gX + this->alturaBraco >= t->getXInit()) << " " << (this->gX - this->alturaBraco <= t->getXInit() - 0.5) << " "
-            << (this->gY - this->raioCabeca < t->getYInit()) << " " << (this->gY + (this->alturaTotal - this->raioCabeca) > t->getYInit()) << " " 
-            << this->gX - this->alturaBraco - 1 <<  " " << t->getXInit() << "\n";
-            return true;
-
-        }
-
+    if (t->getX() + t->getRaioTiro() + t->getDx() > this->gX - this->larguraQuadril/2.0 &&
+        t->getX() - t->getRaioTiro() + t->getDx() < this->gX + this->larguraQuadril/2.0 &&
+        t->getY() + t->getRaioTiro() + t->getDy() > this->gY - this->raioCabeca &&
+        t->getY() - t->getRaioTiro() + t->getDy() < this->gY + (this->alturaTotal - this->raioCabeca)) {
+        return true;
     }
 
     return false;
