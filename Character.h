@@ -51,6 +51,8 @@ class Character {
         void Pula(GLfloat dy, GLfloat deltaT);
         void Cai(GLfloat dy, GLfloat deltaT);
         bool ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT);
+        bool ColisaoXCharacter(Character c, GLfloat dx);
+        bool ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTeto(Obstacle o, GLfloat dy);
         void EstadoInicialY();
         bool getPlayerCaindo();

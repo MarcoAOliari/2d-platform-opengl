@@ -89,6 +89,17 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
     return false;
 }
 
+bool ConfiguracoesJogo::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {
+    for (Character c2 : this->inimigos) {
+        if(c.ColisaoCabeca(c2, dy, deltaT)) {
+            cout << "Aqui\n";
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool ConfiguracoesJogo::ColisaoChao(Character c, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
         if (c.ColisaoChao(o, dy, deltaT)){ 
@@ -126,7 +137,7 @@ void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
 
 void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLdouble deltaT) {
     
-    if (!this->ColisaoChao(this->player, dy, deltaT)) {
+    if (!this->ColisaoChao(this->player, dy, deltaT) && !this->ColisaoCabeca(this->player, dy, deltaT)) {
         this->player.Cai(dy, deltaT);
     } else {
         this->player.EstadoInicialY();
