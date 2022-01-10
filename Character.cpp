@@ -37,6 +37,14 @@ GLfloat Character::getYPe() {
     return this->gY + (this->alturaTotal - this->raioCabeca);
 }
 
+GLfloat Character::getDirecao() {
+    return this->direcao;
+}
+
+void Character::alteraDirecao() {
+    this->direcao = this->direcao == 'd' ? 'e' : 'd';
+}
+
 void Character::DesenhaTronco() {
     glTranslatef(0, this->raioCabeca, 0);
     DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0, 1, 0);
@@ -86,30 +94,30 @@ void Character::PoseParado() {
 }
 
 void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
-    this->gX += dx * deltaT;
+    gX += dx * deltaT;
     this->direcao = direcao;
 
-    this->frameCaminhada = (this->frameCaminhada + 1) % 1000;
+    this->frameCaminhada = (this->frameCaminhada + 1) % 50;
 
-    if (this->frameCaminhada < 200) {
+    if (this->frameCaminhada < 10) {
         this->PoseParado();
 
-    } else if (this->frameCaminhada < 400){
+    } else if (this->frameCaminhada < 20){
         this->gThetaQuadril1 = 70; 
         this->gThetaQuadril2 = 97; 
         this->gThetaJoelho1 = 25;
         this->gThetaJoelho2 = 15;
-    } else if (this->frameCaminhada < 600) {
+    } else if (this->frameCaminhada < 30) {
         this->gThetaQuadril1 = 80; 
         this->gThetaQuadril2 = 95; 
         this->gThetaJoelho1 = 20;
         this->gThetaJoelho2 = 25;
-    }  else if (this->frameCaminhada < 800) {
+    }  else if (this->frameCaminhada < 40) {
         this->gThetaQuadril1 = 86; 
         this->gThetaQuadril2 = 80; 
         this->gThetaJoelho1 = 10;
         this->gThetaJoelho2 = 45;
-    } else if (this->frameCaminhada < 1000) {
+    } else if (this->frameCaminhada < 50) {
         this->gThetaQuadril1 = 92; 
         this->gThetaQuadril2 = 70; 
         this->gThetaJoelho1 = 5;
@@ -147,7 +155,7 @@ GLfloat Character::getCentroCamera() {
     return this->gX;
 }
 
-bool Character::ColisaoY(Obstacle o, GLfloat dy) {
+bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy) {
     if (this->gY + dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
         this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight())
         return true;
@@ -155,7 +163,7 @@ bool Character::ColisaoY(Obstacle o, GLfloat dy) {
         return false;
 }
 
-bool Character::ColisaoX(Obstacle o, GLfloat dx) {
+bool Character::ColisaoXObstacle(Obstacle o, GLfloat dx) {
     if (this->gX + dx + this->larguraColisao > o.getgX() - o.getWidth()/2.0 &&
         this->gX + dx - this->larguraColisao < o.getgX() + o.getWidth()/2.0)
         return true;
@@ -163,8 +171,8 @@ bool Character::ColisaoX(Obstacle o, GLfloat dx) {
         return false;
 }
 
-bool Character::ColisaoObstaculo(Obstacle o, GLfloat dx, GLfloat dy) {
-    return this->ColisaoX(o, dx) && this->ColisaoY(o, dy);
+bool Character::ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy) {
+    return this->ColisaoXObstacle(o, dx) && this->ColisaoYObstacle(o, dy);
 }
 
 void Character::Pula(GLfloat dy, GLfloat deltaT) {
@@ -177,9 +185,10 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
 }
 
 bool Character::ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT) {
-    if (this->gY + (this->alturaTotal - this->raioCabeca) + 5 * dy * deltaT > o.getgY() && 
+    if (this->gY + (this->alturaTotal - this->raioCabeca) + dy * deltaT > o.getgY() && 
         this->gY + (this->alturaTotal - this->raioCabeca) < o.getgY() &&
-        this->ColisaoX(o, 0)) {
+        this->ColisaoXObstacle(o, 0)) {
+        cout << "COLIDIU\n";
         return true;
     } else {
         return false;
@@ -221,7 +230,7 @@ bool Character::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {
 bool Character::ColisaoTeto(Obstacle o, GLfloat dy) {
     if (this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight() &&
         this->gY + (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getHeight() &&
-        this->ColisaoX(o, 0)) {
+        this->ColisaoXObstacle(o, 0)) {
         return true;
     } else {
         return false;
@@ -246,6 +255,7 @@ void Character::Cai(GLfloat dy, GLfloat deltaT) {
         }
     } else {
         this->caindo = false;
+        this->gY = 500 - (this->alturaTotal - this->raioCabeca);
         this->velocidadePulo = -0.25;
     }
 }

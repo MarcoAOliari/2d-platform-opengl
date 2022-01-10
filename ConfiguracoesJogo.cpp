@@ -44,13 +44,11 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
 
 }
 
-void ConfiguracoesJogo::MovimentacaoInimigos(GLfloat dy) {
+void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
     bool colidiu = false;
     for (Character c : this->inimigos) {
         this->CaiInimigo(c, dy);
     }
-
-    cout << this->inimigos.size() << " " << this->plataformaInimigos.size() << "\n"; 
 }
 
 void ConfiguracoesJogo::CaiInimigo(Character c, GLfloat dy) {
@@ -92,7 +90,7 @@ void ConfiguracoesJogo::Desenha() {
 
 bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoObstaculo(o, dx, dy)){ 
+        if (c.ColisaoObstacle(o, dx, dy)){ 
             return true;
         }
     }
@@ -220,6 +218,29 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
     }
 }
 
+void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT) {
+    if (ColisaoCharacterObstaculo(*c, dx, 0)) {
+        c->alteraDirecao();
+    }
+
+    char dir = c->getDirecao();
+
+    // cout << dir << " ";
+
+    if (dir == 'd') {
+        c->Anda(dx, deltaT, false, dir);
+    } else if (dir == 'e') {
+        c->Anda(-dx, deltaT, false, dir);
+    }
+
+}
+
 void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
+    for (int i = 0; i < this->inimigos.size(); i++) {
+        AndaInimigo(&this->inimigos[i], dx, deltaT);
+    }
+    // for (auto &c : this->inimigos) {
+    //     AndaInimigo(c, dx, deltaT);
+    // }
 
 }

@@ -31,10 +31,11 @@ class ConfiguracoesJogo {
         bool ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTiro(Tiro* t);
         void CaiInimigo(Character c, GLfloat dy);
+        void AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT);
 
     public:
         ConfiguracoesJogo(const char *pFilename);
-        void MovimentacaoInimigos(GLfloat dy);
+        void PlataformaInimigos(GLfloat dy);
         void Desenha();
         void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();

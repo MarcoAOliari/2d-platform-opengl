@@ -12,6 +12,7 @@ using namespace std;
 
 #define INC_KEY 0.08
 #define INC_KEYIDLE 0.01
+#define FPS 60.0
 
 int keyStatus[256];
 
@@ -39,13 +40,13 @@ void keyPress(unsigned char key, int x, int y)
         case 27 :
              exit(0);
     }
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 void keyup(unsigned char key, int x, int y)
 {
     keyStatus[(int)(key)] = 0;
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 void ResetKeyStatus()
@@ -92,7 +93,7 @@ void init(void)
       
 }
 
-void idle(void)
+void idle(int value)
 {
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, timeDiference;
@@ -101,7 +102,7 @@ void idle(void)
     previousTime = currentTime;
 
     double inc = INC_KEYIDLE;
-    //Treat keyPress
+
     if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
         if (keyStatus[(int)('a')]) {
             config.AndaPlayer(-INC_KEY, timeDiference, 'e');
@@ -126,8 +127,12 @@ void idle(void)
     } 
     
     config.MoveTiros(timeDiference);
+
+    config.MoveInimigos(timeDiference, INC_KEY);
     
     glutPostRedisplay();
+
+    glutTimerFunc(1000.0/FPS, idle, 0);
 }
 
 void mouse (int button, int state, int x, int y) {
@@ -139,12 +144,12 @@ void mouse (int button, int state, int x, int y) {
 
 void motion (int x, int y) {
     config.MoveBracoPlayer(x, y);
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 int main(int argc, char *argv[])
 {
-    config.MovimentacaoInimigos(INC_KEY);
+    config.PlataformaInimigos(INC_KEY);
     // Initialize openGL with Double buffer and RGB color without transparency.
     // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
     glutInit(&argc, argv);
@@ -158,7 +163,8 @@ int main(int argc, char *argv[])
     // Define callbacks.
     glutDisplayFunc(renderScene);
     glutKeyboardFunc(keyPress);
-    glutIdleFunc(idle);
+    // glutIdleFunc(idle);
+    glutTimerFunc(1000.0/FPS, idle, 0);
     glutKeyboardUpFunc(keyup);
     glutMouseFunc(mouse);
     glutPassiveMotionFunc(motion);
