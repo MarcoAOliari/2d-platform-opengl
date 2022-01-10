@@ -11,6 +11,13 @@ Obstacle::Obstacle(Rect r, Rect arena, float larguraTotal) {
     this->gY = 500 * (r.y - arena.y) / arena.height;
 }
 
+Obstacle::Obstacle(float larguraTotal) {
+    this->height = 500;
+    this->width = larguraTotal;
+    this->gX = larguraTotal / 2.0;
+    this->gY = 500;
+}
+
 void Obstacle::Desenha() {
     glPushMatrix();
     glTranslatef(this->gX, this->gY, 0);

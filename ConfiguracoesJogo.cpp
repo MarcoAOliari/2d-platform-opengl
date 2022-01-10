@@ -38,6 +38,39 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
             this->obstaculos.push_back(o);
         }
     }
+
+    Obstacle chao(larguraTotal);
+    this->chao = chao;
+
+}
+
+void ConfiguracoesJogo::MovimentacaoInimigos(GLfloat dy) {
+    bool colidiu = false;
+    for (Character c : this->inimigos) {
+        this->CaiInimigo(c, dy);
+    }
+
+    cout << this->inimigos.size() << " " << this->plataformaInimigos.size() << "\n"; 
+}
+
+void ConfiguracoesJogo::CaiInimigo(Character c, GLfloat dy) {
+    bool plataforma = false;
+
+    while (!plataforma) {
+        for (Obstacle o : this->obstaculos) {
+            if (c.ColisaoChao(o, dy, 1)) {
+                plataforma = true;
+                this->plataformaInimigos.push_back(o);
+                break;
+            } else if (c.getYPe() >= 500 - dy) {
+                plataforma = true;
+                this->plataformaInimigos.push_back(this->chao);
+                break;
+            }
+        }
+        c.Cai(dy, 1);
+    }
+
 }
 
 void ConfiguracoesJogo::Desenha() {
@@ -74,7 +107,6 @@ bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character c, GLfloat dx, GLflo
     }
 
     if (c.ColisaoCharacter(this->player, dx, dy)) {
-        cout << "DEU RUIM\n";
         return true;
     }
 
@@ -186,4 +218,8 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
             it = this->tiros.erase(it);
         }
     }
+}
+
+void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
+
 }

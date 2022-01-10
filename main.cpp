@@ -13,10 +13,8 @@ using namespace std;
 #define INC_KEY 0.08
 #define INC_KEYIDLE 0.01
 
-//Key status
 int keyStatus[256];
 
-// Window dimensions
 const GLint Width = 500;
 const GLint Height = 500;
 
@@ -146,6 +144,7 @@ void motion (int x, int y) {
 
 int main(int argc, char *argv[])
 {
+    config.MovimentacaoInimigos(INC_KEY);
     // Initialize openGL with Double buffer and RGB color without transparency.
     // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
     glutInit(&argc, argv);

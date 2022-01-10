@@ -7,10 +7,10 @@
 using namespace std;
 
 Character::Character(Circle c, Rect arena, float larguraTotal) {
-    this->gX = larguraTotal * (c.cx - arena.x) / arena.width /*+ 100 */;
+    this->gX = larguraTotal * (c.cx - arena.x) / arena.width;
 
-    float y = 500 * (c.cy - arena.y) / arena.height /* -  100 */;
-    float r = 500 * c.r / arena.height /* + 50 */;
+    float y = 500 * (c.cy - arena.y) / arena.height;
+    float r = 500 * c.r / arena.height;
 
     this->gY = y - 0.75 * r;
     this->raioCabeca = 0.25 * r;
@@ -31,6 +31,10 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->caindo = false;
     this->frameCaminhada = 0;
     this->direcao = 'd';
+}
+
+GLfloat Character::getYPe() {
+    return this->gY + (this->alturaTotal - this->raioCabeca);
 }
 
 void Character::DesenhaTronco() {

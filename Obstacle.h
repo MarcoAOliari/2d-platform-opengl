@@ -13,6 +13,8 @@ class Obstacle {
 
 public:
     Obstacle(Rect r, Rect arena, float larguraTotal);
+    Obstacle(float larguraTotal);
+    Obstacle(){};
 
     void Desenha();
     GLfloat getgX();

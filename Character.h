@@ -45,6 +45,7 @@ class Character {
     public:
         Character(){};
         Character(Circle c, Rect arena, float larguraTotal);
+        GLfloat getYPe();
         void Desenha();
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
         void ParaDeAndar();

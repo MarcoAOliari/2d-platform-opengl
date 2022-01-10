@@ -19,6 +19,8 @@ class ConfiguracoesJogo {
     vector<Character> inimigos;
     vector<Obstacle> obstaculos;
     vector<Tiro*> tiros;
+    vector<Obstacle> plataformaInimigos;
+    Obstacle chao;
     GLfloat limiteArena;
 
     private:
@@ -28,9 +30,11 @@ class ConfiguracoesJogo {
         bool ColisaoChao(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTiro(Tiro* t);
+        void CaiInimigo(Character c, GLfloat dy);
 
     public:
         ConfiguracoesJogo(const char *pFilename);
+        void MovimentacaoInimigos(GLfloat dy);
         void Desenha();
         void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();
@@ -40,6 +44,7 @@ class ConfiguracoesJogo {
         void AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT);
         void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
+        void MoveInimigos(GLdouble deltaT, GLfloat dx);
 };
 
 #endif /* CONFIGURACOES_JOGO_H */
