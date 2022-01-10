@@ -57,12 +57,27 @@ void ConfiguracoesJogo::Desenha() {
 
 }
 
-bool ConfiguracoesJogo::ColisaoPlayer(Character c, GLfloat dx, GLfloat dy) {
+bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy) {
     for (Obstacle o : this->obstaculos) {
         if (c.ColisaoObstaculo(o, dx, dy)){ 
             return true;
         }
     }
+    return false;
+}
+
+bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy) {
+    for (Character c2 : this->inimigos) {
+        if (c.ColisaoCharacter(c2, dx, dy)) {
+            return true;
+        }
+    }
+
+    if (c.ColisaoCharacter(this->player, dx, dy)) {
+        cout << "DEU RUIM\n";
+        return true;
+    }
+
     return false;
 }
 
@@ -92,9 +107,12 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
 bool ConfiguracoesJogo::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {
     for (Character c2 : this->inimigos) {
         if(c.ColisaoCabeca(c2, dy, deltaT)) {
-            cout << "Aqui\n";
             return true;
         }
+    }
+
+    if (c.ColisaoCabeca(this->player, dy, deltaT)) {
+        return true;
     }
 
     return false;
@@ -119,7 +137,7 @@ bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->ColisaoPlayer(this->player, dx, 0))
+    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0) && !this->ColisaoCharacterCharacter(this->player, dx, 0))
         this->player.Anda(dx, deltaT, true, direcao);
 }
 

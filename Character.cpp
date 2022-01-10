@@ -172,7 +172,6 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
     }
 }
 
-// colisão chão obstáculo
 bool Character::ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + 5 * dy * deltaT > o.getgY() && 
         this->gY + (this->alturaTotal - this->raioCabeca) < o.getgY() &&
@@ -184,11 +183,25 @@ bool Character::ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT) {
 }
 
 bool Character::ColisaoXCharacter(Character c, GLfloat dx) {
-    if (this->gX + dx + this->larguraColisao > c.gX - c.larguraColisao/2.0 &&
+    if (this->gX != c.gX && this->gY != c.gY &&
+        this->gX + dx + this->larguraColisao > c.gX - c.larguraColisao/2.0 &&
         this->gX + dx - this->larguraColisao < c.gX + c.larguraColisao/2.0)
         return true;
     else
         return false;
+}
+
+bool Character::ColisaoYCharacter(Character c, GLfloat dy) {
+    if (this->gX != c.gX && this->gY != c.gY &&
+        this->gY + dy + (this->alturaTotal - this->raioCabeca) > c.gY - c.raioCabeca &&
+        this->gY - this->raioCabeca + dy < c.gY + (c.alturaTotal - c.raioCabeca))
+        return true;
+    else
+        return false;
+}
+
+bool Character::ColisaoCharacter(Character c, GLfloat dx, GLfloat dy) {
+    return this->ColisaoXCharacter(c, dx) && this->ColisaoYCharacter(c, dy);
 }
 
 bool Character::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {

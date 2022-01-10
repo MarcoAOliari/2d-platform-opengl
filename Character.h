@@ -39,6 +39,8 @@ class Character {
         void PoseParado();
         bool ColisaoX(Obstacle o, GLfloat dx);
         bool ColisaoY(Obstacle o, GLfloat dy);
+        bool ColisaoXCharacter(Character c, GLfloat dx);
+        bool ColisaoYCharacter(Character c, GLfloat dy);
 
     public:
         Character(){};
@@ -51,7 +53,6 @@ class Character {
         void Pula(GLfloat dy, GLfloat deltaT);
         void Cai(GLfloat dy, GLfloat deltaT);
         bool ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT);
-        bool ColisaoXCharacter(Character c, GLfloat dx);
         bool ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTeto(Obstacle o, GLfloat dy);
         void EstadoInicialY();
@@ -59,6 +60,7 @@ class Character {
         void MoveBraco(GLfloat x, GLfloat y);
         Tiro* CriaTiro(GLdouble velocidadeTiro);
         bool ColisaoTiro(Tiro* t);
+        bool ColisaoCharacter(Character c, GLfloat dx, GLfloat dy);
 };
 
 #endif /* CHARACTER_H */

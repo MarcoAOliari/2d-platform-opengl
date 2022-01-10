@@ -22,7 +22,8 @@ class ConfiguracoesJogo {
     GLfloat limiteArena;
 
     private:
-        bool ColisaoPlayer(Character c, GLfloat dx, GLfloat dy);
+        bool ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy);
+        bool ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy);
         bool ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoChao(Character c, GLfloat dy, GLdouble deltaT);
         bool ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT);
