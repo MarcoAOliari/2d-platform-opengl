@@ -2,3 +2,4 @@
 - animacao com deltaT;
 - colisão bem estabelecida;
 - IA
+- colocar characters com ponteiros

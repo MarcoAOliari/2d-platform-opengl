@@ -37,8 +37,8 @@ class Character {
         void DesenhaCanela(int id);
         void DesenhaBraco();
         void PoseParado();
-        bool ColisaoXObstacle(Obstacle o, GLfloat dx);
-        bool ColisaoYObstacle(Obstacle o, GLfloat dy);
+        bool ColisaoXObstacle(Obstacle o, GLfloat dx, GLdouble deltaT);
+        bool ColisaoYObstacle(Obstacle o, GLfloat dy, GLdouble deltaT);
         bool ColisaoXCharacter(Character c, GLfloat dx);
         bool ColisaoYCharacter(Character c, GLfloat dy);
 
@@ -51,13 +51,13 @@ class Character {
         void Desenha();
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
         void ParaDeAndar();
-        bool ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy);
+        bool ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy, GLdouble deltaT);
         GLfloat getCentroCamera();
         void Pula(GLfloat dy, GLfloat deltaT);
         void Cai(GLfloat dy, GLfloat deltaT);
         bool ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT);
         bool ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT);
-        bool ColisaoTeto(Obstacle o, GLfloat dy);
+        bool ColisaoTeto(Obstacle o, GLfloat dy, GLdouble deltaT);
         void EstadoInicialY();
         bool getPlayerCaindo();
         void MoveBraco(GLfloat x, GLfloat y);

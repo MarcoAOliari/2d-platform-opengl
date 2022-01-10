@@ -155,24 +155,26 @@ GLfloat Character::getCentroCamera() {
     return this->gX;
 }
 
-bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy) {
-    if (this->gY + dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
-        this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight())
+bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy, GLdouble deltaT) {
+    if (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
+        this->gY - this->raioCabeca + deltaT * dy < o.getgY() + o.getHeight()){
         return true;
+    }
     else
         return false;
 }
 
-bool Character::ColisaoXObstacle(Obstacle o, GLfloat dx) {
-    if (this->gX + dx + this->larguraColisao > o.getgX() - o.getWidth()/2.0 &&
-        this->gX + dx - this->larguraColisao < o.getgX() + o.getWidth()/2.0)
+bool Character::ColisaoXObstacle(Obstacle o, GLfloat dx, GLdouble deltaT) {
+    if (this->gX + deltaT * dx + this->larguraColisao > o.getgX() - o.getWidth()/2.0 &&
+        this->gX + deltaT * dx - this->larguraColisao < o.getgX() + o.getWidth()/2.0){
         return true;
+    }
     else
         return false;
 }
 
-bool Character::ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy) {
-    return this->ColisaoXObstacle(o, dx) && this->ColisaoYObstacle(o, dy);
+bool Character::ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy, GLdouble deltaT) {
+    return this->ColisaoXObstacle(o, dx, deltaT) && this->ColisaoYObstacle(o, dy, deltaT);
 }
 
 void Character::Pula(GLfloat dy, GLfloat deltaT) {
@@ -186,9 +188,8 @@ void Character::Pula(GLfloat dy, GLfloat deltaT) {
 
 bool Character::ColisaoChao(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + dy * deltaT > o.getgY() && 
-        this->gY + (this->alturaTotal - this->raioCabeca) < o.getgY() &&
-        this->ColisaoXObstacle(o, 0)) {
-        cout << "COLIDIU\n";
+        this->gY < o.getgY() &&
+        this->ColisaoXObstacle(o, 0, deltaT)) {
         return true;
     } else {
         return false;
@@ -227,10 +228,10 @@ bool Character::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {
     }
 }
 
-bool Character::ColisaoTeto(Obstacle o, GLfloat dy) {
+bool Character::ColisaoTeto(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY - this->raioCabeca + dy < o.getgY() + o.getHeight() &&
         this->gY + (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getHeight() &&
-        this->ColisaoXObstacle(o, 0)) {
+        this->ColisaoXObstacle(o, 0, 16)) {
         return true;
     } else {
         return false;

@@ -88,9 +88,9 @@ void ConfiguracoesJogo::Desenha() {
 
 }
 
-bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy) {
+bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoObstacle(o, dx, dy)){ 
+        if (c.ColisaoObstacle(o, dx, dy, deltaT)){ 
             return true;
         }
     }
@@ -159,7 +159,7 @@ bool ConfiguracoesJogo::ColisaoChao(Character c, GLfloat dy, GLdouble deltaT) {
 
 bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoTeto(o, dy)){ 
+        if (c.ColisaoTeto(o, dy, deltaT)){ 
             return true;
         }
     }
@@ -167,7 +167,7 @@ bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0) && !this->ColisaoCharacterCharacter(this->player, dx, 0))
+    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) && !this->ColisaoCharacterCharacter(this->player, dx, 0))
         this->player.Anda(dx, deltaT, true, direcao);
 }
 
@@ -219,13 +219,11 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT) {
-    if (ColisaoCharacterObstaculo(*c, dx, 0)) {
+    if (ColisaoCharacterObstaculo(*c, dx, 0, deltaT)) {
         c->alteraDirecao();
     }
 
     char dir = c->getDirecao();
-
-    // cout << dir << " ";
 
     if (dir == 'd') {
         c->Anda(dx, deltaT, false, dir);
@@ -239,8 +237,4 @@ void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
     for (int i = 0; i < this->inimigos.size(); i++) {
         AndaInimigo(&this->inimigos[i], dx, deltaT);
     }
-    // for (auto &c : this->inimigos) {
-    //     AndaInimigo(c, dx, deltaT);
-    // }
-
 }
