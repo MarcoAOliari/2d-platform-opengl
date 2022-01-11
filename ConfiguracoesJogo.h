@@ -25,10 +25,10 @@ class ConfiguracoesJogo {
 
     private:
         bool ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT);
-        bool ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy);
-        bool ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT);
-        bool ColisaoChao(Character c, GLfloat dy, GLdouble deltaT);
-        bool ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT);
+        bool ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        bool ColisaoCabeca(Character c, GLdouble deltaT);
+        bool ColisaoChao(Character c, GLdouble deltaT);
+        bool ColisaoTeto(Character c, GLdouble deltaT);
         bool ColisaoTiro(Tiro* t);
         void CaiInimigo(Character c, GLfloat dy);
         void AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT);
@@ -40,8 +40,8 @@ class ConfiguracoesJogo {
         void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();
         GLfloat getCentroCamera();
-        void PulaPlayer(GLfloat dy, GLdouble deltaT);
-        void CaiPlayer(GLfloat dy, GLdouble deltaT);
+        void PulaPlayer(GLdouble deltaT);
+        void CaiPlayer(GLdouble deltaT);
         void AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT);
         void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);

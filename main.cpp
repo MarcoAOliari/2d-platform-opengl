@@ -116,9 +116,9 @@ void idle(int value)
     }
 
     if (jumping) {
-        config.PulaPlayer(INC_KEY, timeDiference);
+        config.PulaPlayer(timeDiference);
     } else {
-        config.CaiPlayer(INC_KEY, timeDiference);
+        config.CaiPlayer(timeDiference);
     }
 
     if (atirou) {

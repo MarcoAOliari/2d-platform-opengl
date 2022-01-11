@@ -56,7 +56,7 @@ void ConfiguracoesJogo::CaiInimigo(Character c, GLfloat dy) {
 
     while (!plataforma) {
         for (Obstacle o : this->obstaculos) {
-            if (c.ColisaoChao(o, dy, 1)) {
+            if (c.ColisaoChao(o, 16)) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(o);
                 break;
@@ -66,7 +66,7 @@ void ConfiguracoesJogo::CaiInimigo(Character c, GLfloat dy) {
                 break;
             }
         }
-        c.Cai(dy, 1);
+        c.Cai(16);
     }
 
 }
@@ -97,14 +97,14 @@ bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character c, GLfloat dx, GLflo
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy) {
+bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     for (Character c2 : this->inimigos) {
-        if (c.ColisaoCharacter(c2, dx, dy)) {
+        if (c.ColisaoCharacter(c2, dx, dy, deltaT)) {
             return true;
         }
     }
 
-    if (c.ColisaoCharacter(this->player, dx, dy)) {
+    if (c.ColisaoCharacter(this->player, dx, dy, deltaT)) {
         return true;
     }
 
@@ -134,32 +134,32 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoCabeca(Character c, GLfloat dy, GLdouble deltaT) {
+bool ConfiguracoesJogo::ColisaoCabeca(Character c, GLdouble deltaT) {
     for (Character c2 : this->inimigos) {
-        if(c.ColisaoCabeca(c2, dy, deltaT)) {
+        if(c.ColisaoCabeca(c2, deltaT)) {
             return true;
         }
     }
 
-    if (c.ColisaoCabeca(this->player, dy, deltaT)) {
+    if (c.ColisaoCabeca(this->player, deltaT)) {
         return true;
     }
 
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoChao(Character c, GLfloat dy, GLdouble deltaT) {
+bool ConfiguracoesJogo::ColisaoChao(Character c, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoChao(o, dy, deltaT)){ 
+        if (c.ColisaoChao(o, deltaT)){ 
             return true;
         }
     }
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
+bool ConfiguracoesJogo::ColisaoTeto(Character c, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c.ColisaoTeto(o, dy, deltaT)){ 
+        if (c.ColisaoTeto(o, deltaT)){ 
             return true;
         }
     }
@@ -167,7 +167,7 @@ bool ConfiguracoesJogo::ColisaoTeto(Character c, GLfloat dy, GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) && !this->ColisaoCharacterCharacter(this->player, dx, 0))
+    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) && !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT))
         this->player.Anda(dx, deltaT, true, direcao);
 }
 
@@ -175,18 +175,17 @@ void ConfiguracoesJogo::ParaDeAndarPlayer() {
     this->player.ParaDeAndar();
 }
 
-void ConfiguracoesJogo::PulaPlayer(GLfloat dy, GLdouble deltaT) {
-    if (!this->ColisaoTeto(this->player, dy, deltaT) && !this->player.getPlayerCaindo()) {
-        this->player.Pula(dy, deltaT);
+void ConfiguracoesJogo::PulaPlayer(GLdouble deltaT) {
+    if (!this->ColisaoTeto(this->player, deltaT) && !this->player.getPlayerCaindo()) {
+        this->player.Pula(deltaT);
     } else {
-        this->CaiPlayer(dy, deltaT);
+        this->CaiPlayer(deltaT);
     }
 }
 
-void ConfiguracoesJogo::CaiPlayer(GLfloat dy, GLdouble deltaT) {
-    
-    if (!this->ColisaoChao(this->player, dy, deltaT) && !this->ColisaoCabeca(this->player, dy, deltaT)) {
-        this->player.Cai(dy, deltaT);
+void ConfiguracoesJogo::CaiPlayer(GLdouble deltaT) {
+    if (!this->ColisaoChao(this->player, deltaT) && !this->ColisaoCabeca(this->player, deltaT)) {
+        this->player.Cai(deltaT);
     } else {
         this->player.EstadoInicialY();
     }
