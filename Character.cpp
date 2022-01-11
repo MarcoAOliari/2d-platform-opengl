@@ -196,31 +196,33 @@ bool Character::ColisaoChao(Obstacle o, GLdouble deltaT) {
     }
 }
 
-bool Character::ColisaoXCharacter(Character c, GLfloat dx, GLdouble deltaT) {
-    if (this->gX != c.gX && this->gY != c.gY &&
-        this->gX + deltaT * dx + this->larguraColisao > c.gX - c.larguraColisao/2.0 &&
-        this->gX + deltaT * dx - this->larguraColisao < c.gX + c.larguraColisao/2.0)
+bool Character::ColisaoXCharacter(Character* c, GLfloat dx, GLdouble deltaT) {
+    if (!(this->gX == c->gX && this->gY == c->gY) &&
+        this->gX + deltaT * dx + this->larguraColisao > c->gX - c->larguraColisao &&
+        this->gX + deltaT * dx - this->larguraColisao < c->gX + c->larguraColisao){
         return true;
+        }
     else
         return false;
 }
 
-bool Character::ColisaoYCharacter(Character c, GLfloat dy, GLdouble deltaT) {
-    if (this->gX != c.gX && this->gY != c.gY &&
-        this->gY + dy + (this->alturaTotal - this->raioCabeca) > c.gY - c.raioCabeca &&
-        this->gY - this->raioCabeca + dy < c.gY + (c.alturaTotal - c.raioCabeca))
+bool Character::ColisaoYCharacter(Character* c, GLfloat dy, GLdouble deltaT) {
+    if (!(this->gX == c->gX && this->gY == c->gY) &&
+        this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > c->gY - c->raioCabeca &&
+        this->gY - this->raioCabeca + deltaT * dy < c->gY + (c->alturaTotal - c->raioCabeca)){
         return true;
+        }
     else
         return false;
 }
 
-bool Character::ColisaoCharacter(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
+bool Character::ColisaoCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     return this->ColisaoXCharacter(c, dx, deltaT) && this->ColisaoYCharacter(c, dy, deltaT);
 }
 
-bool Character::ColisaoCabeca(Character c, GLdouble deltaT) {
-    if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT > c.gY - c.raioCabeca && 
-        this->gY + (this->alturaTotal - this->raioCabeca) < c.gY - c.raioCabeca &&
+bool Character::ColisaoCabeca(Character* c, GLdouble deltaT) {
+    if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT > c->gY - c->raioCabeca && 
+        this->gY + (this->alturaTotal - this->raioCabeca) < c->gY - c->raioCabeca &&
         this->ColisaoXCharacter(c, 0, deltaT)) {
         return true;
     } else {

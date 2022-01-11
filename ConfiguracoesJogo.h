@@ -15,8 +15,8 @@
 using std::vector;
 
 class ConfiguracoesJogo {
-    Character player;
-    vector<Character> inimigos;
+    Character* player;
+    vector<Character*> inimigos;
     vector<Obstacle> obstaculos;
     vector<Tiro*> tiros;
     vector<Obstacle> plataformaInimigos;
@@ -24,13 +24,13 @@ class ConfiguracoesJogo {
     GLfloat limiteArena;
 
     private:
-        bool ColisaoCharacterObstaculo(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT);
-        bool ColisaoCharacterCharacter(Character c, GLfloat dx, GLfloat dy, GLdouble deltaT);
-        bool ColisaoCabeca(Character c, GLdouble deltaT);
-        bool ColisaoChao(Character c, GLdouble deltaT);
-        bool ColisaoTeto(Character c, GLdouble deltaT);
+        bool ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        bool ColisaoCharacterCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        bool ColisaoCabeca(Character* c, GLdouble deltaT);
+        bool ColisaoChao(Character* c, GLdouble deltaT);
+        bool ColisaoTeto(Character* c, GLdouble deltaT);
         bool ColisaoTiro(Tiro* t);
-        void CaiInimigo(Character c, GLfloat dy);
+        void CaiInimigo(Character* c, GLfloat dy);
         void AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT);
 
     public:
