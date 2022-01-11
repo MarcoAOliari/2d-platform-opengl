@@ -41,7 +41,11 @@ GLfloat Character::getDirecao() {
     return this->direcao;
 }
 
-void Character::alteraDirecao() {
+void Character::setgYInimigo(Obstacle o) {
+    this->gY = o.getgY() - this->alturaTotal + this->raioCabeca - 0.5;
+}
+
+void Character::AlteraDirecao() {
     this->direcao = this->direcao == 'd' ? 'e' : 'd';
 }
 
@@ -175,6 +179,24 @@ bool Character::ColisaoXObstacle(Obstacle o, GLfloat dx, GLdouble deltaT) {
 
 bool Character::ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     return this->ColisaoXObstacle(o, dx, deltaT) && this->ColisaoYObstacle(o, dy, deltaT);
+}
+
+bool Character::ColisaoPlataforma(Obstacle o, GLfloat dx, GLdouble deltaT) {
+    if (this->direcao == 'd') {
+        if (this->gX + this->larguraColisao + deltaT * dx > o.getgX() + o.getWidth()/2.0) {
+            return true;
+        } else {
+            return false;
+        }
+    } else if (this->direcao == 'e') {
+        if (this->gX - this->larguraColisao - deltaT * dx < o.getgX() - o.getWidth()/2.0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    return false;
 }
 
 void Character::Pula(GLfloat deltaT) {

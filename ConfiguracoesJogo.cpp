@@ -48,6 +48,10 @@ void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
     for (Character* c : this->inimigos) {
         this->CaiInimigo(c, dy);
     }
+
+    for (int i = 0; i < this->inimigos.size(); i++) {
+        inimigos[i]->setgYInimigo(this->plataformaInimigos[i]);
+    }
 }
 
 // puxar deltaT
@@ -57,7 +61,7 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
     while (!plataforma) {
         for (Obstacle o : this->obstaculos) {
             // refatorar também
-            if (c->ColisaoChao(o, 16)) {
+            if (c->ColisaoChao(o, 0.001)) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(o);
                 break;
@@ -68,7 +72,7 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
             }
         }
         // refatorar
-        c->Cai(16);
+        c->Cai(0.001);
     }
 
 }
@@ -122,14 +126,18 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
 
     vector<Character*>::iterator it;
 
-    for (it = this->inimigos.begin(); it != this->inimigos.end(); ++it) {
+    for (it = this->inimigos.begin(); it != this->inimigos.end();) {
         if ((*it)->ColisaoTiro(t)){
+            delete *it;
             it = this->inimigos.erase(it);
             return true;
-        } 
+        } else {
+            ++it;
+        }
     }
 
     if (this->player->ColisaoTiro(t)) {
+        delete this->player;
         return true;
     }
 
@@ -205,7 +213,6 @@ void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
     this->tiros.push_back(this->player->CriaTiro(velocidadeTiro));
 }
 
-// dar delete no tiro
 void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
     vector<Tiro*>::iterator it;
 
@@ -215,28 +222,32 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
             (*it)->Move(deltaT);
             ++it;
         } else {
+            delete *it;
             it = this->tiros.erase(it);
         }
     }
 }
 
-// void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT) {
-//     if (ColisaoCharacterObstaculo(c, dx, 0, deltaT)) {
-//         c->alteraDirecao();
-//     }
+void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, Obstacle o) {
+    if (ColisaoCharacterObstaculo(c, dx, 0, deltaT) || ColisaoCharacterCharacter(c, dx, 0, deltaT) || c->ColisaoPlataforma(o, dx, deltaT)) {
+        c->AlteraDirecao();
+    }
 
-//     char dir = c->getDirecao();
+    char dir = c->getDirecao();
 
-//     if (dir == 'd') {
-//         c->Anda(dx, deltaT, false, dir);
-//     } else if (dir == 'e') {
-//         c->Anda(-dx, deltaT, false, dir);
-//     }
+    if (dir == 'd') {
+        c->Anda(dx, deltaT, false, dir);
+    } else if (dir == 'e') {
+        c->Anda(-dx, deltaT, false, dir);
+    }
 
-// }
+}
 
-// void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
-//     for (int i = 0; i < this->inimigos.size(); i++) {
-//         AndaInimigo(&this->inimigos[i], dx, deltaT);
-//     }
-// }
+void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
+    for (int i = 0; i < this->inimigos.size(); i++) {
+        this->AndaInimigo(this->inimigos[i], dx, deltaT, this->plataformaInimigos[i]);
+    }
+    // for (Character* c : this->inimigos) {
+    //     this->AndaInimigo(c, dx, deltaT);
+    // }
+}

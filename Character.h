@@ -47,11 +47,13 @@ class Character {
         Character(Circle c, Rect arena, float larguraTotal);
         GLfloat getYPe();
         GLfloat getDirecao();
-        void alteraDirecao();
+        void setgYInimigo(Obstacle o);
+        void AlteraDirecao();
         void Desenha();
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
         void ParaDeAndar();
         bool ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        bool ColisaoPlataforma(Obstacle o, GLfloat dx, GLdouble deltaT);
         GLfloat getCentroCamera();
         void Pula(GLfloat deltaT);
         void Cai(GLfloat deltaT);
