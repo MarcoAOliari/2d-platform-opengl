@@ -125,14 +125,19 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
     }
 
     vector<Character*>::iterator it;
+    int index = 0;
 
     for (it = this->inimigos.begin(); it != this->inimigos.end();) {
         if ((*it)->ColisaoTiro(t)){
             delete *it;
             it = this->inimigos.erase(it);
+
+            this->plataformaInimigos.erase(this->plataformaInimigos.begin() + index);
+
             return true;
         } else {
             ++it;
+            index++;
         }
     }
 
@@ -247,7 +252,4 @@ void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
     for (int i = 0; i < this->inimigos.size(); i++) {
         this->AndaInimigo(this->inimigos[i], dx, deltaT, this->plataformaInimigos[i]);
     }
-    // for (Character* c : this->inimigos) {
-    //     this->AndaInimigo(c, dx, deltaT);
-    // }
 }

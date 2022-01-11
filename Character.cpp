@@ -182,17 +182,19 @@ bool Character::ColisaoObstacle(Obstacle o, GLfloat dx, GLfloat dy, GLdouble del
 }
 
 bool Character::ColisaoPlataforma(Obstacle o, GLfloat dx, GLdouble deltaT) {
-    if (this->direcao == 'd') {
-        if (this->gX + this->larguraColisao + deltaT * dx > o.getgX() + o.getWidth()/2.0) {
-            return true;
-        } else {
-            return false;
-        }
-    } else if (this->direcao == 'e') {
-        if (this->gX - this->larguraColisao - deltaT * dx < o.getgX() - o.getWidth()/2.0) {
-            return true;
-        } else {
-            return false;
+    if (o.getgY() != 500) {
+        if (this->direcao == 'd') {
+            if (this->gX + this->larguraColisao + deltaT * dx > o.getgX() + o.getWidth()/2.0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (this->direcao == 'e') {
+            if (this->gX - this->larguraColisao - deltaT * dx < o.getgX() - o.getWidth()/2.0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
