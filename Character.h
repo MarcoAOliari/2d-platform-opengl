@@ -60,6 +60,7 @@ class Character {
         bool ColisaoChao(Obstacle o, GLdouble deltaT);
         bool ColisaoCabeca(Character* c, GLdouble deltaT);
         bool ColisaoTeto(Obstacle o, GLdouble deltaT);
+        bool ColisaoMapa(GLfloat larguraMapa, GLfloat dx, GLdouble deltaT);
         void EstadoInicialY();
         bool getPlayerCaindo();
         void MoveBraco(GLfloat x, GLfloat y);

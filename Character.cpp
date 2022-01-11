@@ -101,27 +101,27 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
     gX += dx * deltaT;
     this->direcao = direcao;
 
-    this->frameCaminhada = (this->frameCaminhada + 1) % 50;
+    this->frameCaminhada = (this->frameCaminhada + 1) % 30;
 
-    if (this->frameCaminhada < 10) {
+    if (this->frameCaminhada < 6) {
         this->PoseParado();
 
-    } else if (this->frameCaminhada < 20){
+    } else if (this->frameCaminhada < 12){
         this->gThetaQuadril1 = 70; 
         this->gThetaQuadril2 = 97; 
         this->gThetaJoelho1 = 25;
         this->gThetaJoelho2 = 15;
-    } else if (this->frameCaminhada < 30) {
+    } else if (this->frameCaminhada < 18) {
         this->gThetaQuadril1 = 80; 
         this->gThetaQuadril2 = 95; 
         this->gThetaJoelho1 = 20;
         this->gThetaJoelho2 = 25;
-    }  else if (this->frameCaminhada < 40) {
+    }  else if (this->frameCaminhada < 24) {
         this->gThetaQuadril1 = 86; 
         this->gThetaQuadril2 = 80; 
         this->gThetaJoelho1 = 10;
         this->gThetaJoelho2 = 45;
-    } else if (this->frameCaminhada < 50) {
+    } else if (this->frameCaminhada < 30) {
         this->gThetaQuadril1 = 92; 
         this->gThetaQuadril2 = 70; 
         this->gThetaJoelho1 = 5;
@@ -259,6 +259,15 @@ bool Character::ColisaoTeto(Obstacle o, GLdouble deltaT) {
         this->gY + (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getHeight() &&
         this->ColisaoXObstacle(o, 0, 16)) {
         return true;
+    } else {
+        return false;
+    }
+}
+
+bool Character::ColisaoMapa(GLfloat larguraMapa, GLfloat dx, GLdouble deltaT) {
+    if (this->gX + this->larguraColisao + dx * deltaT > larguraMapa ||
+        this->gX - this->larguraColisao + dx * deltaT < 0) {
+            return true;
     } else {
         return false;
     }

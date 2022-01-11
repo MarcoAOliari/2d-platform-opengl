@@ -54,14 +54,14 @@ void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
     }
 }
 
-// puxar deltaT
+// puxar deltaT e dá?
 void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
     bool plataforma = false;
 
     while (!plataforma) {
         for (Obstacle o : this->obstaculos) {
             // refatorar também
-            if (c->ColisaoChao(o, 0.001)) {
+            if (c->ColisaoChao(o, 1)) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(o);
                 break;
@@ -72,7 +72,7 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
             }
         }
         // refatorar
-        c->Cai(0.001);
+        c->Cai(1);
     }
 
 }
@@ -96,7 +96,10 @@ void ConfiguracoesJogo::Desenha() {
 
 bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
-        if (c->ColisaoObstacle(o, dx, dy, deltaT)){ 
+        if (c->ColisaoObstacle(o, dx, dy, deltaT)){
+            if (c == this->player) {
+                cout << o.getgX() << " " << o.getgY() << "\n";
+            }
             return true;
         }
     }
@@ -181,8 +184,14 @@ bool ConfiguracoesJogo::ColisaoTeto(Character* c, GLdouble deltaT) {
     return false;
 }
 
+bool ConfiguracoesJogo::ColisaoMapa(Character* c, GLfloat dx, GLdouble deltaT) {
+    return c->ColisaoMapa(this->limiteArena, dx, deltaT);
+}
+
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) && !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT))
+    if (!this->ColisaoMapa(this->player, dx, deltaT) &&
+        !this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) &&
+        !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT))
         this->player->Anda(dx, deltaT, true, direcao);
 }
 
@@ -234,7 +243,8 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, Obstacle o) {
-    if (ColisaoCharacterObstaculo(c, dx, 0, deltaT) || ColisaoCharacterCharacter(c, dx, 0, deltaT) || c->ColisaoPlataforma(o, dx, deltaT)) {
+    if (ColisaoCharacterObstaculo(c, dx, 0, deltaT) || ColisaoCharacterCharacter(c, dx, 0, deltaT) || 
+        c->ColisaoPlataforma(o, dx, deltaT) || c->ColisaoMapa(this->limiteArena, dx, deltaT)) {
         c->AlteraDirecao();
     }
 

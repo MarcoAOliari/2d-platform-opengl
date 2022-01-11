@@ -29,6 +29,7 @@ class ConfiguracoesJogo {
         bool ColisaoCabeca(Character* c, GLdouble deltaT);
         bool ColisaoChao(Character* c, GLdouble deltaT);
         bool ColisaoTeto(Character* c, GLdouble deltaT);
+        bool ColisaoMapa(Character* c, GLfloat dx, GLdouble deltaT);
         bool ColisaoTiro(Tiro* t);
         void CaiInimigo(Character* c, GLfloat dy);
         void AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, Obstacle o);
