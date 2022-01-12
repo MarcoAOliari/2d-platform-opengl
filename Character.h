@@ -27,7 +27,7 @@ class Character {
     GLfloat velocidadePulo;
     GLfloat larguraColisao;
     bool caindo;
-    int frameCaminhada;
+    int tempoCaminhada;
     char direcao;
 
     private:

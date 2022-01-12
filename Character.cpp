@@ -29,7 +29,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->velocidadePulo = -0.25;
     this->larguraColisao = 2.2 * raioCabeca;
     this->caindo = false;
-    this->frameCaminhada = 0;
+    this->tempoCaminhada = 0;
     this->direcao = 'd';
 }
 
@@ -109,27 +109,27 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
     gX += dx * deltaT;
     this->direcao = direcao;
 
-    this->frameCaminhada = (this->frameCaminhada + 1) % 30;
+    this->tempoCaminhada = (this->tempoCaminhada + int(deltaT)) % 500;
 
-    if (this->frameCaminhada < 6) {
+    if (this->tempoCaminhada < 100) {
         this->PoseParado();
 
-    } else if (this->frameCaminhada < 12){
+    } else if (this->tempoCaminhada < 200){
         this->gThetaQuadril1 = 70; 
         this->gThetaQuadril2 = 97; 
         this->gThetaJoelho1 = 25;
         this->gThetaJoelho2 = 15;
-    } else if (this->frameCaminhada < 18) {
+    } else if (this->tempoCaminhada < 300) {
         this->gThetaQuadril1 = 80; 
         this->gThetaQuadril2 = 95; 
         this->gThetaJoelho1 = 20;
         this->gThetaJoelho2 = 25;
-    }  else if (this->frameCaminhada < 24) {
+    }  else if (this->tempoCaminhada < 400) {
         this->gThetaQuadril1 = 86; 
         this->gThetaQuadril2 = 80; 
         this->gThetaJoelho1 = 10;
         this->gThetaJoelho2 = 45;
-    } else if (this->frameCaminhada < 30) {
+    } else if (this->tempoCaminhada < 500) {
         this->gThetaQuadril1 = 92; 
         this->gThetaQuadril2 = 70; 
         this->gThetaJoelho1 = 5;
@@ -140,7 +140,7 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
 }
 
 void Character::ParaDeAndar() {
-    this->frameCaminhada = 0;
+    this->tempoCaminhada = 0;
     this->PoseParado();
 }
 
