@@ -97,9 +97,6 @@ void ConfiguracoesJogo::Desenha() {
 bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
     for (Obstacle o : this->obstaculos) {
         if (c->ColisaoObstacle(o, dx, dy, deltaT)){
-            if (c == this->player) {
-                cout << o.getgX() << " " << o.getgY() << "\n";
-            }
             return true;
         }
     }
@@ -246,6 +243,7 @@ void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, O
     if (ColisaoCharacterObstaculo(c, dx, 0, deltaT) || ColisaoCharacterCharacter(c, dx, 0, deltaT) || 
         c->ColisaoPlataforma(o, dx, deltaT) || c->ColisaoMapa(this->limiteArena, dx, deltaT)) {
         c->AlteraDirecao();
+        c->setgXInimigo(dx, deltaT);
     }
 
     char dir = c->getDirecao();

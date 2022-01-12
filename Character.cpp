@@ -45,6 +45,14 @@ void Character::setgYInimigo(Obstacle o) {
     this->gY = o.getgY() - this->alturaTotal + this->raioCabeca - 0.5;
 }
 
+void Character::setgXInimigo(GLfloat dx, GLdouble deltaT) {
+    if (this->direcao == 'd')
+        this->gX += dx * deltaT;
+    else if (this->direcao == 'e') {
+        this->gX -= dx * deltaT;
+    }
+}
+
 void Character::AlteraDirecao() {
     this->direcao = this->direcao == 'd' ? 'e' : 'd';
 }

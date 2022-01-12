@@ -102,7 +102,7 @@ void idle(int value)
     previousTime = currentTime;
 
     double inc = INC_KEYIDLE;
-
+    
     if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
         if (keyStatus[(int)('a')]) {
             config.AndaPlayer(-INC_KEY, timeDiference, 'e');

@@ -48,6 +48,7 @@ class Character {
         GLfloat getYPe();
         GLfloat getDirecao();
         void setgYInimigo(Obstacle o);
+        void setgXInimigo(GLfloat dx, GLdouble deltaT);
         void AlteraDirecao();
         void Desenha();
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
