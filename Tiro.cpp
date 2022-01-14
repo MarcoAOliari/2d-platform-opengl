@@ -12,7 +12,7 @@ Tiro::Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat a
     if (direcao == 'd') {
         this->gXInit = x + alturaBraco * cos(angulo * PI / 180);
         this->gX = x + alturaBraco * cos(angulo * PI / 180);
-    } else {
+    } else if (direcao == 'e') {
         this->gXInit = x - alturaBraco * cos(angulo * PI / 180);
         this->gX = x - alturaBraco * cos(angulo * PI / 180);
     }
@@ -22,7 +22,7 @@ Tiro::Tiro(GLfloat x, GLfloat y, GLfloat angulo, GLfloat larguraBraco, GLfloat a
     this->alturaBraco = alturaBraco;
     this->gVel = velocidadeTiro;
     this->gAngulo = angulo;
-    this->raioTiro = larguraBraco;
+    this->raioTiro = larguraBraco * 0.6;
     this->direcao = direcao;
 }
 

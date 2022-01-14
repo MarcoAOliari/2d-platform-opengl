@@ -217,7 +217,7 @@ GLfloat ConfiguracoesJogo::getCentroCamera() {
 }
 
 void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
-    this->player->MoveBraco(x, y);
+    this->player->MoveBraco(x, y, true);
 }
 
 void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
@@ -228,7 +228,6 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
     vector<Tiro*>::iterator it;
 
     for (it = this->tiros.begin(); it != this->tiros.end();) {
-
         if ((*it)->Valido(this->limiteArena) && !this->ColisaoTiro((*it))){
             (*it)->Move(deltaT);
             ++it;
@@ -253,11 +252,15 @@ void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, O
     } else if (dir == 'e') {
         c->Anda(-dx, deltaT, false, dir);
     }
+}
 
+void ConfiguracoesJogo::MoveBracoInimigo(Character* c, GLfloat x, GLfloat y) {
+    c->MoveBraco(x, y, false);
 }
 
 void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
     for (int i = 0; i < this->inimigos.size(); i++) {
         this->AndaInimigo(this->inimigos[i], dx, deltaT, this->plataformaInimigos[i]);
+        this->MoveBracoInimigo(this->inimigos[i], this->player->getgX(), this->player->getgY()); 
     }
 }

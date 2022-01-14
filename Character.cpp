@@ -41,6 +41,14 @@ GLfloat Character::getDirecao() {
     return this->direcao;
 }
 
+GLfloat Character::getgX() {
+    return this->gX;
+}
+
+GLfloat Character::getgY() {
+    return this->gY;
+}
+
 void Character::setgYInimigo(Obstacle o) {
     this->gY = o.getgY() - this->alturaTotal + this->raioCabeca - 0.5;
 }
@@ -308,16 +316,23 @@ bool Character::getPlayerCaindo() {
     return this->caindo;
 }
 
-void Character::MoveBraco(GLfloat x, GLfloat y) {
+void Character::MoveBraco(GLfloat x, GLfloat y, bool isPlayer) {
     GLfloat novoAngulo;
+    GLfloat xRelativo;
     GLfloat gYBraco = this->gY + this->raioCabeca + this->alturaQuadril/2.0;
     
-    if (this->direcao == 'd') {
-        novoAngulo = atan((y - gYBraco)/(x - 250)) * 180 / PI;
+    if (isPlayer) {
+        xRelativo = 250;
     } else {
-        novoAngulo = -atan((y - gYBraco)/(x - 250)) * 180 / PI;
+        xRelativo = this->gX;
     }
 
+    if (this->direcao == 'd') {
+        novoAngulo = atan((y - gYBraco)/(x - xRelativo)) * 180 / PI;
+    } else {
+        novoAngulo = -atan((y - gYBraco)/(x - xRelativo)) * 180 / PI;
+    }
+    
     if ((novoAngulo > 45 || novoAngulo < -45) && y <= gYBraco) {
         this->gThetaBraco = -45;
     } else if ((novoAngulo > 45 || novoAngulo < -45) && y > gYBraco) {

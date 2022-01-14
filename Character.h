@@ -47,6 +47,8 @@ class Character {
         Character(Circle c, Rect arena, float larguraTotal);
         GLfloat getYPe();
         GLfloat getDirecao();
+        GLfloat getgX();
+        GLfloat getgY();
         void setgYInimigo(Obstacle o);
         void setgXInimigo(GLfloat dx, GLdouble deltaT);
         void AlteraDirecao();
@@ -64,7 +66,7 @@ class Character {
         bool ColisaoMapa(GLfloat larguraMapa, GLfloat dx, GLdouble deltaT);
         void EstadoInicialY();
         bool getPlayerCaindo();
-        void MoveBraco(GLfloat x, GLfloat y);
+        void MoveBraco(GLfloat x, GLfloat y, bool isPlayer);
         Tiro* CriaTiro(GLdouble velocidadeTiro);
         bool ColisaoTiro(Tiro* t);
         bool ColisaoCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);

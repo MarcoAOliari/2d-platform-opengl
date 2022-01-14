@@ -40,19 +40,17 @@ void keyPress(unsigned char key, int x, int y)
         case 27 :
              exit(0);
     }
-    //glutPostRedisplay();
 }
 
 void keyup(unsigned char key, int x, int y)
 {
     keyStatus[(int)(key)] = 0;
-    //glutPostRedisplay();
 }
 
 void ResetKeyStatus()
 {
     int i;
-    //Initialize keyStatus
+
     for(i = 0; i < 256; i++)
        keyStatus[i] = 0; 
 }
@@ -81,14 +79,14 @@ void init(void)
 
     GLfloat centro = config.getCentroCamera();
  
-    glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-    glOrtho(centro - Width/2,     // X coordinate of left edge             
-            centro + Width/2,     // X coordinate of right edge            
-            500,     // Y coordinate of bottom edge             
-            0,     // Y coordinate of top edge             
-            -1,     // Z coordinate of the “near” plane            
-            1);    // Z coordinate of the “far” plane
-    glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
+    glMatrixMode(GL_PROJECTION);    
+    glOrtho(centro - Width/2,                
+            centro + Width/2,            
+            500,                
+            0,             
+            -1,               
+            1);    
+    glMatrixMode(GL_MODELVIEW);   
     glLoadIdentity();
       
 }
@@ -144,14 +142,12 @@ void mouse (int button, int state, int x, int y) {
 
 void motion (int x, int y) {
     config.MoveBracoPlayer(x, y);
-    //glutPostRedisplay();
 }
 
 int main(int argc, char *argv[])
 {
     config.PlataformaInimigos(INC_KEY);
-    // Initialize openGL with Double buffer and RGB color without transparency.
-    // Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
  
@@ -163,6 +159,7 @@ int main(int argc, char *argv[])
     // Define callbacks.
     glutDisplayFunc(renderScene);
     glutKeyboardFunc(keyPress);
+
     // glutIdleFunc(idle);
     glutTimerFunc(1000.0/FPS, idle, 0);
     glutKeyboardUpFunc(keyup);
