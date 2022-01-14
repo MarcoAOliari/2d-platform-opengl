@@ -40,6 +40,7 @@ ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
 
     Obstacle chao(larguraTotal);
     this->chao = chao;
+    this->gameTime = 0;
 
 }
 
@@ -262,5 +263,20 @@ void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
     for (int i = 0; i < this->inimigos.size(); i++) {
         this->AndaInimigo(this->inimigos[i], dx, deltaT, this->plataformaInimigos[i]);
         this->MoveBracoInimigo(this->inimigos[i], this->player->getgX(), this->player->getgY()); 
+    }
+}
+
+void ConfiguracoesJogo::AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT) {
+    this->gameTime += deltaT;
+
+    if (this->gameTime > 2500) {
+        for (Character* c : this->inimigos) {
+            Tiro* t = c->TentaAtirar(velocidadeTiro, this->player->getgX());
+
+            if (t) {
+                this->tiros.push_back(t);
+            }
+        }
+        this->gameTime = 0;
     }
 }

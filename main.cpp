@@ -127,6 +127,8 @@ void idle(int value)
     config.MoveTiros(timeDiference);
 
     config.MoveInimigos(timeDiference, INC_KEY);
+
+    config.AtiraInimigos(2 * INC_KEY, timeDiference);
     
     glutPostRedisplay();
 

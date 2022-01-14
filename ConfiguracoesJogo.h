@@ -22,6 +22,7 @@ class ConfiguracoesJogo {
     vector<Obstacle> plataformaInimigos;
     Obstacle chao;
     GLfloat limiteArena;
+    GLdouble gameTime;
 
     private:
         bool ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
@@ -48,6 +49,7 @@ class ConfiguracoesJogo {
         void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
         void MoveInimigos(GLdouble deltaT, GLfloat dx);
+        void AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT);
 };
 
 #endif /* CONFIGURACOES_JOGO_H */

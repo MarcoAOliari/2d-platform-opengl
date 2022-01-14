@@ -70,6 +70,7 @@ class Character {
         Tiro* CriaTiro(GLdouble velocidadeTiro);
         bool ColisaoTiro(Tiro* t);
         bool ColisaoCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        Tiro* TentaAtirar(GLdouble velocidadeTiro, GLfloat x);
 };
 
 #endif /* CHARACTER_H */

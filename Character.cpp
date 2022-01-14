@@ -342,6 +342,14 @@ void Character::MoveBraco(GLfloat x, GLfloat y, bool isPlayer) {
     }
 }
 
+Tiro* Character::TentaAtirar(GLdouble velocidadeTiro, GLfloat x) {
+    if ((x > this->gX && this->direcao == 'd') || (x < this->gX && this->direcao == 'e')) {
+        return this->CriaTiro(velocidadeTiro);
+    } else {
+        return NULL;
+    }
+}
+
 Tiro* Character::CriaTiro(GLdouble velocidadeTiro) {
     return new Tiro(this->gX, this->gY + this->raioCabeca + this->alturaQuadril/2.0, this->gThetaBraco, this->larguraBraco, this->alturaBraco, velocidadeTiro, this->direcao);
 }
