@@ -30,24 +30,26 @@ void keyPress(unsigned char key, int x, int y)
     {
         case 'a':
         case 'A':
-             keyStatus[(int)('a')] = 1; //Using keyStatus trick
-             break;
+            keyStatus[(int)('a')] = 1;
+            break;
         case 'd':
         case 'D':
-             keyStatus[(int)('d')] = 1; //Using keyStatus trick
-             break;
+            keyStatus[(int)('d')] = 1;
+            break;
+        case 'r':
+        case 'R':
+            keyStatus[(int)('r')] = 1;
+            break;
         case 27 :
              exit(0);
     }
 }
 
-void keyup(unsigned char key, int x, int y)
-{
+void keyup(unsigned char key, int x, int y) {
     keyStatus[(int)(key)] = 0;
 }
 
-void ResetKeyStatus()
-{
+void ResetKeyStatus() {
     int i;
 
     for(i = 0; i < 256; i++)
@@ -56,7 +58,6 @@ void ResetKeyStatus()
 
 void renderScene(void)
 {
-     // Clear the screen.
     glClear(GL_COLOR_BUFFER_BIT);
       
     config.Desenha();
@@ -65,11 +66,10 @@ void renderScene(void)
         config.DesenhaFimDeJogo();
     }
 
-    glutSwapBuffers(); // Desenha the new frame of the game.
+    glutSwapBuffers();
 }
 
-void init(void)
-{
+void init(void) {
     ResetKeyStatus();
     // The color the windows will redraw. Its done to erase the previous frame.
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
@@ -88,8 +88,7 @@ void init(void)
       
 }
 
-void idle(int value)
-{
+void idle(int value) {
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, timeDiference;
     currentTime = glutGet(GLUT_ELAPSED_TIME);
@@ -98,39 +97,40 @@ void idle(int value)
 
     double inc = INC_KEYIDLE;
 
-    if (!config.getGanhou()) {
-        if (!config.getPerdeu()) {
-            if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
-                if (keyStatus[(int)('a')]) {
-                    config.AndaPlayer(-INC_KEY, timeDiference, 'e');
-                }
 
-                if (keyStatus[(int)('d')]) {
-                    config.AndaPlayer(INC_KEY, timeDiference, 'd');
-                }
-            } else {
-                config.ParaDeAndarPlayer();
+    if (!config.FimDeJogo()) {
+        if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
+            if (keyStatus[(int)('a')]) {
+                config.AndaPlayer(-INC_KEY, timeDiference, 'e');
             }
 
-            if (jumping) {
-                config.PulaPlayer(timeDiference);
-            } else {
-                config.CaiPlayer(timeDiference);
+            if (keyStatus[(int)('d')]) {
+                config.AndaPlayer(INC_KEY, timeDiference, 'd');
             }
-
-            if (atirou) {
-                config.AtiraPlayer(2 * INC_KEY, timeDiference);
-                atirou = false;
-            } 
-
-            config.VerificaGanhou(timeDiference, INC_KEY);
+        } else {
+            config.ParaDeAndarPlayer();
         }
 
-        config.MoveTiros(timeDiference);
+        if (jumping) {
+            config.PulaPlayer(timeDiference);
+        } else {
+            config.CaiPlayer(timeDiference);
+        }
 
+        if (atirou) {
+            config.AtiraPlayer(2 * INC_KEY);
+            atirou = false;
+        } 
+
+        config.VerificaGanhou(timeDiference, INC_KEY);
+        config.AtiraInimigos(2 * INC_KEY, timeDiference);
+        config.MoveTiros(timeDiference);
         config.MoveInimigos(timeDiference, INC_KEY);
 
-        config.AtiraInimigos(2 * INC_KEY, timeDiference);
+    } else {
+        if (keyStatus[(int)('r')]) {
+            config.Restart();
+        }
     }
     
     glutPostRedisplay();

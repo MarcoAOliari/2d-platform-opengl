@@ -25,7 +25,7 @@ void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     vector<Circle> circles = svg.getCircles();
     vector<Rect> rects = svg.getRects();
 
-    float larguraTotal, arenaX, arenaY, larguraArena;
+    float larguraTotal;
     Rect arena;
 
     for (Rect r : rects) {
@@ -58,10 +58,11 @@ void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     this->centroCamera = this->player->getgX();
     this->ganhou = false;
     this->perdeu = false;
+    this->fileName = pFilename;
+    this->distanciaPercorrida = 0;
 }
 
 void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
-    bool colidiu = false;
     for (Character* c : this->inimigos) {
         this->CaiInimigo(c, dy);
     }
@@ -208,6 +209,7 @@ void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
         !this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) &&
         !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT)) {
             this->player->Anda(dx, deltaT, true, direcao);
+            this->distanciaPercorrida += dx * deltaT;
             this->centroCamera = this->player->getgX();
         }
 }
@@ -240,7 +242,7 @@ void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
     this->player->MoveBraco(x, y, true);
 }
 
-void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT) {
+void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro) {
     this->tiros.push_back(this->player->CriaTiro(velocidadeTiro));
 }
 
@@ -337,4 +339,35 @@ void ConfiguracoesJogo::DesenhaFimDeJogo() {
         glutBitmapCharacter(font, *tmpStr);
         tmpStr++;
     }
+}
+
+void ConfiguracoesJogo::Restart() {
+
+    if (!this->perdeu) {
+        delete this->player;
+    }
+
+    for (Character* c : this->inimigos) {
+        delete c;
+    }
+
+    for (Tiro* t : this->tiros) {
+        delete t;
+    }
+
+    // vector <Character*>().swap(this->inimigos);
+
+    // vector <Obstacle>().swap(this->obstaculos);
+
+    // vector <Tiro*>().swap(this->tiros);
+
+    this->inimigos.clear();
+    this->obstaculos.clear();
+    this->tiros.clear();
+    this->plataformaInimigos.clear();
+
+    glTranslatef(this->distanciaPercorrida, 0, 0);
+
+    this->CriaJogo(this->fileName);
+    this->PlataformaInimigos(0.08);
 }

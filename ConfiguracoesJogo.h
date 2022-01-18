@@ -24,8 +24,10 @@ class ConfiguracoesJogo {
     GLfloat centroCamera;
     GLfloat limiteArena;
     GLdouble gameTime;
+    GLfloat distanciaPercorrida;
     bool ganhou;
     bool perdeu;
+    const char* fileName;
 
     private:
         bool ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
@@ -51,7 +53,7 @@ class ConfiguracoesJogo {
         GLfloat getCentroCamera();
         void PulaPlayer(GLdouble deltaT);
         void CaiPlayer(GLdouble deltaT);
-        void AtiraPlayer(GLfloat velocidadeTiro, GLdouble deltaT);
+        void AtiraPlayer(GLfloat velocidadeTiro);
         void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
         void MoveInimigos(GLdouble deltaT, GLfloat dx);
@@ -59,6 +61,7 @@ class ConfiguracoesJogo {
         void VerificaGanhou(GLdouble deltaT, GLfloat dx);
         bool FimDeJogo();
         void DesenhaFimDeJogo();
+        void Restart();
 };
 
 #endif /* CONFIGURACOES_JOGO_H */

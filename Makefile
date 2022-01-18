@@ -1,6 +1,6 @@
 EXECUTAVEL := trabalhocg
 CODIGO_FONTE := *.cpp
-FLAGS := -lGL -lGLU -lglut
+FLAGS := -lGL -lGLU -lglut -std=c++11
 
 all:
 	g++ -o $(EXECUTAVEL) $(CODIGO_FONTE) $(FLAGS)
