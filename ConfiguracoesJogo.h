@@ -37,7 +37,8 @@ class ConfiguracoesJogo {
         void MoveBracoInimigo(Character* c, GLfloat x, GLfloat y);
 
     public:
-        ConfiguracoesJogo(const char *pFilename);
+        ConfiguracoesJogo(){};
+        void CriaJogo(const char *pFilename);
         void PlataformaInimigos(GLfloat dy);
         void Desenha();
         void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);

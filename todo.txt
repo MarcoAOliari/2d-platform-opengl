@@ -1,4 +1,4 @@
 - velocidade conforme altura do personagem
+- receber arquivo da entrada
 - fim de jogo (ganhar ou perder)
-- make
 - velocidade pulo

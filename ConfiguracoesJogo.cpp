@@ -5,7 +5,7 @@
 
 using namespace std;
 
-ConfiguracoesJogo::ConfiguracoesJogo(const char *pFilename) {
+void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     SVGReader svg(pFilename);
 
     vector<Circle> circles = svg.getCircles();

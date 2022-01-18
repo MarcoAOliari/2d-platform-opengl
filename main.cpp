@@ -19,7 +19,7 @@ int keyStatus[256];
 const GLint Width = 500;
 const GLint Height = 500;
 
-ConfiguracoesJogo config("arena_teste.svg");
+ConfiguracoesJogo config;
 
 bool jumping = false;
 bool atirou = false;
@@ -146,8 +146,15 @@ void motion (int x, int y) {
     config.MoveBracoPlayer(x, y);
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+
+    if (argc < 2) {
+        cout << "FORNEÇA UM ARQUIVO DE ENTRADA\n";
+        exit(EXIT_SUCCESS);
+    }
+
+    config.CriaJogo(argv[1]);
+
     config.PlataformaInimigos(INC_KEY);
 
     glutInit(&argc, argv);
