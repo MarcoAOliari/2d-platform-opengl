@@ -23,7 +23,6 @@ ConfiguracoesJogo config;
 
 bool jumping = false;
 bool atirou = false;
-int jumpCounter = 0;
 
 void keyPress(unsigned char key, int x, int y)
 {
@@ -58,17 +57,15 @@ void ResetKeyStatus()
 void renderScene(void)
 {
      // Clear the screen.
-     glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
       
     config.Desenha();
 
-     //if (tiro) tiro->Desenha();
-     
-     //alvo.Desenha();
+    if (config.FimDeJogo()) {
+        config.DesenhaFimDeJogo();
+    }
 
-     //ImprimePlacar(-230, -230);
-
-     glutSwapBuffers(); // Desenha the new frame of the game.
+    glutSwapBuffers(); // Desenha the new frame of the game.
 }
 
 void init(void)

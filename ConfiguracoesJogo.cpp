@@ -1,9 +1,23 @@
 #include "ConfiguracoesJogo.h"
 #include "SVGReader.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 #include <iostream>
 
 using namespace std;
+
+static char str[1000];
+void * font = GLUT_BITMAP_9_BY_15;
+
+bool ConfiguracoesJogo::getGanhou() {
+    return this->ganhou;
+}
+
+bool ConfiguracoesJogo::getPerdeu() {
+    return this->perdeu;
+}
 
 void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     SVGReader svg(pFilename);
@@ -41,7 +55,9 @@ void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     Obstacle chao(larguraTotal);
     this->chao = chao;
     this->gameTime = 0;
-
+    this->centroCamera = this->player->getgX();
+    this->ganhou = false;
+    this->perdeu = false;
 }
 
 void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
@@ -189,8 +205,10 @@ bool ConfiguracoesJogo::ColisaoMapa(Character* c, GLfloat dx, GLdouble deltaT) {
 void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
     if (!this->ColisaoMapa(this->player, dx, deltaT) &&
         !this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) &&
-        !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT))
-        this->player->Anda(dx, deltaT, true, direcao);
+        !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT)) {
+            this->player->Anda(dx, deltaT, true, direcao);
+            this->centroCamera = this->player->getgX();
+        }
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {
@@ -278,5 +296,40 @@ void ConfiguracoesJogo::AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT) {
             }
         }
         this->gameTime = 0;
+    }
+}
+
+bool ConfiguracoesJogo::FimDeJogo() {
+    return this->ganhou || this->perdeu;
+}
+
+void ConfiguracoesJogo::DesenhaFimDeJogo() {
+    glColor3f(1.0, 1.0, 1.0);
+
+    //Cria a string a ser impressa
+    char *tmpStr;
+
+    if (this->ganhou) {
+        sprintf(str, "Parabens, voce ganhou!");
+        glRasterPos2f(this->centroCamera - 80, 250);
+    } else if (this->perdeu) {
+        sprintf(str, "Voce perdeu!");
+        glRasterPos2f(this->centroCamera - 40, 250);
+    }
+
+    //Imprime um caractere por vez
+    tmpStr = str;
+    while( *tmpStr ){
+        glutBitmapCharacter(font, *tmpStr);
+        tmpStr++;
+    }
+
+    sprintf(str, "Pressione R para reiniciar o jogo");
+    glRasterPos2f(this->centroCamera - 130, 270);
+
+    tmpStr = str;
+    while( *tmpStr ){
+        glutBitmapCharacter(font, *tmpStr);
+        tmpStr++;
     }
 }
