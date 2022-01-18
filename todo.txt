@@ -1,5 +1,4 @@
-- colisões com deltaT;
-- animacao com deltaT;
-- colisão bem estabelecida;
-- IA
-- colocar characters com ponteiros
+- velocidade conforme altura do personagem
+- fim de jogo (ganhar ou perder)
+- make
+- velocidade pulo
