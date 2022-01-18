@@ -56,6 +56,7 @@ class ConfiguracoesJogo {
         void MoveBracoPlayer(GLfloat x, GLfloat y);
         void MoveInimigos(GLdouble deltaT, GLfloat dx);
         void AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT);
+        void VerificaGanhou(GLdouble deltaT, GLfloat dx);
         bool FimDeJogo();
         void DesenhaFimDeJogo();
 };

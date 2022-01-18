@@ -1,4 +1,4 @@
-- velocidade conforme altura do personagem
+- velocidade conforme altura do personagem (retirar os dx)
 - fim de jogo (ganhar ou perder)
 - velocidade pulo
 - restart

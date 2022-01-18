@@ -160,6 +160,7 @@ bool ConfiguracoesJogo::ColisaoTiro(Tiro* t) {
 
     if (this->player->ColisaoTiro(t)) {
         delete this->player;
+        this->perdeu = true;
         return true;
     }
 
@@ -299,6 +300,12 @@ void ConfiguracoesJogo::AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT) {
     }
 }
 
+void ConfiguracoesJogo::VerificaGanhou(GLdouble deltaT, GLfloat dx) {
+    if (this->player->getgX() + this->player->getLarguraColisao() + dx * deltaT > this->limiteArena) {
+        this->ganhou = true;
+    }
+}
+
 bool ConfiguracoesJogo::FimDeJogo() {
     return this->ganhou || this->perdeu;
 }
@@ -306,7 +313,6 @@ bool ConfiguracoesJogo::FimDeJogo() {
 void ConfiguracoesJogo::DesenhaFimDeJogo() {
     glColor3f(1.0, 1.0, 1.0);
 
-    //Cria a string a ser impressa
     char *tmpStr;
 
     if (this->ganhou) {
@@ -317,7 +323,6 @@ void ConfiguracoesJogo::DesenhaFimDeJogo() {
         glRasterPos2f(this->centroCamera - 40, 250);
     }
 
-    //Imprime um caractere por vez
     tmpStr = str;
     while( *tmpStr ){
         glutBitmapCharacter(font, *tmpStr);

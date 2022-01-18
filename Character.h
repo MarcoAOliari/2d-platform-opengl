@@ -49,6 +49,7 @@ class Character {
         GLfloat getDirecao();
         GLfloat getgX();
         GLfloat getgY();
+        GLfloat getLarguraColisao();
         void setgYInimigo(Obstacle o);
         void setgXInimigo(GLfloat dx, GLdouble deltaT);
         void AlteraDirecao();

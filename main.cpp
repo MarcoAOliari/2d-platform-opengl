@@ -97,35 +97,41 @@ void idle(int value)
     previousTime = currentTime;
 
     double inc = INC_KEYIDLE;
-    
-    if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
-        if (keyStatus[(int)('a')]) {
-            config.AndaPlayer(-INC_KEY, timeDiference, 'e');
+
+    if (!config.getGanhou()) {
+        if (!config.getPerdeu()) {
+            if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
+                if (keyStatus[(int)('a')]) {
+                    config.AndaPlayer(-INC_KEY, timeDiference, 'e');
+                }
+
+                if (keyStatus[(int)('d')]) {
+                    config.AndaPlayer(INC_KEY, timeDiference, 'd');
+                }
+            } else {
+                config.ParaDeAndarPlayer();
+            }
+
+            if (jumping) {
+                config.PulaPlayer(timeDiference);
+            } else {
+                config.CaiPlayer(timeDiference);
+            }
+
+            if (atirou) {
+                config.AtiraPlayer(2 * INC_KEY, timeDiference);
+                atirou = false;
+            } 
+
+            config.VerificaGanhou(timeDiference, INC_KEY);
         }
 
-        if (keyStatus[(int)('d')]) {
-            config.AndaPlayer(INC_KEY, timeDiference, 'd');
-        }
-    } else {
-        config.ParaDeAndarPlayer();
+        config.MoveTiros(timeDiference);
+
+        config.MoveInimigos(timeDiference, INC_KEY);
+
+        config.AtiraInimigos(2 * INC_KEY, timeDiference);
     }
-
-    if (jumping) {
-        config.PulaPlayer(timeDiference);
-    } else {
-        config.CaiPlayer(timeDiference);
-    }
-
-    if (atirou) {
-        config.AtiraPlayer(2 * INC_KEY, timeDiference);
-        atirou = false;
-    } 
-    
-    config.MoveTiros(timeDiference);
-
-    config.MoveInimigos(timeDiference, INC_KEY);
-
-    config.AtiraInimigos(2 * INC_KEY, timeDiference);
     
     glutPostRedisplay();
 

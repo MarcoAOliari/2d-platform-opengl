@@ -49,6 +49,10 @@ GLfloat Character::getgY() {
     return this->gY;
 }
 
+GLfloat Character::getLarguraColisao() {
+    return this->larguraColisao;
+}
+
 void Character::setgYInimigo(Obstacle o) {
     this->gY = o.getgY() - this->alturaTotal + this->raioCabeca - 0.5;
 }
