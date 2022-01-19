@@ -25,20 +25,21 @@ class ConfiguracoesJogo {
     GLfloat limiteArena;
     GLdouble gameTime;
     GLfloat distanciaPercorrida;
+    GLfloat dx;
     bool ganhou;
     bool perdeu;
     const char* fileName;
 
     private:
-        bool ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
-        bool ColisaoCharacterCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT);
+        bool ColisaoCharacterObstaculo(Character* c, GLfloat dy, GLdouble deltaT, int multiplicador);
+        bool ColisaoCharacterCharacter(Character* c, GLfloat dy, GLdouble deltaT, int multiplicador);
         bool ColisaoCabeca(Character* c, GLdouble deltaT);
         bool ColisaoChao(Character* c, GLdouble deltaT);
         bool ColisaoTeto(Character* c, GLdouble deltaT);
-        bool ColisaoMapa(Character* c, GLfloat dx, GLdouble deltaT);
+        bool ColisaoMapa(Character* c, GLdouble deltaT, int multiplicador);
         bool ColisaoTiro(Tiro* t);
         void CaiInimigo(Character* c, GLfloat dy);
-        void AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, Obstacle o);
+        void AndaInimigo(Character* c, GLdouble deltaT, Obstacle o);
         void MoveBracoInimigo(Character* c, GLfloat x, GLfloat y);
 
     public:
@@ -48,17 +49,17 @@ class ConfiguracoesJogo {
         void CriaJogo(const char *pFilename);
         void PlataformaInimigos(GLfloat dy);
         void Desenha();
-        void AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao);
+        void AndaPlayer(int multiplicador, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();
         GLfloat getCentroCamera();
         void PulaPlayer(GLdouble deltaT);
         void CaiPlayer(GLdouble deltaT);
-        void AtiraPlayer(GLfloat velocidadeTiro);
+        void AtiraPlayer();
         void MoveTiros(GLdouble deltaT);
         void MoveBracoPlayer(GLfloat x, GLfloat y);
-        void MoveInimigos(GLdouble deltaT, GLfloat dx);
-        void AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT);
-        void VerificaGanhou(GLdouble deltaT, GLfloat dx);
+        void MoveInimigos(GLdouble deltaT);
+        void AtiraInimigos(GLdouble deltaT);
+        void VerificaGanhou(GLdouble deltaT);
         bool FimDeJogo();
         void DesenhaFimDeJogo();
         void Restart();

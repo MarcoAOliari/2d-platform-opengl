@@ -101,11 +101,11 @@ void idle(int value) {
     if (!config.FimDeJogo()) {
         if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
             if (keyStatus[(int)('a')]) {
-                config.AndaPlayer(-INC_KEY, timeDiference, 'e');
+                config.AndaPlayer(-1, timeDiference, 'e');
             }
 
             if (keyStatus[(int)('d')]) {
-                config.AndaPlayer(INC_KEY, timeDiference, 'd');
+                config.AndaPlayer(1, timeDiference, 'd');
             }
         } else {
             config.ParaDeAndarPlayer();
@@ -118,14 +118,14 @@ void idle(int value) {
         }
 
         if (atirou) {
-            config.AtiraPlayer(2 * INC_KEY);
+            config.AtiraPlayer();
             atirou = false;
         } 
 
-        config.VerificaGanhou(timeDiference, INC_KEY);
-        config.AtiraInimigos(2 * INC_KEY, timeDiference);
+        config.VerificaGanhou(timeDiference);
+        config.AtiraInimigos(timeDiference);
         config.MoveTiros(timeDiference);
-        config.MoveInimigos(timeDiference, INC_KEY);
+        config.MoveInimigos(timeDiference);
 
     } else {
         if (keyStatus[(int)('r')]) {

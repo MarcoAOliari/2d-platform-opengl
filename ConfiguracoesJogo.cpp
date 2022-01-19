@@ -56,6 +56,7 @@ void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     this->chao = chao;
     this->gameTime = 0;
     this->centroCamera = this->player->getgX();
+    this->dx = this->player->getLarguraColisao()/150;
     this->ganhou = false;
     this->perdeu = false;
     this->fileName = pFilename;
@@ -112,23 +113,23 @@ void ConfiguracoesJogo::Desenha() {
 
 }
 
-bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
+bool ConfiguracoesJogo::ColisaoCharacterObstaculo(Character* c, GLfloat dy, GLdouble deltaT, int multiplicador) {
     for (Obstacle o : this->obstaculos) {
-        if (c->ColisaoObstacle(o, dx, dy, deltaT)){
+        if (c->ColisaoObstacle(o, multiplicador * this->dx, dy, deltaT)){
             return true;
         }
     }
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character* c, GLfloat dx, GLfloat dy, GLdouble deltaT) {
+bool ConfiguracoesJogo::ColisaoCharacterCharacter(Character* c, GLfloat dy, GLdouble deltaT, int multiplicador) {
     for (Character* c2 : this->inimigos) {
-        if (c->ColisaoCharacter(c2, dx, dy, deltaT)) {
+        if (c->ColisaoCharacter(c2, multiplicador * this->dx, dy, deltaT)) {
             return true;
         }
     }
 
-    if (c->ColisaoCharacter(this->player, dx, dy, deltaT)) {
+    if (c->ColisaoCharacter(this->player, this->dx, dy, deltaT)) {
         return true;
     }
 
@@ -200,18 +201,19 @@ bool ConfiguracoesJogo::ColisaoTeto(Character* c, GLdouble deltaT) {
     return false;
 }
 
-bool ConfiguracoesJogo::ColisaoMapa(Character* c, GLfloat dx, GLdouble deltaT) {
-    return c->ColisaoMapa(this->limiteArena, dx, deltaT);
+bool ConfiguracoesJogo::ColisaoMapa(Character* c, GLdouble deltaT, int multiplicador) {
+    return c->ColisaoMapa(this->limiteArena, multiplicador * this->dx, deltaT);
 }
 
-void ConfiguracoesJogo::AndaPlayer(GLfloat dx, GLdouble deltaT, char direcao) {
-    if (!this->ColisaoMapa(this->player, dx, deltaT) &&
-        !this->ColisaoCharacterObstaculo(this->player, dx, 0, deltaT) &&
-        !this->ColisaoCharacterCharacter(this->player, dx, 0, deltaT)) {
-            this->player->Anda(dx, deltaT, true, direcao);
-            this->distanciaPercorrida += dx * deltaT;
-            this->centroCamera = this->player->getgX();
-        }
+void ConfiguracoesJogo::AndaPlayer(int multiplicador, GLdouble deltaT, char direcao) {
+    if (!this->ColisaoMapa(this->player, deltaT, multiplicador) &&
+        !this->ColisaoCharacterObstaculo(this->player, 0, deltaT, multiplicador) &&
+        !this->ColisaoCharacterCharacter(this->player, 0, deltaT, multiplicador)) {
+
+        this->player->Anda(multiplicador * this->dx, deltaT, true, direcao);
+        this->distanciaPercorrida += multiplicador * this->dx * deltaT;
+        this->centroCamera = this->player->getgX();
+    }
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {
@@ -242,8 +244,8 @@ void ConfiguracoesJogo::MoveBracoPlayer(GLfloat x, GLfloat y) {
     this->player->MoveBraco(x, y, true);
 }
 
-void ConfiguracoesJogo::AtiraPlayer(GLfloat velocidadeTiro) {
-    this->tiros.push_back(this->player->CriaTiro(velocidadeTiro));
+void ConfiguracoesJogo::AtiraPlayer() {
+    this->tiros.push_back(this->player->CriaTiro(2 * this->dx));
 }
 
 void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
@@ -260,19 +262,19 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
     }
 }
 
-void ConfiguracoesJogo::AndaInimigo(Character* c, GLfloat dx, GLdouble deltaT, Obstacle o) {
-    if (ColisaoCharacterObstaculo(c, dx, 0, deltaT) || ColisaoCharacterCharacter(c, dx, 0, deltaT) || 
-        c->ColisaoPlataforma(o, dx, deltaT) || c->ColisaoMapa(this->limiteArena, dx, deltaT)) {
+void ConfiguracoesJogo::AndaInimigo(Character* c, GLdouble deltaT, Obstacle o) {
+    if (ColisaoCharacterObstaculo(c, 0, deltaT, 1) || ColisaoCharacterCharacter(c, 0, deltaT, 1) || 
+        c->ColisaoPlataforma(o, this->dx, deltaT) || c->ColisaoMapa(this->limiteArena, this->dx, deltaT)) {
         c->AlteraDirecao();
-        c->setgXInimigo(dx, deltaT);
+        c->setgXInimigo(this->dx, deltaT);
     }
 
     char dir = c->getDirecao();
 
     if (dir == 'd') {
-        c->Anda(dx, deltaT, false, dir);
+        c->Anda(this->dx, deltaT, false, dir);
     } else if (dir == 'e') {
-        c->Anda(-dx, deltaT, false, dir);
+        c->Anda(-this->dx, deltaT, false, dir);
     }
 }
 
@@ -280,19 +282,19 @@ void ConfiguracoesJogo::MoveBracoInimigo(Character* c, GLfloat x, GLfloat y) {
     c->MoveBraco(x, y, false);
 }
 
-void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT, GLfloat dx) {
+void ConfiguracoesJogo::MoveInimigos(GLdouble deltaT) {
     for (int i = 0; i < this->inimigos.size(); i++) {
-        this->AndaInimigo(this->inimigos[i], dx, deltaT, this->plataformaInimigos[i]);
+        this->AndaInimigo(this->inimigos[i], deltaT, this->plataformaInimigos[i]);
         this->MoveBracoInimigo(this->inimigos[i], this->player->getgX(), this->player->getgY()); 
     }
 }
 
-void ConfiguracoesJogo::AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT) {
+void ConfiguracoesJogo::AtiraInimigos(GLdouble deltaT) {
     this->gameTime += deltaT;
 
     if (this->gameTime > 2500) {
         for (Character* c : this->inimigos) {
-            Tiro* t = c->TentaAtirar(velocidadeTiro, this->player->getgX());
+            Tiro* t = c->TentaAtirar(2 * this->dx, this->player->getgX());
 
             if (t) {
                 this->tiros.push_back(t);
@@ -302,8 +304,8 @@ void ConfiguracoesJogo::AtiraInimigos(GLfloat velocidadeTiro, GLdouble deltaT) {
     }
 }
 
-void ConfiguracoesJogo::VerificaGanhou(GLdouble deltaT, GLfloat dx) {
-    if (this->player->getgX() + this->player->getLarguraColisao() + dx * deltaT > this->limiteArena) {
+void ConfiguracoesJogo::VerificaGanhou(GLdouble deltaT) {
+    if (this->player->getgX() + this->player->getLarguraColisao() + this->dx * deltaT > this->limiteArena) {
         this->ganhou = true;
     }
 }
@@ -354,12 +356,6 @@ void ConfiguracoesJogo::Restart() {
     for (Tiro* t : this->tiros) {
         delete t;
     }
-
-    // vector <Character*>().swap(this->inimigos);
-
-    // vector <Obstacle>().swap(this->obstaculos);
-
-    // vector <Tiro*>().swap(this->tiros);
 
     this->inimigos.clear();
     this->obstaculos.clear();
