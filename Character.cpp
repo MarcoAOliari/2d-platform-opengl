@@ -123,28 +123,31 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
     this->tempoCaminhada = (this->tempoCaminhada + int(deltaT)) % 500;
 
     if (this->tempoCaminhada < 100) {
-        this->PoseParado();
+        this->gThetaQuadril1 = 60 + (10/100) * this->tempoCaminhada; 
+        this->gThetaQuadril2 = 100 - (3/100) * this->tempoCaminhada;
+        this->gThetaJoelho1 = 30 - (5/100) * this->tempoCaminhada;
+        this->gThetaJoelho2 = 0 + (15/100) * this->tempoCaminhada;
 
     } else if (this->tempoCaminhada < 200){
-        this->gThetaQuadril1 = 70; 
-        this->gThetaQuadril2 = 97; 
-        this->gThetaJoelho1 = 25;
-        this->gThetaJoelho2 = 15;
+        this->gThetaQuadril1 = 70 + (10/100) * (this->tempoCaminhada - 100); 
+        this->gThetaQuadril2 = 97 - (2/100) * (this->tempoCaminhada - 100); 
+        this->gThetaJoelho1 = 25 - (5/100) * (this->tempoCaminhada - 100);
+        this->gThetaJoelho2 = 15 + (10/100) * (this->tempoCaminhada - 100);
     } else if (this->tempoCaminhada < 300) {
-        this->gThetaQuadril1 = 80; 
-        this->gThetaQuadril2 = 95; 
-        this->gThetaJoelho1 = 20;
-        this->gThetaJoelho2 = 25;
+        this->gThetaQuadril1 = 80 + (6/100) * (this->tempoCaminhada - 200); 
+        this->gThetaQuadril2 = 95 - (15/100) * (this->tempoCaminhada - 200); 
+        this->gThetaJoelho1 = 20 - (10/100) * (this->tempoCaminhada - 200);
+        this->gThetaJoelho2 = 25 + (20/100) * (this->tempoCaminhada - 200);
     }  else if (this->tempoCaminhada < 400) {
-        this->gThetaQuadril1 = 86; 
-        this->gThetaQuadril2 = 80; 
-        this->gThetaJoelho1 = 10;
-        this->gThetaJoelho2 = 45;
+        this->gThetaQuadril1 = 86 + (6/100) * (this->tempoCaminhada - 300); 
+        this->gThetaQuadril2 = 80 - (10/100) * (this->tempoCaminhada - 300); 
+        this->gThetaJoelho1 = 10 - (5/100) * (this->tempoCaminhada - 300);
+        this->gThetaJoelho2 = 45 + (25/100) * (this->tempoCaminhada - 300);
     } else if (this->tempoCaminhada < 500) {
-        this->gThetaQuadril1 = 92; 
-        this->gThetaQuadril2 = 70; 
-        this->gThetaJoelho1 = 5;
-        this->gThetaJoelho2 = 70;
+        this->gThetaQuadril1 = 92 - (32/100) * (this->tempoCaminhada - 400); 
+        this->gThetaQuadril2 = 70 + (30/100) * (this->tempoCaminhada - 400); 
+        this->gThetaJoelho1 = 5 + (25/100) * (this->tempoCaminhada - 400);
+        this->gThetaJoelho2 = 70 - (70/100) * (this->tempoCaminhada - 400);
     }
 
     if (isPlayer) glTranslatef(-dx * deltaT, 0, 0);
