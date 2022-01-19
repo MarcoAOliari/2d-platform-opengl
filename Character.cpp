@@ -71,7 +71,7 @@ void Character::AlteraDirecao() {
 
 void Character::DesenhaTronco() {
     glTranslatef(0, this->raioCabeca, 0);
-    DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0, 1, 0);
+    DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0.5, 0.5, 1);
 }
 
 void Character::DesenhaCoxa(int id) {
@@ -81,8 +81,7 @@ void Character::DesenhaCoxa(int id) {
         glRotatef(this->gThetaQuadril2, 0, 0, 1);
     }
 
-    // correcao pra juntar joelho
-    DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 1, 0, 0);
+    DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 0.1, 0, 0.1);
 }
 
 void Character::DesenhaCanela(int id) {
@@ -92,7 +91,7 @@ void Character::DesenhaCanela(int id) {
         glRotatef(this->gThetaJoelho2, 0, 0, 1);
     }
 
-    DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 0, 0);
+    DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 1, 1);
 }
 
 void Character::DesenhaPerna(int id) {
@@ -106,7 +105,7 @@ void Character::DesenhaPerna(int id) {
 void Character::DesenhaBraco() {
     glPushMatrix();
     glRotatef(this->gThetaBraco, 0, 0, 1);
-    DesenhaRectEixo(this->alturaBraco, this->larguraBraco, 1, 1, 0);
+    DesenhaRectEixo(this->alturaBraco, this->larguraBraco, 0.8, 0.8, 0.8);
     glPopMatrix();
 }
 
@@ -164,7 +163,7 @@ void Character::Desenha() {
         glScalef(-1, 1, 1);
     }
 
-    DesenhaCirc(this->raioCabeca, 0, 1, 0);
+    DesenhaCirc(this->raioCabeca, 1, 1, 1);
     this->DesenhaTronco();
     glTranslatef(0, this->alturaQuadril/2.0, 0);
     this->DesenhaBraco();
@@ -224,7 +223,7 @@ bool Character::ColisaoPlataforma(Obstacle o, GLfloat dx, GLdouble deltaT) {
 void Character::Pula(GLfloat deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT < 500) {
         this->gY += this->velocidadePulo * deltaT;
-        this->velocidadePulo += 0.00015 * deltaT;
+        this->velocidadePulo += 0.00018 * deltaT;
 
         if (this->velocidadePulo >= 0) this->caindo = true;
     }
@@ -302,7 +301,7 @@ void Character::Cai(GLfloat deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) - this->velocidadePulo * deltaT < 500) {
         if (this->caindo) {
             this->gY += this->velocidadePulo * deltaT;
-            this->velocidadePulo += 0.00015 * deltaT;
+            this->velocidadePulo += 0.00018 * deltaT;
         } else {
             this->caindo = true;
             if (this->velocidadePulo < 0) {

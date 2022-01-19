@@ -1,3 +1,2 @@
-- velocidade conforme altura do personagem (retirar os dx)
-- velocidade pulo
 - colisão com dy
+- atalhos para apresentação
