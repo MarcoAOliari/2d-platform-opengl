@@ -25,6 +25,7 @@ class Character {
     GLfloat larguraArticulacao;
     GLfloat larguraBraco;
     GLfloat velocidadePulo;
+    GLfloat aceleracaoPulo;
     GLfloat larguraColisao;
     bool caindo;
     int tempoCaminhada;

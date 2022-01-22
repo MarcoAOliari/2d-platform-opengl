@@ -26,7 +26,8 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->gThetaJoelho1 = 30;
     this->gThetaJoelho2 = 0;
     this->gThetaBraco = 0;
-    this->velocidadePulo = -0.25;
+    this->velocidadePulo = -alturaTotal/200;
+    this->aceleracaoPulo = alturaTotal/250000;
     this->larguraColisao = 2.2 * raioCabeca;
     this->caindo = false;
     this->tempoCaminhada = 0;
@@ -226,7 +227,7 @@ bool Character::ColisaoPlataforma(Obstacle o, GLfloat dx, GLdouble deltaT) {
 void Character::Pula(GLfloat deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT < 500) {
         this->gY += this->velocidadePulo * deltaT;
-        this->velocidadePulo += 0.00018 * deltaT;
+        this->velocidadePulo += this->aceleracaoPulo * deltaT;
 
         if (this->velocidadePulo >= 0) this->caindo = true;
     }
@@ -297,14 +298,14 @@ bool Character::ColisaoMapa(GLfloat larguraMapa, GLfloat dx, GLdouble deltaT) {
 
 void Character::EstadoInicialY() {
     this->caindo = false;
-    this->velocidadePulo = -0.25;
+    this->velocidadePulo = -alturaTotal/200;
 }
 
 void Character::Cai(GLfloat deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) - this->velocidadePulo * deltaT < 500) {
         if (this->caindo) {
             this->gY += this->velocidadePulo * deltaT;
-            this->velocidadePulo += 0.00018 * deltaT;
+            this->velocidadePulo += this->aceleracaoPulo * deltaT;
         } else {
             this->caindo = true;
             if (this->velocidadePulo < 0) {
@@ -314,7 +315,7 @@ void Character::Cai(GLfloat deltaT) {
     } else {
         this->caindo = false;
         this->gY = 500 - (this->alturaTotal - this->raioCabeca);
-        this->velocidadePulo = -0.25;
+        this->velocidadePulo = -alturaTotal/200;
     }
 }
 
