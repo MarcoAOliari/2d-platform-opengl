@@ -24,6 +24,12 @@ ConfiguracoesJogo config;
 bool jumping = false;
 bool atirou = false;
 
+bool inimigosAtiram = true;
+bool mudouInimigosAtiram = false;
+
+bool inimigosAndam = true;
+bool mudouInimigosAndam = false;
+
 void keyPress(unsigned char key, int x, int y)
 {
     switch (key)
@@ -40,13 +46,47 @@ void keyPress(unsigned char key, int x, int y)
         case 'R':
             keyStatus[(int)('r')] = 1;
             break;
+        // inimigos não atiram
+        case 'i':
+        case 'I':
+            if (!mudouInimigosAtiram) {
+                keyStatus[(int)('i')] = 1;
+                mudouInimigosAtiram = true;
+                inimigosAtiram = !inimigosAtiram;
+            }
+            break;
+        // inimigos não andam
+        case 'o':
+        case 'O':
+            if (!mudouInimigosAndam) {
+                keyStatus[(int)('o')] = 1;
+                mudouInimigosAndam = true;
+                inimigosAndam = !inimigosAndam;
+            }
+            break;
         case 27 :
              exit(0);
     }
 }
 
 void keyup(unsigned char key, int x, int y) {
-    keyStatus[(int)(key)] = 0;
+    switch (key)
+    {
+    case 'i':
+    case 'I':
+        mudouInimigosAtiram = false;
+        keyStatus[(int)(key)] = 0;
+        break;
+    case 'o':
+    case 'O':
+        mudouInimigosAndam = false;
+        keyStatus[(int)(key)] = 0;
+        break;
+    default:
+        keyStatus[(int)(key)] = 0;
+        break;
+    }
+    
 }
 
 void ResetKeyStatus() {
@@ -97,7 +137,6 @@ void idle(int value) {
 
     double inc = INC_KEYIDLE;
 
-
     if (!config.FimDeJogo()) {
         if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {
             if (keyStatus[(int)('a')]) {
@@ -123,9 +162,18 @@ void idle(int value) {
         } 
 
         config.VerificaGanhou(timeDiference);
-        config.AtiraInimigos(timeDiference);
+
+        if (inimigosAtiram) {
+            config.AtiraInimigos(timeDiference);
+        }
+
         config.MoveTiros(timeDiference);
-        config.MoveInimigos(timeDiference);
+
+        cout << inimigosAndam << "\n";
+
+        if (inimigosAndam) {
+            config.MoveInimigos(timeDiference);
+        }
 
     } else {
         if (keyStatus[(int)('r')]) {
