@@ -184,7 +184,6 @@ GLfloat Character::getCentroCamera() {
 bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
         this->gY - this->raioCabeca + deltaT * dy < o.getgY() + o.getHeight()){
-            //cout << "--" << this->gY + (this->alturaTotal - this->raioCabeca) << " " << o.getgY() << " " << (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY()) << "--";
         return true;
     }
     else
