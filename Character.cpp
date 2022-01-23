@@ -184,7 +184,7 @@ GLfloat Character::getCentroCamera() {
 bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
         this->gY - this->raioCabeca + deltaT * dy < o.getgY() + o.getHeight()){
-            cout << "--" << this->gY + (this->alturaTotal - this->raioCabeca) << " " << o.getgY() << " " << (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY()) << "--";
+            //cout << "--" << this->gY + (this->alturaTotal - this->raioCabeca) << " " << o.getgY() << " " << (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY()) << "--";
         return true;
     }
     else
@@ -237,6 +237,7 @@ bool Character::ColisaoChao(Obstacle o, GLdouble deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT > o.getgY() && 
         this->gY < o.getgY() &&
         this->ColisaoXObstacle(o, 0, deltaT)) {
+        this->gY -= 0.1;
         return true;
     } else {
         return false;
