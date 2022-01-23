@@ -128,7 +128,6 @@ void Character::Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao) {
         this->gThetaQuadril2 = 100 - (3/100) * this->tempoCaminhada;
         this->gThetaJoelho1 = 30 - (5/100) * this->tempoCaminhada;
         this->gThetaJoelho2 = 0 + (15/100) * this->tempoCaminhada;
-
     } else if (this->tempoCaminhada < 200){
         this->gThetaQuadril1 = 70 + (10/100) * (this->tempoCaminhada - 100); 
         this->gThetaQuadril2 = 97 - (2/100) * (this->tempoCaminhada - 100); 
@@ -185,6 +184,7 @@ GLfloat Character::getCentroCamera() {
 bool Character::ColisaoYObstacle(Obstacle o, GLfloat dy, GLdouble deltaT) {
     if (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY() &&
         this->gY - this->raioCabeca + deltaT * dy < o.getgY() + o.getHeight()){
+            cout << "--" << this->gY + (this->alturaTotal - this->raioCabeca) << " " << o.getgY() << " " << (this->gY + deltaT * dy + (this->alturaTotal - this->raioCabeca) > o.getgY()) << "--";
         return true;
     }
     else

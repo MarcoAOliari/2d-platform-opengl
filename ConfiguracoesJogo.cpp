@@ -73,13 +73,11 @@ void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
     }
 }
 
-// puxar deltaT e dá?
 void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
     bool plataforma = false;
 
     while (!plataforma) {
         for (Obstacle o : this->obstaculos) {
-            // refatorar também
             if (c->ColisaoChao(o, 1)) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(o);
@@ -90,7 +88,6 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
                 break;
             }
         }
-        // refatorar
         c->Cai(1);
     }
 
@@ -213,7 +210,11 @@ void ConfiguracoesJogo::AndaPlayer(int multiplicador, GLdouble deltaT, char dire
         this->player->Anda(multiplicador * this->dx, deltaT, true, direcao);
         this->distanciaPercorrida += multiplicador * this->dx * deltaT;
         this->centroCamera = this->player->getgX();
+    // }
+    } else {
+        cout << "player -->" << !this->ColisaoCharacterObstaculo(this->player, 0, deltaT, multiplicador) << "<-- player\n";
     }
+
 }
 
 void ConfiguracoesJogo::ParaDeAndarPlayer() {
@@ -263,13 +264,16 @@ void ConfiguracoesJogo::MoveTiros(GLdouble deltaT) {
 }
 
 void ConfiguracoesJogo::AndaInimigo(Character* c, GLdouble deltaT, Obstacle o) {
-    if (ColisaoCharacterObstaculo(c, 0, deltaT, 1) || ColisaoCharacterCharacter(c, 0, deltaT, 1) || 
+    char dir = c->getDirecao();
+    int multiplicador = dir == 'd' ? 1 : -1;
+
+    if (ColisaoCharacterObstaculo(c, 0, deltaT, multiplicador) || ColisaoCharacterCharacter(c, 0, deltaT, multiplicador) || 
         c->ColisaoPlataforma(o, this->dx, deltaT) || c->ColisaoMapa(this->limiteArena, this->dx, deltaT)) {
         c->AlteraDirecao();
         c->setgXInimigo(this->dx, deltaT);
+        return;
     }
 
-    char dir = c->getDirecao();
 
     if (dir == 'd') {
         c->Anda(this->dx, deltaT, false, dir);

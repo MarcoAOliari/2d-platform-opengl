@@ -12,7 +12,7 @@ using namespace std;
 
 #define INC_KEY 0.08
 #define INC_KEYIDLE 0.01
-#define FPS 60.0
+#define FPS 30.0
 
 int keyStatus[256];
 
@@ -128,7 +128,8 @@ void init(void) {
       
 }
 
-void idle(int value) {
+// void idle(int value) {
+void idle(void) {
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, timeDiference;
     currentTime = glutGet(GLUT_ELAPSED_TIME);
@@ -169,8 +170,6 @@ void idle(int value) {
 
         config.MoveTiros(timeDiference);
 
-        cout << inimigosAndam << "\n";
-
         if (inimigosAndam) {
             config.MoveInimigos(timeDiference);
         }
@@ -183,7 +182,7 @@ void idle(int value) {
     
     glutPostRedisplay();
 
-    glutTimerFunc(1000.0/FPS, idle, 0);
+    // glutTimerFunc(1000.0/FPS, idle, 0);
 }
 
 void mouse (int button, int state, int x, int y) {
@@ -220,8 +219,8 @@ int main(int argc, char *argv[]) {
     glutDisplayFunc(renderScene);
     glutKeyboardFunc(keyPress);
 
-    // glutIdleFunc(idle);
-    glutTimerFunc(1000.0/FPS, idle, 0);
+    glutIdleFunc(idle);
+    // glutTimerFunc(1000.0/FPS, idle, 0);
     glutKeyboardUpFunc(keyup);
     glutMouseFunc(mouse);
     glutPassiveMotionFunc(motion);
