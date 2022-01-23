@@ -236,7 +236,6 @@ bool Character::ColisaoChao(Obstacle o, GLdouble deltaT) {
     if (this->gY + (this->alturaTotal - this->raioCabeca) + this->velocidadePulo * deltaT > o.getgY() && 
         this->gY < o.getgY() &&
         this->ColisaoXObstacle(o, 0, deltaT)) {
-        this->gY -= 0.1;
         return true;
     } else {
         return false;
