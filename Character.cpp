@@ -277,9 +277,9 @@ bool Character::ColisaoCabeca(Character* c, GLdouble deltaT) {
 }
 
 bool Character::ColisaoTeto(Obstacle o, GLdouble deltaT) {
-    if (this->gY - this->raioCabeca + this->velocidadePulo * deltaT < o.getgY() + o.getHeight() &&
+    if ((this->gY - this->raioCabeca + this->velocidadePulo * deltaT < o.getgY() + o.getHeight() &&
         this->gY + (this->alturaTotal - this->raioCabeca) > o.getgY() + o.getHeight() &&
-        this->ColisaoXObstacle(o, 0, 16)) {
+        this->ColisaoXObstacle(o, 0, 16)) || this->gY - this->raioCabeca + this->velocidadePulo * deltaT < 0) {
         return true;
     } else {
         return false;
