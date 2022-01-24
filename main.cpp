@@ -111,8 +111,7 @@ void renderScene(void)
 
 void init(void) {
     ResetKeyStatus();
-    // The color the windows will redraw. Its done to erase the previous frame.
-    glClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Black, no opacity(alpha).
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     GLfloat centro = config.getCentroCamera();
  

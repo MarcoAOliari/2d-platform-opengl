@@ -1,5 +1,6 @@
 #include "ConfiguracoesJogo.h"
 #include "SVGReader.h"
+#include "utils.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -94,6 +95,11 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
 }
 
 void ConfiguracoesJogo::Desenha() {
+    glPushMatrix();
+    glTranslatef(this->limiteArena/2.0, 0, 0);
+    DesenhaRect(this->limiteArena, 500, 0, 0, 1);
+    glPopMatrix();
+
     this->player->Desenha();
 
     for (Obstacle o : this->obstaculos) {
