@@ -69,7 +69,6 @@ void Tiro::DesenhaTiro()
     }
 
     glRotatef(this->gAngulo, 0, 0, 1);
-    // glTranslatef(this->alturaBraco, 0, 0);
     DesenhaCirc(this->raioTiro, 0.5, 0.5, 1);
     glPopMatrix();
 }

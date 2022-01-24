@@ -38,7 +38,7 @@ class ConfiguracoesJogo {
         bool ColisaoTeto(Character* c, GLdouble deltaT);
         bool ColisaoMapa(Character* c, GLdouble deltaT, int multiplicador);
         bool ColisaoTiro(Tiro* t);
-        void CaiInimigo(Character* c, GLfloat dy);
+        void CaiInimigo(Character* c);
         void AndaInimigo(Character* c, GLdouble deltaT, Obstacle o);
         void MoveBracoInimigo(Character* c, GLfloat x, GLfloat y);
 
@@ -47,7 +47,7 @@ class ConfiguracoesJogo {
         bool getGanhou();
         bool getPerdeu();
         void CriaJogo(const char *pFilename);
-        void PlataformaInimigos(GLfloat dy);
+        void PlataformaInimigos();
         void Desenha();
         void AndaPlayer(int multiplicador, GLdouble deltaT, char direcao);
         void ParaDeAndarPlayer();

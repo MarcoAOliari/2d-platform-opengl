@@ -64,9 +64,9 @@ void ConfiguracoesJogo::CriaJogo(const char *pFilename) {
     this->distanciaPercorrida = 0;
 }
 
-void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
+void ConfiguracoesJogo::PlataformaInimigos() {
     for (Character* c : this->inimigos) {
-        this->CaiInimigo(c, dy);
+        this->CaiInimigo(c);
     }
 
     for (int i = 0; i < this->inimigos.size(); i++) {
@@ -74,7 +74,7 @@ void ConfiguracoesJogo::PlataformaInimigos(GLfloat dy) {
     }
 }
 
-void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
+void ConfiguracoesJogo::CaiInimigo(Character* c) {
     bool plataforma = false;
 
     while (!plataforma) {
@@ -83,7 +83,7 @@ void ConfiguracoesJogo::CaiInimigo(Character* c, GLfloat dy) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(o);
                 break;
-            } else if (c->getYPe() >= 500 - dy) {
+            } else if (c->getYPe() >= 500 - this->dx) {
                 plataforma = true;
                 this->plataformaInimigos.push_back(this->chao);
                 break;
@@ -369,5 +369,5 @@ void ConfiguracoesJogo::Restart() {
     glTranslatef(this->distanciaPercorrida, 0, 0);
 
     this->CriaJogo(this->fileName);
-    this->PlataformaInimigos(0.08);
+    this->PlataformaInimigos();
 }

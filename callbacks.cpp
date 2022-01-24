@@ -10,8 +10,6 @@ using namespace std;
 #include "ConfiguracoesJogo.h"
 #include "callbacks.h"
 
-#define INC_KEY 0.08
-#define INC_KEYIDLE 0.01
 #define FPS 60.0
 
 int keyStatus[256];
@@ -128,8 +126,6 @@ void idle(int value) {
     currentTime = glutGet(GLUT_ELAPSED_TIME);
     timeDiference = currentTime - previousTime;
     previousTime = currentTime;
-
-    double inc = INC_KEYIDLE;
 
     if (!config.FimDeJogo()) {
         if (keyStatus[(int)('a')] or keyStatus[(int)('d')]) {

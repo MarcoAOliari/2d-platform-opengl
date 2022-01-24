@@ -27,8 +27,7 @@ int main(int argc, char *argv[]) {
 
     config.CriaJogo(argv[1]);
 
-    // REFATORAR!!!
-    config.PlataformaInimigos(0.08);
+    config.PlataformaInimigos();
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
