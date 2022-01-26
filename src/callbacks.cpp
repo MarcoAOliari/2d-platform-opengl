@@ -7,8 +7,8 @@
 
 using namespace std;
 
-#include "ConfiguracoesJogo.h"
-#include "callbacks.h"
+#include "../header/ConfiguracoesJogo.h"
+#include "../header/callbacks.h"
 
 #define FPS 60.0
 

@@ -1,5 +1,5 @@
-#include "SVGReader.h"
-#include "tinyxml2.h"
+#include "../header/SVGReader.h"
+#include "../header/tinyxml2.h"
 
 #include <iostream>
 #include <string.h>

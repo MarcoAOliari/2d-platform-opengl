@@ -1,5 +1,5 @@
-#include "Character.h"
-#include "utils.h"
+#include "../header/Character.h"
+#include "../header/utils.h"
 #include <iostream>
 #include <math.h>
 #define PI 3.14159264

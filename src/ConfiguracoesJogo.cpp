@@ -1,6 +1,6 @@
-#include "ConfiguracoesJogo.h"
-#include "SVGReader.h"
-#include "utils.h"
+#include "../header/ConfiguracoesJogo.h"
+#include "../header/SVGReader.h"
+#include "../header/utils.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>

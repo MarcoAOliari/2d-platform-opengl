@@ -1,4 +1,4 @@
-#include "Rect.h"
+#include "../header/Rect.h"
 
 Rect::Rect(float width, float height, float x, float y, bool isArena) {
     this->width = width;

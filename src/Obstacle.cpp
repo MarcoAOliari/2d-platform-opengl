@@ -1,5 +1,5 @@
-#include "Obstacle.h"
-#include "utils.h"
+#include "../header/Obstacle.h"
+#include "../header/utils.h"
 #include <iostream>
 
 using namespace std;
