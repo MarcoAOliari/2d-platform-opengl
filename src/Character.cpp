@@ -70,19 +70,21 @@ void Character::AlteraDirecao() {
     this->direcao = this->direcao == 'd' ? 'e' : 'd';
 }
 
-void Character::DesenhaTronco() {
+void Character::DesenhaTronco(bool isPlayer) {
     glTranslatef(0, this->raioCabeca, 0);
-    DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0.5, 0.5, 1);
+    if (isPlayer) DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0.5, 0.5, 1);
+    else DesenhaRect(this->larguraQuadril, this->alturaQuadril, 0.8, 0.1, 0.1);
 }
 
-void Character::DesenhaCoxa(int id) {
+void Character::DesenhaCoxa(int id, bool isPlayer) {
     if (id == 1) {
         glRotatef(this->gThetaQuadril1, 0, 0, 1);
     } else if (id == 2) {
         glRotatef(this->gThetaQuadril2, 0, 0, 1);
     }
 
-    DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 0.1, 0, 0.1);
+    if (isPlayer) DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 0.1, 0, 0.1);
+    else DesenhaRect(this->larguraArticulacao, this->alturaArticulacao * 1.05, 0, 0, 0);
 }
 
 void Character::DesenhaCanela(int id) {
@@ -95,9 +97,9 @@ void Character::DesenhaCanela(int id) {
     DesenhaRect(0.4 * this->raioCabeca, this->alturaArticulacao, 1, 1, 1);
 }
 
-void Character::DesenhaPerna(int id) {
+void Character::DesenhaPerna(int id, bool isPlayer) {
     glPushMatrix();
-    DesenhaCoxa(id);
+    DesenhaCoxa(id, isPlayer);
     glTranslatef(0, this->alturaArticulacao, 0);
     DesenhaCanela(id);
     glPopMatrix();
@@ -158,7 +160,7 @@ void Character::ParaDeAndar() {
     this->PoseParado();
 }
 
-void Character::Desenha() {
+void Character::Desenha(bool isPlayer) {
     glPushMatrix();
     glTranslatef(this->gX, this->gY, 0);
 
@@ -167,13 +169,13 @@ void Character::Desenha() {
     }
 
     DesenhaCirc(this->raioCabeca, 1, 1, 1);
-    this->DesenhaTronco();
+    this->DesenhaTronco(isPlayer);
     glTranslatef(0, this->alturaQuadril/2.0, 0);
     this->DesenhaBraco();
     glTranslatef(0, this->alturaQuadril/2.0, 0);
     glRotatef(-90, 0, 0, 1);
-    this->DesenhaPerna(1);
-    this->DesenhaPerna(2);
+    this->DesenhaPerna(1, isPlayer);
+    this->DesenhaPerna(2, isPlayer);
     glPopMatrix();
 }
 
@@ -329,6 +331,10 @@ void Character::MoveBraco(GLfloat x, GLfloat y, bool isPlayer) {
     
     if (isPlayer) {
         xRelativo = 250;
+
+        if ((250 < x && this->direcao == 'e') || (250 > x && this->direcao == 'd')) {
+            this->AlteraDirecao();
+        }
     } else {
         xRelativo = this->gX;
     }

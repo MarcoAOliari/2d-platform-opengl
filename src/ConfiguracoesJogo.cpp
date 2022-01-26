@@ -100,14 +100,14 @@ void ConfiguracoesJogo::Desenha() {
     DesenhaRect(this->limiteArena, 500, 0, 0, 1);
     glPopMatrix();
 
-    this->player->Desenha();
+    this->player->Desenha(true);
 
     for (Obstacle o : this->obstaculos) {
         o.Desenha();
     }
 
     for (Character* c : this->inimigos) {
-        c->Desenha();
+        c->Desenha(false);
     }
 
     for (Tiro* t : this->tiros) {

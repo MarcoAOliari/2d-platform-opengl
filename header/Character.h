@@ -34,9 +34,9 @@ class Character {
 
     private:
         // Desenhos de personagem
-        void DesenhaTronco();
-        void DesenhaCoxa(int id);
-        void DesenhaPerna(int id);
+        void DesenhaTronco(bool isPlayer);
+        void DesenhaCoxa(int id, bool isPlayer);
+        void DesenhaPerna(int id, bool isPlayer);
         void DesenhaCanela(int id);
         void DesenhaBraco();
 
@@ -74,7 +74,7 @@ class Character {
         void AlteraDirecao();
 
         // Desenha personagem por completo
-        void Desenha();
+        void Desenha(bool isPlayer);
 
         // Movimenta horizontalmente um personagem
         void Anda(GLfloat dx, GLdouble deltaT, bool isPlayer, char direcao);
