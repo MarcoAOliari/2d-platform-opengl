@@ -1,6 +1,7 @@
 #ifndef CIRCLE_H
 #define CIRCLE_H
 
+// Classe para leitura dos circles de um svg
 class Circle {
     public:
         float cx;

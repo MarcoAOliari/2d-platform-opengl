@@ -5,6 +5,7 @@
 
 #include "Rect.h"
 
+// Classe de um obstáculo do jogo
 class Obstacle {
     GLfloat gX;
     GLfloat gY;

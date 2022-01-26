@@ -1,6 +1,7 @@
 #ifndef RECT_H
 #define RECT_H
 
+// Classe para leitura dos rects de um svg
 class Rect {
     public:
         float width;

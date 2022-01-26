@@ -9,6 +9,7 @@
 using namespace tinyxml2;
 using std::vector;
 
+// Classe para leitor de svg
 class SVGReader {
     XMLDocument svg;
 

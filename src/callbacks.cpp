@@ -120,7 +120,6 @@ void init(void) {
 }
 
 void idle(int value) {
-// void idle(void) {
     static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
     GLdouble currentTime, timeDiference;
     currentTime = glutGet(GLUT_ELAPSED_TIME);

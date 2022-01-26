@@ -32,16 +32,14 @@ int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
  
-    // Create the window.
+    // Cria a janela
     glutInitWindowSize(Width, Height);
     glutInitWindowPosition(150, 50);
     glutCreateWindow("Trabalho 2D");
  
-    // Define callbacks.
+    // Definição dos callbacks
     glutDisplayFunc(renderScene);
     glutKeyboardFunc(keyPress);
-
-    // glutIdleFunc(idle);
     glutTimerFunc(1000.0/FPS, idle, 0);
     glutKeyboardUpFunc(keyup);
     glutMouseFunc(mouse);

@@ -5,6 +5,7 @@
 
 #include "Obstacle.h"
 
+// Classe de tiro de todos os personagens
 class Tiro {
     GLfloat gXInit; 
     GLfloat gYInit; 
@@ -25,12 +26,18 @@ class Tiro {
         GLfloat getX();
         GLfloat getY();
         GLfloat getRaioTiro();
+
+        // Retornam variações futuras do tiro para verificar colisões
         GLfloat getDx();
         GLfloat getDy();
+
+        // Retornam posições iniciais do tiro
         GLfloat getXInit();
         GLfloat getYInit();
         void DesenhaTiro();
         void Move(GLfloat deltaT);
+
+        // Auxilia na remoção dos tiros distantes da arena ou colididos
         bool Valido(GLfloat limiteArena);
         bool ColisaoObstaculo(Obstacle o);
 };
