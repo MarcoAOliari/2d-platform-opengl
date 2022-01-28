@@ -26,8 +26,8 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->gThetaJoelho1 = 30;
     this->gThetaJoelho2 = 0;
     this->gThetaBraco = 0;
-    this->velocidadePulo = -alturaTotal/200;
-    this->aceleracaoPulo = alturaTotal/170000;
+    this->velocidadePulo = -alturaTotal/150;
+    this->aceleracaoPulo = alturaTotal/120000;
     this->larguraColisao = 2.2 * raioCabeca;
     this->caindo = false;
     this->tempoCaminhada = 0;
@@ -299,7 +299,7 @@ bool Character::ColisaoMapa(GLfloat larguraMapa, GLfloat dx, GLdouble deltaT) {
 
 void Character::EstadoInicialY() {
     this->caindo = false;
-    this->velocidadePulo = -alturaTotal/200;
+    this->velocidadePulo = -alturaTotal/150;
 }
 
 void Character::Cai(GLfloat deltaT) {
@@ -316,7 +316,7 @@ void Character::Cai(GLfloat deltaT) {
     } else {
         this->caindo = false;
         this->gY = 500 - (this->alturaTotal - this->raioCabeca);
-        this->velocidadePulo = -alturaTotal/200;
+        this->velocidadePulo = -alturaTotal/150;
     }
 }
 
