@@ -27,7 +27,7 @@ Character::Character(Circle c, Rect arena, float larguraTotal) {
     this->gThetaJoelho2 = 0;
     this->gThetaBraco = 0;
     this->velocidadePulo = -alturaTotal/200;
-    this->aceleracaoPulo = alturaTotal/250000;
+    this->aceleracaoPulo = alturaTotal/170000;
     this->larguraColisao = 2.2 * raioCabeca;
     this->caindo = false;
     this->tempoCaminhada = 0;
