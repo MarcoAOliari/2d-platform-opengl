@@ -43,6 +43,7 @@ int main(int argc, char *argv[]) {
     glutTimerFunc(1000.0/FPS, idle, 0);
     glutKeyboardUpFunc(keyup);
     glutMouseFunc(mouse);
+    glutMotionFunc(motion);
     glutPassiveMotionFunc(motion);
     
     init();
